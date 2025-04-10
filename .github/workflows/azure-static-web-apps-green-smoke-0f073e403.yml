@@ -32,10 +32,10 @@ jobs:
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
            result-encoding: string
-      - name: Tests
+      - name: npm test
         run: |
-        chmod +x ./node_modules/.bin/jest
-        npx jest --coverage --passWithNoTests
+          chmod +x ./node_modules/.bin/jest
+          npm test -- --passWithNoTests
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
