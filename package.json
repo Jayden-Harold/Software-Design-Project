@@ -4,6 +4,7 @@
   "description": "This website aims to provide a web-based solution for managing community sports facilities. It allows users to book slots, report maintenance issues, and receive relevant notifications.",
   "main": "index.js",
   "scripts": {
+    "build": "react-scripts build"
     "test": "jest"
   },
   "keywords": [],
