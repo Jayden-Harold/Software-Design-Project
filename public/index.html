@@ -2,42 +2,105 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    
+    
+   
+    <title>Green Smoke</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <header class="nav-container">
+    <nav class="nav-bar">
+      <h1 id="Logo">GREEN SMOKE</h1>
+        <ul class="nav-left">
+          <li><a href="#" class="nav-links">BOOK</a></li>
+          <li><a href="#" class="nav-links">FACILITIES</a></li>
+          <li><a href="#" class="nav-links">EVENTS</a></li>        
+        </ul>
+        <ul class="nav-right">
+          <li><a href="#" class="nav-links nav-links-btn">LOGIN</a></li>
+          <li><a href="#" class="nav-links nav-links-btn">REGISTER</a></li>
+        </ul>
+    </nav>
+    </header>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <main class="main-container">
+      <section class="description">
+        <section class = "desc-left">
+        <h1>
+          GREEN SMOKE
+        </h1>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        <p>
+          Welcome to our platform, designed to simplify the management of community sports facilities. Whether you're looking to book a slot, report maintenance issues, or stay updated with the latest notifications, we provide an easy-to-use, website to keep everything organized and accessible for you.
+        </p>
+
+        <button id="btn-1">REGISTER</button>
+        </section>
+
+        <section class="desc-right">
+          <img src="#" alt="GREEN SMOKE" id="main-img">
+        </section>
+      </section>
+
+      <section class="uevents">
+          <h2>UPCOMNG EVENTS</h2>
+          <ul class="events-list">
+            <li class="events-info">14.04.2025</li>
+            <li class="events-info">Sprint 1</li>
+            <li class="events-info">MSL 004</li>
+            <li class="events-info">14:15</li>
+          </ul>
+          <button id="btn-2">VIEW ALL</button>
+      </section>
+      
+      <section class="facilities-tab">
+        <section class="facilities-head">
+          <button id="btn-3">VIEW ALL</button>
+          <h2>FACILITIES</h2>
+        </section>
+
+        <section class="row-1">
+          <img src="#" alt="PADEL" id="padel-img">
+          <img src="#" alt="SOCCER" id="soccer-img">
+          <img src="#" alt="NETBALL" id="netball-img">
+        </section>
+
+        <section class="row-2">
+          <img src="#" alt="CRICKET" id="cricket-img">
+          <img src="#" alt="BASKETBALL" id="basketball-img">
+          <img src="#" alt="SWIMMING" id="swimming-img">
+          <img src="#" alt="HOCKEY" id="hockey-img">
+        </section>
+
+      </section>
+
+    </main>
+
   </body>
+
+  <footer>
+    <section>
+      <h2>GREEN SMOKE</h2>
+      <p>© Green Smoke 2025</p>
+    </section>
+    <section>
+      <p>Contact Us</p>
+      <br>
+      <p>Telephone: (+27) 11 222 3333</p>
+      <p>Instagram: @greensmoke</p>
+      <p>Email: martin.shilenge@greensmoke.co.za</p>
+    </section>
+    <section>
+      <p><b>Green Smoke</b></p>
+      <br>
+      <p><a href="#" class="f-links">Terms and Conditions</a></p>  
+      <p><a href="#" class="f-links">Privacy Policy</a></p>  
+    </section>
 </html>
