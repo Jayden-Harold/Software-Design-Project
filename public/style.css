@@ -1,4 +1,5 @@
 @import url('content.css');
+@import url('modal.css');
 
 :root{
     --poolblue: #00A0A6;
@@ -194,4 +195,5 @@ footer h2{
     text-align: center;
     border-radius: 10px;
     box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
 }

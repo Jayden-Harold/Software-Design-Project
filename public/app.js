@@ -61,7 +61,10 @@ window.onload = function () {
       document.getElementById("googlesignup"),
       {
         theme: "outline",
-        size: "large"
+        size: "large",
+        text: "signup_with",
+        shape: "pill",
+        width: 250
       }
     );
 
@@ -69,7 +72,10 @@ window.onload = function () {
         document.getElementById("googlesignin"),
         {
           theme: "outline",
-          size: "large"
+          size: "large",
+          text: "signin_with",
+          shape: "pill",
+          width: 250
         }
       );
 

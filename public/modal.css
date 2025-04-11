@@ -1,0 +1,113 @@
+dialog.modal-signin{
+    position: relative;
+    z-index: 10;
+    left: 0;
+    top:0;
+    background-color: var(--tennisgreen);
+    margin: 10% auto;
+    width: 30%;
+    width: 30%;
+    max-height: 70vh; 
+    border: none;
+    border-radius: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.modal-signin{
+    justify-items: center;
+}
+
+.modal-signin h2{
+    font-size: 2rem;
+}
+
+.close-signin{
+    position:absolute;
+    top:5%;
+    right:5%;
+    font-size: 1.2rem;
+    z-index: 1;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+}
+
+.close-signin:hover{
+    cursor: pointer;
+    color: var(--greensmoke);
+    transition: 0.2s ease-out;
+}
+
+#link2signup {
+    text-decoration: none;
+    color: var(--greensmoke);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+dialog.modal-signup{
+    position: relative;
+    z-index: 10;
+    left: 0;
+    top:0;
+    background-color: var(--tennisgreen);
+    margin: 10% auto;
+    width: 30%;
+    max-height: 70vh; 
+    overflow-y: auto;
+    border: none;
+    border-radius: 10px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.modal-signup{
+    justify-items: center;
+}
+
+.modal-signup h2{
+    font-size: 2rem;
+}
+
+.close-signup{
+    position:absolute;
+    top:5%;
+    right:5%;
+    font-size: 1.2rem;
+    z-index: 1;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+}
+
+.close-signup:hover{
+    cursor: pointer;
+    color: var(--greensmoke);
+    transition: 0.2s ease-out;
+}
+
+#link2signin {
+    text-decoration: none;
+    color: var(--greensmoke);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+select {
+    font-size: 16px;
+    padding: 6px 10px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: var(--lightgray);
+    appearance: none;         /* Hides default arrow on modern browsers */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    cursor: pointer;
+  }
+  
