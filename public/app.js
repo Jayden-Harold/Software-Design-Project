@@ -58,11 +58,20 @@ window.onload = function () {
     });
   
     google.accounts.id.renderButton(
-      document.getElementById("googlesignin"),
+      document.getElementById("googlesignup"),
       {
         theme: "outline",
         size: "large"
       }
     );
+
+    google.accounts.id.renderButton(
+        document.getElementById("googlesignin"),
+        {
+          theme: "outline",
+          size: "large"
+        }
+      );
+
   };
 
