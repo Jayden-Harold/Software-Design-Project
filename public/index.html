@@ -87,22 +87,28 @@
     </main>
 
     <dialog class="modal-signup">
+      <button class="close-signup">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
       <h2>Sign Up</h2>
       <label for="signup">I am a:</label>
       <select name="signup", id="signup">
         <option value="Resident">Resident</option>
         <option value="Staff">Staff</option>
-        <button id="googlesingin" style="all: unset;"></button>
-        <p>Don't have an acoount? Sign up <a href="#">here</a></p>
       </select>
-    
+        <p>Continue with Google</p>
+        <button id="googlesignin" style="all: unset;"></button>
+        <p>Already have an acoount? Sign in <a href="#" id ="link2signin">here</a></p>
     </dialog>
 
     <dialog class="modal-signin">
+      <button class="close-signin">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
       <h2>Sign In</h2>
       <p>Continue with Google</p>
-      <button id="googlesingin" style="all: unset;"></button>
-      <p>Don't have an acoount? Sign up <a href="#">here</a></p>
+      <button id="googlesignin" style="all: unset;"></button>
+      <p>Don't have an acoount? Sign up <a href="#" id = "link2signup">here</a></p>
     </dialog>
     <script src="app.js"></script>
   </body>
