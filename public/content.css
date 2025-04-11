@@ -17,15 +17,11 @@
 }
 
 .desc-left{
-    justify-self:center;
     margin-left: 20px;
-    width: 50%;
+    width: 70%;
     padding: 20px;
     padding-left: 40px;
-}
-
-.desc-right{
-    width: 50%;
+    justify-content: center;
 }
 
 .desc-left h1{
@@ -229,7 +225,7 @@
 .row-1{
     display: flex;
     justify-content: space-evenly;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
 }
 
 .row-2{
