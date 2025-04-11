@@ -6,6 +6,7 @@
     --lightgray: #EDEDED;
     --darkgray: #3D464F;
     --tennisgreen: #B6FF00;
+    --gray: #D9D9D9;
 }
 
 
@@ -45,6 +46,8 @@ html,body {
     background-color: var(--lightgray);
     text-align: center;
     border-radius: 8px;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .nav-menu{
@@ -164,3 +167,31 @@ html,body {
 
 }
 
+footer{
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--gray);
+}
+
+footer p{
+    font-size: .8rem;
+}
+
+footer h3{
+    font-size: 1rem;
+}
+
+footer a{
+    text-decoration: none;
+    color: black;
+}
+
+footer h2{
+    background-color: var(--tennisgreen);
+    color: var(--greensmoke);
+    font-size: 2rem;
+    width: 70%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.25);
+}

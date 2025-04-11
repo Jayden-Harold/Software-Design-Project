@@ -24,6 +24,10 @@
     padding-left: 40px;
 }
 
+.desc-right{
+    width: 50%;
+}
+
 .desc-left h1{
     font-size: 2.5rem;
 }
@@ -109,6 +113,7 @@
     margin-top: 0;
     background-color: var(--darkgray);
     align-items: center;
+    padding-bottom: .5rem;
 }
 
 .uevents h2{
@@ -124,20 +129,24 @@
     display: flex;
     list-style: none;
     text-align: center;
-    width: 80%;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-evenly;
     justify-items: center;
     justify-self: center;
-    align-items: center;
 }
 
 .events-info{
     text-decoration: none;
     font-weight: bold;
-    background-color: var(--lightgray);
-    border-radius: 8px;
+    color: var(--lightgray);
+    border-radius: 2px;
+    border: solid 4px var(--lightgray);
     width: 20%;
+    height: 2.5rem;
     font-size: 1.5rem;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }
 
 #btn-2{
@@ -148,7 +157,6 @@
     padding: 8px 20px;
     border: none;
     border-radius: 8px;
-    margin-top: 8px;
     cursor: pointer;
     transition: all .35s;
     outline: none;
@@ -158,8 +166,9 @@
         display: flex;
         justify-content: flex-end; /* pushes content to the right */
         align-items: center;
-        padding: .5rem;
         background-color: var(--darkgray);
+        padding-bottom: .5rem;
+        padding-right: .5rem;
 }
 
 #btn-2:hover{
@@ -193,6 +202,15 @@
     height: 100%;
 }
 
+#btn-3:hover{
+    background-color: transparent;
+    color: var(--poolblue);
+    padding: 8px 20px;
+    border-radius: 4px;
+    border: solid 1px var(--poolblue);
+    transition: all 0.2s ease-out;
+}
+
 .facilities-head h2{
     font-size: 2rem;
     text-align: center;
@@ -210,8 +228,16 @@
 
 .row-1{
     display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 1rem;
 }
 
 .row-2{
     display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 1rem;
+}
+
+.facilities-img{
+    cursor: pointer;
 }
