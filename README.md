@@ -22,7 +22,7 @@ Reporting
 
 ## 🚀 Visit our site
 
-link:
+Click [here](https://green-smoke-0f073e403.6.azurestaticapps.net/)
 
 ## Tech Stack
 
