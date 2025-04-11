@@ -14,6 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Green Smoke</title>
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   </head>
   <body>
     <header class="nav-container">
@@ -83,6 +85,25 @@
       </section>
 
     </main>
+
+    <dialog class="modal-signup">
+      <h2>Sign Up</h2>
+      <label for="signup">I am a:</label>
+      <select name="signup", id="signup">
+        <option value="Resident">Resident</option>
+        <option value="Staff">Staff</option>
+        <button id="googlesingin" style="all: unset;"></button>
+        <p>Don't have an acoount? Sign up <a href="#">here</a></p>
+      </select>
+    
+    </dialog>
+
+    <dialog class="modal-signin">
+      <h2>Sign In</h2>
+      <p>Continue with Google</p>
+      <button id="googlesingin" style="all: unset;"></button>
+      <p>Don't have an acoount? Sign up <a href="#">here</a></p>
+    </dialog>
 
   </body>
 
