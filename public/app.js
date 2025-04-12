@@ -53,8 +53,8 @@ close_signup.addEventListener("click", (e) => {
 
 window.onload = function () {
     google.accounts.id.initialize({
-      client_id: "YOUR_GOOGLE_CLIENT_ID",
-      callback: () => {} // Empty callback, nothing happens yet
+      client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com",
+      callback: handleCredentialResponse 
     });
   
     google.accounts.id.renderButton(
@@ -80,4 +80,76 @@ window.onload = function () {
       );
 
   };
+
+//fetches token in order to extract in
+  function handleCredentialResponse(response) {
+    const token = response.credential; //stores user's info from google
+  
+    const userInfo = parseJwt(token);
+    console.log("User Name:", userInfo.name);
+  
+    // Send token to your backend to request verification
+    fetch("https://green-smoke-0f073e403.6.azurestaticapps.net/api/auth/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Server response:", data);
+      })
+      .catch(error => {
+        console.error("Error verifying token:", error); 
+        //in case something goes on
+      });
+  }
+  
+  //takes a JWT token, from Google, and decodes it to reveal its payload, which holds the users information.
+  function parseJwt(token) {
+    //JWT Token has format xxxxx.yyyyy.zzzzz, we want the yyyy part
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  };
+
+  const jwt = require('jsonwebtoken');
+
+  async function handleGoogleSignin(idToken) {
+    //verify GoogleID token
+    const googleUser  = await verifyGoogleToken(idToken);
+
+    //check if user exits
+    let user = await database.query(
+      "SELECT UserId, Name, Role FROM Users WHERE GoogleSubjectId = @sub",
+      {sub: googleUser.sub}
+    );
+
+    //if user doesn't exist, create them
+    if(!user){
+      user = await database.query(
+        "INSERT INTO Users (GoogleSubjectId, Name) OUTPUT inserted.* VALUES (@sub, @name)",
+        { sub: googleUser.sub, name: googleUser.name }
+      );
+    }
+    //generate a JWT token (for both new and existing users)
+  const token = parseJwt.sign(
+    {userId: user.UserId, 
+      role: user.Role},
+      process.env.JWT_SECRET,
+      { expiresIn: '1h'}
+  );
+
+  return { users, token};
+  }
+  
+
+  
 
