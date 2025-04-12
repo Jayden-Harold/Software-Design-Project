@@ -6,7 +6,6 @@ dialog.modal-signin{
     background-color: var(--tennisgreen);
     margin: 10% auto;
     width: 30%;
-    width: 30%;
     max-height: 70vh; 
     border: none;
     border-radius: 10px;
