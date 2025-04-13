@@ -39,7 +39,7 @@ jobs:
       - name: Add Execute Permissions for react-scripts
         run: chmod +x node_modules/.bin/react-scripts
       - name: Run all JS files
-        working-directory: green-smoke
+        working-directory: public
         env:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
