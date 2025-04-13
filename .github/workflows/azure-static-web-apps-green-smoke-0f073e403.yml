@@ -44,6 +44,9 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_SERVER: ${{ secrets.DB_SERVER }}
           DB_NAME: ${{ secrets.DB_NAME }}
+        run: |
+          node app.js
+
     # Add all your entry files
       - name: Build And Deploy
         id: builddeploy
