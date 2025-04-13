@@ -38,15 +38,6 @@ jobs:
           npx jest --coverage --passWithNoTests
       - name: Add Execute Permissions for react-scripts
         run: chmod +x node_modules/.bin/react-scripts
-      - name: Run all JS files
-        working-directory: public
-        env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_SERVER: ${{ secrets.DB_SERVER }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-        run: |
-          node db.js
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
