@@ -1,0 +1,261 @@
+:root{
+    --poolblue: #00A0A6;
+    --greensmoke: #245b54;
+    --lightgray: #EDEDED;
+    --darkgray: #3D464F;
+    --tennisgreen: #B6FF00;
+    --gray: #D9D9D9;
+    --brightred: #F9423D;
+}
+
+
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Raleway", sans-serif;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    background-color: var(--lightgray);
+}
+
+.nav-container{
+    width: 100%;
+    background-color: var(--poolblue);
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    width: 90%;
+    max-width: 1720px;
+    margin: 0 auto 0;
+    position: relative;
+}
+
+#Logo{
+    color: var(--greensmoke);
+    justify-self: start;
+    margin-left: 20px;
+    flex: 0 0 150px;
+    background-color: var(--lightgray);
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.nav-menu{
+    display: flex;
+    list-style: none;
+    text-align: center;
+    width: 50%;
+    justify-content: space-between;
+    margin-left: auto;
+}
+
+.nav-links{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links:hover{
+    color: var(--darkgray);
+    transition: all 0.2s ease-out;
+}
+
+.nav-links-btn{
+    background-color: var(--darkgray);
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+
+.nav-links-btn:hover{
+    background-color: transparent;
+    color: var(--darkgray);
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: solid 1px var(--darkgray);
+    transition: all 0.2s ease-out;
+}
+
+#mobile-menu{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-container {
+        position: relative;
+    }
+
+    .nav-menu{
+        display: flex;
+        flex-direction: column;
+        background: var(--darkgray);
+        margin: 0;
+        width: 100%;
+        position: absolute;
+        top: 80px;
+        right: 0;
+        transform: translateX(-100%);
+        opacity: 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    #Logo{
+        margin-left: 20px;
+    }
+
+    .nav-menu.active{
+        background: var(--poolblue);
+        transform: translateX(0);
+        right: 0;
+        opacity: 1;
+        z-index: 100;
+    }
+
+    .nav-links{
+        text-align: center;
+        line-height: 60px;
+        width: 100%;
+        display: table;
+    }
+
+    .nav-links:hover{
+        background-color: var(--darkgray);
+        color: var(--white);
+        transition: all 0.4s ease-out;
+    }
+
+    .nav-bar{
+        width: 100%;
+    }
+
+    .nav-links-btn{
+        border: none;
+        padding: 0;
+        border-radius: 0;
+        background-color: var(--poolblue);
+        color: var(--white);
+        transition:  all 0.4s ease-out;
+    }
+
+    .nav-links-btn:hover{
+        border:none;
+        padding:0;
+        border-radius: 0;
+        background-color: var(--darkgray);
+        color: var(--white);
+        transition:  all 0.4s ease-out;
+    }
+
+    #mobile-menu {
+        display: block;
+        justify-self: start;
+        margin-right: 20px;
+        flex: 0 0 150px;
+        background: none;
+        border: none
+    }
+
+
+}
+
+.Greeting{
+    padding-left: 1rem;
+}
+
+.Pending{
+    padding-left: 1rem;
+}
+
+.Pending h2{
+    color: var(--brightred)
+}
+
+.Accepted{
+    padding-left: 1rem;
+}
+
+table{
+    width: 100%;
+    padding: 1.6rem;
+}
+
+.table-headings{
+    color: var(--tennisgreen);
+    background-color: var(--darkgray);
+}
+
+#btn-approve{
+    font-family: "Raleway", sans-serif;
+    background-color: var(--tennisgreen);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#btn-approve:hover{
+    background-color: var(--darkgray);
+    color: var(--tennisgreen);
+
+}
+
+#btn-deny{
+    font-family: "Raleway", sans-serif;
+    background-color: var(--brightred);
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#btn-deny:hover{
+    background-color: white;
+    color: var(--brightred);
+}
+
+
+footer{
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--gray);
+    width: 100%;
+}
+
+footer p{
+    font-size: .8rem;
+}
+
+footer h3{
+    font-size: 1rem;
+}
+
+footer a{
+    text-decoration: none;
+    color: black;
+}
+
+footer h2{
+    background-color: var(--tennisgreen);
+    color: var(--greensmoke);
+    font-size: 2rem;
+    width: 70%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
