@@ -131,7 +131,7 @@ window.onload = function () {
 
     //check if user exits
     let user = await database.query(
-      "SELECT UserId, Name, Role FROM Users WHERE GoogleSubjectId = @sub",
+      "SELECT Name, Role FROM Users WHERE GoogleSubjectId = @sub",
       {sub: googleUser.sub}
     );
 
