@@ -1,3 +1,6 @@
+
+const { getDb } = require('./db');
+
 const modal_signin = document.querySelector(".modal-signin");
 const modal_signup = document.querySelector(".modal-signup");
 
