@@ -18,7 +18,6 @@
     
 
   </head>
-  <body>
     <header class="nav-container">
     <nav class="nav-bar">
       <h1 id="Logo">GREEN SMOKE</h1>
@@ -26,7 +25,7 @@
           <li><a href="#" class="nav-links">BOOK</a></li>
           <li><a href="#" class="nav-links">FACILITIES</a></li>
           <li><a href="#" class="nav-links">EVENTS</a></li>      
-          <li><a href="#" class="nav-links-new">USER</a></li>      
+          <li><a href="#" class="nav-links">USER</a></li>      
           
         </ul>
 
@@ -35,50 +34,48 @@
     </header>
 
 <body>
-    <section class="Greeting">
-        <h1>Hi, Admin</h1>
-    </section>
+  <section class="Greeting">
+    <h1>Hi, Admin</h1>
+</section>
 
 
-    <section class="Pending">
-      <h2>Pending Requests</h2>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Joined on</th>
-                <th>Requested Role</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>Joe Biden</td>
-                <td>11 April 2025, 11:05</td>
-                <td>Resident</td>
-                <td>
-                  <button>Approve</button>
-                  <button>Deny</button>
-                </td>
-            </tr>
-        </table>
+<section class="Pending">
+  <h2>Pending Requests</h2>
+    <table>
+        <tr class="table-headings">
+            <th>Name</th>
+            <th>Joined on</th>
+            <th>Requested Role</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Joe Biden</td>
+            <td>11 April 2025, 11:05</td>
+            <td>Resident</td>
+            <td>
+              <button id="btn-approve">Approve</button>
+              <button id="btn-deny">Deny</button>
+            </td>
+        </tr>
+    </table>
 
-        <section class="Accepted">
-          <h2>Users</h2>
-          <table>
-              <tr>
-                  <th>Name</th>
-                  <th>Joined on</th>
-                  <th>Role</th>
-              </tr>
-              <tr>
-                  <td>Example</td>
-                  <td>12 April 2025, 22:10</td>
-                  <td>Staff</td>
-              </tr>
-          </table>
-      </section>
-        
-    </section>
+  </section>
 
-</body>
+    <section class="Accepted">
+      <h2>Users</h2>
+      <table>
+          <tr class="table-headings">
+              <th>Name</th>
+              <th>Joined on</th>
+              <th>Role</th>
+          </tr>
+          <tr>
+              <td>Example</td>
+              <td>12 April 2025, 22:10</td>
+              <td>Staff</td>
+          </tr>
+      </table>
+  </section>
 
   <footer>
     <section>
@@ -97,3 +94,5 @@
       <p><a href="#" class="f-links">Privacy Policy</a></p>  
     </section>
     </footer>
+
+</body>
