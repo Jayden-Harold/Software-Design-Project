@@ -45,7 +45,12 @@ window.handleSignupResponse = async (response) => {
         status: "pending",
       });
       console.log("New user signed up with role:", selectedRole);
-      window.location.href = "../user.html";
+      if (selectedRole === "Staff"){
+        window.location.href = "../staff.html";
+      }
+     else if ( selectedRole === "Resident"){
+        window.location.href = "../user.html";
+     }
     } else {
       alert("User already exists. Try signing in.");
     }
