@@ -17,7 +17,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    const auth = getAuth(app);
    const db = getFirestore(app);
  
- window.handleCredentialResponse = async (response) => {
+window.handleCredentialResponse = async (response) => {
      try {
        const credential = GoogleAuthProvider.credential(response.credential);
        const result = await signInWithCredential(auth, credential);
@@ -46,6 +46,62 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
        console.error("Sign-in error:", error.code, error.message);
      }
    };
+window.handleSignupResponse = async (response) => {
+  try {
+    const credential = GoogleAuthProvider.credential(response.credential);
+    const result = await signInWithCredential(auth, credential);
+    const user = result.user;
+
+    const selectedRole = document.getElementById("signup").value;
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        name: user.displayName,
+        email: user.email,
+        role: selectedRole,
+        createdAt: new Date(),
+        status: "pending",
+      });
+      console.log("New user signed up with role:", selectedRole);
+      window.location.href = `../onboarding.html?role=${selectedRole}`;
+    } else {
+      alert("User already exists. Try signing in.");
+    }
+  } catch (error) {
+    console.error("Sign-up error:", error.code, error.message);
+  }
+};
+
+window.handleSigninResponse = async (response) => {
+  try {
+    const credential = GoogleAuthProvider.credential(response.credential);
+    const result = await signInWithCredential(auth, credential);
+    const user = result.user;
+
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      console.log("Signed in as:", userData.name, userData.role);
+
+      // Redirect based on role
+      if (userData.role === "staff") {
+        window.location.href = "../staff.html";
+      } else if (userData.role === "student") {
+        window.location.href = "../student.html";
+      } else {
+        window.location.href = "../user.html";
+      }
+    } else {
+      alert("No account found. Please sign up first.");
+    }
+  } catch (error) {
+    console.error("Sign-in error:", error.code, error.message);
+  }
+};
  
    // Initialize Google Sign-In
    window.onload = () => {
@@ -56,7 +112,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
  
      google.accounts.id.renderButton(
        document.getElementById("googlesignup"),
-       {
+       { callback: handleSignupResponse,
          theme: "filled_blue",
          size: "large",
          shape: "pill",
@@ -65,7 +121,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
  
      google.accounts.id.renderButton(
        document.getElementById("googlesignin"),
-       {
+       { callback: handleSigninResponse, 
          theme: "filled_blue",
          size: "large",
          shape: "pill",
