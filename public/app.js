@@ -40,7 +40,11 @@ window.handleCredentialResponse = async (response) => {
         console.log("User already exists:", userSnap.data());
       }
 
+      if (role === "admin") {
+      window.location.href = "../admin.html";
+    } else {
       window.location.href = "../user.html";
+    }
     } catch (error) {
       console.error("Sign-in error:", error.code, error.message);
     }
