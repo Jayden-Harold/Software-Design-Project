@@ -1,7 +1,7 @@
 
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  import { getAuth, GoogleAuthProvider, signInWithCredential } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,31 +16,40 @@
     appId: "1:140065144019:web:48e4963e4826a85aca2826"
   };
 
-  // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-auth.languageCode = 'en';
-const provider= new GoogleAuthProvider();
-const googlesignin= document.getElementById("googlesignin")
-googlesignin.addEventListener("click", function(){
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-     
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-    window.location.href="user.html"
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-   
-  });
-})
+// Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Handle credential from Google Identity
+    window.handleCredentialResponse = async (response) => {
+      try {
+        const credential = GoogleAuthProvider.credential(response.credential);
+        const result = await signInWithCredential(auth, credential);
+        console.log("Firebase user:", result.user);
+        window.location.href = "../user.html"; // ✅ redirect after login
+      } catch (error) {
+        console.error("Sign-in error:", error.code, error.message);
+      }
+    };
+
+    // Render the Google Sign-In button after DOM loads
+    window.onload = () => {
+      google.accounts.id.initialize({
+        client_id: "YOUR_GOOGLE_CLIENT_ID", // ✅ replace with your Google Client ID
+        callback: handleCredentialResponse,
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("g_id_signin"),
+        {
+          theme: "filled_blue",
+          size: "large",
+          shape: "pill",
+        }
+      );
+
+      google.accounts.id.prompt(); // Optional: shows One Tap prompt
+    };
 
 
 const modal_signin = document.querySelector(".modal-signin");
