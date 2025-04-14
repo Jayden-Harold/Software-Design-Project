@@ -59,7 +59,7 @@ window.onload = function () {
     );
 };
 
-function handleCredentialResponse(response) {
+/*function handleCredentialResponse(response) {
     const token = response.credential;
 
     fetch("https://green-smoke-0f073e403.6.azurestaticapps.net/api/auth/google", {
@@ -81,5 +81,5 @@ function handleCredentialResponse(response) {
             console.error("Auth error:", err);
             alert("Something went wrong during sign-in.");
         });
-}
+}*/
 
