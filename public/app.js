@@ -20,10 +20,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
  
 window.handleCredentialResponse = async (response) => {
    if (isRegistering){
-      handleSignUpResponse(response);
+      handleSignupResponse(response);
    }
    else{
-      handleSignInResponse(response);
+      handleSigninResponse(response);
    }
    };
 window.handleSignupResponse = async (response) => {
