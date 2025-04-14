@@ -4,7 +4,7 @@ window.handleCredentialResponse = async (response) => {
       const result = await signInWithCredential(auth, credential);
       const user = result.user;
 
-      const selectedRole = document.getElementById("roleSelect").value;
+      const selectedRole = document.getElementById("signup").value;
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
