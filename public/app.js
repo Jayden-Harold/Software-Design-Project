@@ -26,13 +26,14 @@ window.handleCredentialResponse = async (response) => {
       const selectedRole = document.getElementById("signup").value;
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
+      const status = "pending";
 
       if (!userSnap.exists()) {
         await setDoc(userRef, {
           name: user.displayName,
-          email: user.email,
           role: selectedRole,
-          createdAt: new Date()
+          createdAt: new Date(),
+          status: status
         });
         console.log("New user added with role:", selectedRole);
       } else {
