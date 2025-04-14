@@ -88,7 +88,7 @@ window.handleSigninResponse = async (response) => {
       console.log("Signed in as:", userData.name, userData.role);
 
       // Redirect based on role
-      if (userData.role === "Admin"}{
+      if (userData.role === "Admin"){
          window.location.href="../admin.html";
       } else {
         window.location.href = "../user.html";
