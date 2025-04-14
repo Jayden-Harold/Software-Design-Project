@@ -66,7 +66,7 @@ window.handleSigninResponse = async (response) => {
     if (userSnap.exists()) {
       const userData = userSnap.data();
       console.log("Signed in as:", userData.name, userData.role);
-
+    
       // Redirect based on role
       if (userData.role === "Admin"){
          window.location.href="../admin.html";
@@ -75,7 +75,7 @@ window.handleSigninResponse = async (response) => {
       }
      else if (userData.role === "Resident"){
         window.location.href = "../user.html";
-    } else {
+    }} else {
       alert("No account found. Please sign up first.");
     }
   } catch (error) {
