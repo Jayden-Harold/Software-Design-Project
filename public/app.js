@@ -35,7 +35,7 @@
     // Render the Google Sign-In button after DOM loads
     window.onload = () => {
       google.accounts.id.initialize({
-        client_id: "YOUR_GOOGLE_CLIENT_ID", // ✅ replace with your Google Client ID
+        client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com", // ✅ replace with your Google Client ID
         callback: handleCredentialResponse,
       });
 
