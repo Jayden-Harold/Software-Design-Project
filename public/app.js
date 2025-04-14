@@ -82,7 +82,7 @@ window.handleCredentialResponse = async (response) => {
 
     google.accounts.id.prompt(); 
 };
-
+};
 
 const modal_signin = document.querySelector(".modal-signin");
 const modal_signup = document.querySelector(".modal-signup");
