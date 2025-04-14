@@ -40,7 +40,7 @@
       });
 
       google.accounts.id.renderButton(
-        document.getElementById("g_id_signin"),
+        document.getElementById("googlesignin"),
         {
           theme: "filled_blue",
           size: "large",
