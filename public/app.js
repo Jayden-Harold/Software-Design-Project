@@ -31,7 +31,7 @@ window.handleCredentialResponse = async (response) => {
     if (!userSnap.exists()) {
       // New user
       if (isSignUp) {
-        const selectedRole = document.getElementById("roleSelect").value;
+        const selectedRole = document.getElementById("signup").value;
         role = selectedRole;
 
         await setDoc(userRef, {
@@ -63,6 +63,24 @@ window.handleCredentialResponse = async (response) => {
   } catch (error) {
     console.error("Sign-in error:", error.code, error.message);
   }
+
+    // Initialize Google Sign-In
+  window.onload = () => {
+    google.accounts.id.initialize({
+      client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googlesignup"),
+      {
+        theme: "filled_blue",
+        size: "large",
+        shape: "pill",
+      }
+    );
+
+    google.accounts.id.prompt(); 
 };
 
 
