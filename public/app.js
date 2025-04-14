@@ -48,6 +48,15 @@
         }
       );
 
+      google.accounts.id.renderButton(
+        document.getElementById("googlesignup"),
+        {
+          theme: "filled_blue",
+          size: "large",
+          shape: "pill",
+        }
+      );
+
       google.accounts.id.prompt(); // Optional: shows One Tap prompt
     };
 
