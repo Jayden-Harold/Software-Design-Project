@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
   import { getAuth, GoogleAuthProvider, signInWithCredential } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+let isSignUp = false;
   // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
@@ -18,65 +19,53 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
   const db = getFirestore(app);
 
 window.handleCredentialResponse = async (response) => {
-    try {
-      const credential = GoogleAuthProvider.credential(response.credential);
-      const result = await signInWithCredential(auth, credential);
-      const user = result.user;
+  try {
+    const credential = GoogleAuthProvider.credential(response.credential);
+    const result = await signInWithCredential(auth, credential);
+    const user = result.user;
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
 
-      const selectedRole = document.getElementById("signup").value;
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      const status = "pending";
+    let role;
 
-      if (!userSnap.exists()) {
+    if (!userSnap.exists()) {
+      // New user
+      if (isSignUp) {
+        const selectedRole = document.getElementById("roleSelect").value;
+        role = selectedRole;
+
         await setDoc(userRef, {
           name: user.displayName,
-          role: selectedRole,
-          createdAt: new Date(),
-          status: status
+          email: user.email,
+          role: role,
+          createdAt: new Date()
         });
-        console.log("New user added with role:", selectedRole);
-      } else {
-        console.log("User already exists:", userSnap.data());
-      }
 
-      if (role === "Admin") {
+        console.log("Signed up new user with role:", role);
+      } else {
+        console.error("User does not exist in Firestore and no role was selected");
+        alert("User not found. Please sign up first.");
+        return;
+      }
+    } else {
+      // Existing user
+      role = userSnap.data().role;
+      console.log("Signed in existing user with role:", role);
+    }
+
+    // Redirect
+    if (role === "admin") {
       window.location.href = "../admin.html";
     } else {
       window.location.href = "../user.html";
     }
-    } catch (error) {
-      console.error("Sign-in error:", error.code, error.message);
-    }
-  };
 
-  // Initialize Google Sign-In
-  window.onload = () => {
-    google.accounts.id.initialize({
-      client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com",
-      callback: handleCredentialResponse,
-    });
+  } catch (error) {
+    console.error("Sign-in error:", error.code, error.message);
+  })
+  google.accounts.id.prompt(); // Optional: shows One Tap
+};
 
-    google.accounts.id.renderButton(
-      document.getElementById("googlesignup"),
-      {
-        theme: "filled_blue",
-        size: "large",
-        shape: "pill",
-      }
-    );
-
-    google.accounts.id.renderButton(
-      document.getElementById("googlesignin"),
-      {
-        theme: "filled_blue",
-        size: "large",
-        shape: "pill",
-      }
-    );
-
-    google.accounts.id.prompt(); // Optional: shows One Tap
-  };
 
 const modal_signin = document.querySelector(".modal-signin");
 const modal_signup = document.querySelector(".modal-signup");
@@ -94,14 +83,17 @@ const close_signup = document.querySelector(".close-signup");
 // Modal triggers
 loginbtn.addEventListener("click", (e) => {
     e.preventDefault();
+    isSignUp = false;
     modal_signin.showModal();
 });
 registerbtn.addEventListener("click", (e) => {
     e.preventDefault();
+    isSignUp = true;
     modal_signup.showModal();
 });
 registerbtn2.addEventListener("click", (e) => {
     e.preventDefault();
+    isSignUp = true;
     modal_signup.showModal();
 });
 link2signup.addEventListener("click", (e) => {
