@@ -59,7 +59,7 @@ app.post("/api/auth/google", async (req, res) => {
     }
 
     const appToken = jwt.sign(
-      { userId: user.UserId, role: user.Role },
+      { name: user.Name, role: user.Role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
