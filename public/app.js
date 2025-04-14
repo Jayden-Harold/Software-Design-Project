@@ -11,39 +11,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
      messagingSenderId: "140065144019",
      appId: "1:140065144019:web:48e4963e4826a85aca2826"
    };
- 
+
+   let isRegistering = true;
    // Initialize Firebase
    const app = initializeApp(firebaseConfig);
    const auth = getAuth(app);
    const db = getFirestore(app);
  
 window.handleCredentialResponse = async (response) => {
-     try {
-       const credential = GoogleAuthProvider.credential(response.credential);
-       const result = await signInWithCredential(auth, credential);
-       const user = result.user;
- 
-       const selectedRole = document.getElementById("signup").value;
-       const userRef = doc(db, "users", user.uid);
-       const userSnap = await getDoc(userRef);
-       const status = "pending";
- 
-       if (!userSnap.exists()) {
-         await setDoc(userRef, {
-           name: user.displayName,
-           email: user.email,
-           role: selectedRole,
-           createdAt: new Date(),
-           status: status
-         });
-         console.log("New user added with role:", selectedRole);
-       } else {
-         console.log("User already exists:", userSnap.data());
-       }
-
-     } catch (error) {
-       console.error("Sign-in error:", error.code, error.message);
-     }
+   if (isRegistering){
+      handleSignUpResponse(response);
+   }
+   else{
+      handleSignInResponse(response);
+   }
    };
 window.handleSignupResponse = async (response) => {
   try {
@@ -109,7 +90,7 @@ window.handleSigninResponse = async (response) => {
  
      google.accounts.id.renderButton(
        document.getElementById("googlesignup"),
-       { callback: handleSignupResponse,
+       { 
          theme: "filled_blue",
          size: "large",
          shape: "pill",
@@ -118,7 +99,7 @@ window.handleSigninResponse = async (response) => {
  
      google.accounts.id.renderButton(
        document.getElementById("googlesignin"),
-       { callback: handleSigninResponse, 
+       { 
          theme: "filled_blue",
          size: "large",
          shape: "pill",
@@ -143,6 +124,7 @@ window.handleSigninResponse = async (response) => {
  
  // Modal triggers
  loginbtn.addEventListener("click", (e) => {
+     isRegistering = false;
      e.preventDefault();
      modal_signin.showModal();
  });
