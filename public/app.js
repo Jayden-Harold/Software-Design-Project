@@ -40,8 +40,7 @@ window.handleCredentialResponse = async (response) => {
        } else {
          console.log("User already exists:", userSnap.data());
        }
- 
-       window.location.href = "../user.html";
+
      } catch (error) {
        console.error("Sign-in error:", error.code, error.message);
      }
