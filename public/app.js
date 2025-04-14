@@ -70,9 +70,11 @@ window.handleSigninResponse = async (response) => {
       // Redirect based on role
       if (userData.role === "Admin"){
          window.location.href="../admin.html";
-      } else {
-        window.location.href = "../user.html";
+      } else if (userData.role === "Staff){
+        window.location.href = "../staff.html";
       }
+     else if (userData.role === "Resident"){
+        window.location.href = "../user.html";
     } else {
       alert("No account found. Please sign up first.");
     }
