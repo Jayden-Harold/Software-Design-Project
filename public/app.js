@@ -62,8 +62,7 @@ window.handleCredentialResponse = async (response) => {
 
   } catch (error) {
     console.error("Sign-in error:", error.code, error.message);
-  })
-  google.accounts.id.prompt(); // Optional: shows One Tap
+  }
 };
 
 
