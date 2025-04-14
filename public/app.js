@@ -70,7 +70,7 @@ window.handleSigninResponse = async (response) => {
       // Redirect based on role
       if (userData.role === "Admin"){
          window.location.href="../admin.html";
-      } else if (userData.role === "Staff){
+      } else if (userData.role === "Staff"){
         window.location.href = "../staff.html";
       }
      else if (userData.role === "Resident"){
