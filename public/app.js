@@ -40,6 +40,7 @@ signInWithPopup(auth, provider)
     const errorMessage = error.message;
    
   });
+})
 
 
 const modal_signin = document.querySelector(".modal-signin");
