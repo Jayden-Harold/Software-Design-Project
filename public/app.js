@@ -65,7 +65,7 @@ window.handleSignupResponse = async (response) => {
         status: "pending",
       });
       console.log("New user signed up with role:", selectedRole);
-      window.location.href = `../onboarding.html?role=${selectedRole}`;
+      window.location.href = "../user.html";
     } else {
       alert("User already exists. Try signing in.");
     }
@@ -88,10 +88,8 @@ window.handleSigninResponse = async (response) => {
       console.log("Signed in as:", userData.name, userData.role);
 
       // Redirect based on role
-      if (userData.role === "staff") {
-        window.location.href = "../staff.html";
-      } else if (userData.role === "student") {
-        window.location.href = "../student.html";
+      if (userData.role === "Admin"}{
+         window.location.href="../admin.html";
       } else {
         window.location.href = "../user.html";
       }
