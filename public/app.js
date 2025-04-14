@@ -72,12 +72,7 @@ function handleCredentialResponse(response) {
             console.log("Server response:", data);
             if (data.success) {
                 localStorage.setItem("jwtToken", data.token);
-                const role = data.user.Role.toLowerCase();
-                if (role !== "admin") {
                     window.location.href = "dashboard_user.html";
-                } else {
-                    alert("Admins cannot access the dashboard.");
-                }
             } else {
                 alert("Authentication failed.");
             }
