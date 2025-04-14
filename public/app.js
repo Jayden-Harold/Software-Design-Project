@@ -1,3 +1,47 @@
+
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAuth, googleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
+    authDomain: "greensmoke-ee894.firebaseapp.com",
+    projectId: "greensmoke-ee894",
+    storageBucket: "greensmoke-ee894.firebasestorage.app",
+    messagingSenderId: "140065144019",
+    appId: "1:140065144019:web:48e4963e4826a85aca2826"
+  };
+
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+auth.languageCode = 'en';
+const provider= new GoogleAuthProvider();
+const googlesignin= document.getElementById("googlesignin")
+googlesignin.addEventListener("click", function(){
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+     
+    // The signed-in user info.
+    const user = result.user;
+    console.log(user);
+    window.location.href="user.html"
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+   
+  });
+
+
 const modal_signin = document.querySelector(".modal-signin");
 const modal_signup = document.querySelector(".modal-signup");
 
@@ -43,7 +87,7 @@ close_signup.addEventListener("click", (e) => {
     modal_signup.close();
 });
 
-window.onload = function () {
+/*window.onload = function () {
     google.accounts.id.initialize({
         client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com",
         callback: handleCredentialResponse
@@ -57,7 +101,7 @@ window.onload = function () {
         document.getElementById("googlesignin"),
         { theme: "outline", size: "large", text: "signin_with", shape: "pill", width: 250 }
     );
-};
+};*/
 
 /*function handleCredentialResponse(response) {
     const token = response.credential;
