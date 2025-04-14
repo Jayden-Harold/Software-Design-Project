@@ -1,65 +1,49 @@
+window.handleCredentialResponse = async (response) => {
+    try {
+      const credential = GoogleAuthProvider.credential(response.credential);
+      const result = await signInWithCredential(auth, credential);
+      const user = result.user;
 
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithCredential } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+      const selectedRole = document.getElementById("roleSelect").value;
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
 
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          name: user.displayName,
+          email: user.email,
+          role: selectedRole,
+          createdAt: new Date()
+        });
+        console.log("New user added with role:", selectedRole);
+      } else {
+        console.log("User already exists:", userSnap.data());
+      }
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
-    authDomain: "greensmoke-ee894.firebaseapp.com",
-    projectId: "greensmoke-ee894",
-    storageBucket: "greensmoke-ee894.firebasestorage.app",
-    messagingSenderId: "140065144019",
-    appId: "1:140065144019:web:48e4963e4826a85aca2826"
+      window.location.href = "../user.html";
+    } catch (error) {
+      console.error("Sign-in error:", error.code, error.message);
+    }
   };
 
-// Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  // Initialize Google Sign-In
+  window.onload = () => {
+    google.accounts.id.initialize({
+      client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+    });
 
-    // Handle credential from Google Identity
-    window.handleCredentialResponse = async (response) => {
-      try {
-        const credential = GoogleAuthProvider.credential(response.credential);
-        const result = await signInWithCredential(auth, credential);
-        console.log("Firebase user:", result.user);
-        window.location.href = "../user.html"; // ✅ redirect after login
-      } catch (error) {
-        console.error("Sign-in error:", error.code, error.message);
+    google.accounts.id.renderButton(
+      document.getElementById("googlesignup"),
+      {
+        theme: "filled_blue",
+        size: "large",
+        shape: "pill",
       }
-    };
+    );
 
-    // Render the Google Sign-In button after DOM loads
-    window.onload = () => {
-      google.accounts.id.initialize({
-        client_id: "665358967021-jplj68b577hu07gir38bld3u849hood6.apps.googleusercontent.com", // ✅ replace with your Google Client ID
-        callback: handleCredentialResponse,
-      });
-
-      google.accounts.id.renderButton(
-        document.getElementById("googlesignin"),
-        {
-          theme: "filled_blue",
-          size: "large",
-          shape: "pill",
-        }
-      );
-
-      google.accounts.id.renderButton(
-        document.getElementById("googlesignup"),
-        {
-          theme: "filled_blue",
-          size: "large",
-          shape: "pill",
-        }
-      );
-
-      google.accounts.id.prompt(); // Optional: shows One Tap prompt
-    };
-
+    google.accounts.id.prompt(); // Optional: shows One Tap
+  };
 
 const modal_signin = document.querySelector(".modal-signin");
 const modal_signup = document.querySelector(".modal-signup");
