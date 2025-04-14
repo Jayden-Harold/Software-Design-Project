@@ -33,7 +33,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
            name: user.displayName,
            email: user.email,
            role: selectedRole,
-           createdAt: new Date()
            createdAt: new Date(),
            status: status
          });
