@@ -72,7 +72,7 @@ function handleCredentialResponse(response) {
             console.log("Server response:", data);
             if (data.success) {
                 localStorage.setItem("jwtToken", data.token);
-                    window.location.href = "dashboard_user.html";
+                    window.location.href = "user.html";
             } else {
                 alert("Authentication failed.");
             }
