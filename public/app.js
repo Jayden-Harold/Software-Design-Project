@@ -58,15 +58,28 @@ window.handleSignupResponse = async (response) => {
     console.error("Sign-up error:", error.code, error.message);
   }
 };
-function UpdateUserProfile(user){
-  const userName= user.displayName;
-  const userProfilePicture=user.photoURL
+async function updateUserProfile(user) {
+    try {
+        // Get user document from Firestore
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
 
-  document.getElementById("userName").textContent = name;
-  document.getElementById("userProfilePicture").src = profilePicture;
+        if (userSnap.exists()) {
+            const userData = userSnap.data();
+            
+            // Update the profile section with all user data
+            document.getElementById("userName").textContent = user.displayName || userData.name;
+            document.getElementById("userEmail").textContent = user.email;
+            document.getElementById("userProfilePicture").src = user.photoURL || "./images/default-profile.png";
+            document.getElementById("userRole").textContent = userData.role || "No role assigned";
+            document.getElementById("userStatus").textContent = userData.status || "Unknown status";
+        } else {
+            console.log("No additional user data found in Firestore");
+        }
+    } catch (error) {
+        console.error("Error updating user profile:", error);
+    }
 }
-UpdateUserProfile();
-
 window.handleSigninResponse = async (response) => {
   try {
     const credential = GoogleAuthProvider.credential(response.credential);
@@ -79,6 +92,8 @@ window.handleSigninResponse = async (response) => {
     if (userSnap.exists()) {
       const userData = userSnap.data();
       console.log("Signed in as:", userData.name, userData.role);
+
+      await updateUserProfile(user);
     
       // Redirect based on role
       if (userData.role === "Admin"){
