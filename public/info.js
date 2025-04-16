@@ -12,8 +12,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
   };
   
     const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const user = auth.currentUser;
 
    async function updateUserProfile(user) {
     try {
@@ -45,4 +46,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     }
 }
 
-updateUserProfile();
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        updateUserProfile(user);
+        const uid = user.uid;
+        return uid;
+    }
+    else {
+        alert("Create an Account");
+        window.location.href = "../index.html";
+    }
+});
+
