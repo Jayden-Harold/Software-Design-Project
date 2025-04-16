@@ -2,25 +2,34 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-async function updateUserProfile(user) {
+   async function updateUserProfile(user) {
     try {
-        // Get user document from Firestore
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
             const userData = userSnap.data();
-            
-            // Update the profile section with all user data
-            document.getElementById("username").textContent = user.displayName || userData.name;
-            document.getElementById("userDP").src = user.photoURL || "./images/default-profile.png";
-            document.getElementById("userRole").textContent = userData.role || "No role assigned";
-            document.getElementById("userStatus").textContent = userData.status || "Unknown status";
+            const status = userData.status;
+
+            // Update name in UI
+            document.getElementById("username").textContent = "Hi, " + user.displayName || "Hi, " + userData.name;
+
+            // Only show status if it's "Pending Approval"
+            if (status === "pending") {
+                document.getElementById("userStatus").textContent = status;
+            } else {
+                document.getElementById("userStatus").textContent = ""; // clear or hide
+            }
+
+            return status || null;
         } else {
-            console.log("No additional user data found in Firestore");
+            console.log("No user data found in Firestore");
+            return null;
         }
     } catch (error) {
         console.error("Error updating user profile:", error);
+        return null;
     }
 }
+
 updateUserProfile();
