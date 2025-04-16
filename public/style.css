@@ -1,5 +1,6 @@
 @import url('content.css');
 @import url('modal.css');
+@import url('booking.css');
 
 :root{
     --poolblue: #00A0A6;
@@ -196,4 +197,11 @@ footer h2{
     border-radius: 10px;
     box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+}
+
+
+.sticky-footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

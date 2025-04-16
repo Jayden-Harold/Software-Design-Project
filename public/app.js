@@ -128,6 +128,8 @@ window.handleSigninResponse = async (response) => {
  
  const close_signin = document.querySelector(".close-signin");
  const close_signup = document.querySelector(".close-signup");
+
+ const facilities_btn = document.querySelector("#btn-3")
  
  // Modal triggers
  loginbtn.addEventListener("click", (e) => {
@@ -160,6 +162,10 @@ window.handleSigninResponse = async (response) => {
  close_signup.addEventListener("click", (e) => {
      e.preventDefault();
      modal_signup.close();
+ });
+ facilities_btn.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location.href="facilities.html";
  });
  
  /*window.onload = function () {

@@ -30,7 +30,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
             // Only show status if it's "Pending Approval"
             if (status === "pending") {
-                document.getElementById("userStatus").textContent = status;
+                document.getElementById("userStatus").textContent = "Account Pending Approval";
             } else {
                 document.getElementById("userStatus").textContent = ""; // clear or hide
             }
@@ -54,7 +54,7 @@ onAuthStateChanged(auth, (user) => {
     }
     else {
         alert("Create an Account");
-        window.location.href = "../index.html";
+        window.location.href = "index.html";
     }
 });
 
