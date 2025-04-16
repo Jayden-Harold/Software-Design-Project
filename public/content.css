@@ -182,6 +182,7 @@
     padding: .5rem;
 }
 
+
 #btn-3{
     margin-right: auto;
     font-size: 1.2rem;
@@ -215,6 +216,16 @@
     padding: 6px;
     margin-top: 0;
 }
+
+.facilities-header h2{
+    font-size: 2rem;
+    text-align: center;
+    justify-items: center;
+    color: var(--poolblue);
+    padding: 6px;
+    margin-top: 0;
+}
+
 
 .facilites-tab{
     padding: 0;
