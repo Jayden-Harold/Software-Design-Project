@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-   import { getAuth, GoogleAuthProvider, signInWithCredential } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+   import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
  
    // Firebase config
@@ -58,6 +58,14 @@ window.handleSignupResponse = async (response) => {
     console.error("Sign-up error:", error.code, error.message);
   }
 };
+function UpdateUserProfile(user){
+  const userName= user.displayName;
+  const userProfilePicture=user.photoURL
+
+  document.getElementById("userName").textContent = name;
+  document.getElementById("userProfilePicture").src = profilePicture;
+}
+UpdateUserProfile();
 
 window.handleSigninResponse = async (response) => {
   try {
