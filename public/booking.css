@@ -1,0 +1,120 @@
+#book-btn{
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--tennisgreen);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#book-btn:hover{
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: var(--darkgray);
+    border: solid 1px var(--darkgray);
+    transition: all 0.2s ease-out;
+}
+
+.booking{
+    padding-left: 1.5rem;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    max-width: 250px;
+  }
+
+  dialog.modal-booking{
+    position: relative;
+    z-index: 10;
+    left: 0;
+    top:0;
+    background-color: var(--tennisgreen);
+    margin: 10% auto;
+    width: 40%;
+    max-height: 70vh; 
+    border: none;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.modal-booking{
+    justify-items: center;
+}
+
+.modal-booking h2{
+    font-size: 1.5rem;
+}
+
+.booking-content{
+    display: flex;
+    width: 80%;
+    font-size: 1.2rem;
+}
+
+.categories{
+    padding: 1rem;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.info{
+    padding: 1rem;
+    width : 100%;
+    font-weight: bold;
+    text-align: right;
+}
+
+.confirm-text{
+    font-size: .9rem;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.btn-container1{
+    display: flex;
+    justify-items: center;
+}
+
+#confirm-btn{
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--poolblue);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#confirm-btn:hover{
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: var(--poolblue);
+    border: solid 1px var(--poolblue);
+    transition: all 0.2s ease-out;
+}
+
+.close-booking{
+    position:absolute;
+    top:5%;
+    right:5%;
+    font-size: 1.2rem;
+    z-index: 1;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+}

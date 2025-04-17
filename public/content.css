@@ -222,14 +222,14 @@
     text-align: center;
     justify-items: center;
     color: var(--poolblue);
-    padding: 6px;
-    margin-top: 6px;
+    padding: .2rem;
+    margin-top: 10px;
 }
 
 .facilities-header p{
     text-align: center;
     justify-items: center;
-    padding: 2rem;
+    padding: .2rem;
 }
 
 .facilites-tab{

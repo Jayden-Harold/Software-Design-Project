@@ -15,14 +15,15 @@
     <title>Green Smoke</title>
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="booking.js" defer type="module"></script>
   </head>
   <body>
     <header class="nav-container">
     <nav class="nav-bar">
       <h1 id="Logo">GREEN SMOKE</h1>
         <ul class="nav-menu">
-          <li><a href="admin.html" class="nav-links">BOOK</a></li>
-          <li><a href="user.html" class="nav-links">FACILITIES</a></li>
+          <li><a href="booking.html" class="nav-links">BOOK</a></li>
+          <li><a href="facilities.html" class="nav-links">FACILITIES</a></li>
           <li><a href="#" class="nav-links">EVENTS</a></li>        
           <li><a href="#" class="nav-links nav-links-btn" id="login-btn">LOGIN</a></li>
           <li><a href="#" class="nav-links nav-links-btn" id="register-btn">REGISTER</a></li>
@@ -35,49 +36,57 @@
 
     
   
-    <section>
+    <section class="booking">
       <h1>Make a booking</h1>
-      <label for="Facility">Facility</label>
-      <select name="Facility"></select>
-      <br>
-      <label for="Date">Date</label>
-      <select name="Date"></select>
-      <br>
-      <label for="Time">Time</label>
-      <select name="Time"></select>
-      <br>
+      <section class="booking-form">
       <label for="Sport">Sport</label>
-      <select name="Sport"></select>
-      <br>
-      <button>BOOK</button>
-      <br>
+      <select name="Sport">
+        <option value="" disabled selected>Sport...</option>
+        <option value="Padel" >Padel</option>
+        <option value="Soccer" >Soccer</option>
+        <option value="Netball" >Netball</option>
+        <option value="Cricket" >Cricket</option>
+        <option value="Basketball" >Basketball</option>
+        <option value="Hockey" >Hockey</option>
+      </select>
+      <label for="Facility">Facility</label>
+      <select name="Facility">
+        <option value="" disabled selected>Facility...</option>
+      </select>
+      <label for="Date">Date</label>
+      <input type="date" id="booking-date" name="booking-date">
+      <label for="Time">Time</label>
+      <select name="Time">
+        <option value="" disabled selected>Time...</option>
+      </select>
+    </section>
+      <button id="book-btn">BOOK</button>
     </section>
 
-    <dialog>
-      <button class="close-signup">
+    <dialog class="modal-booking">
+      <button class="close-booking">
         <i class="fa-solid fa-xmark"></i>
       </button>
       <h1>Confirm your booking</h1>
-      <br>
-      <section>
-        <p>Facililty</p>
-        <p>Date</p>
-        <p>Time</p>
-        <p>Duration</p>
-        <p>Admit</p>
-      </section>
-      <section>
-        <p>Padel Court 3</p>
-        <p>15 April 2025</p>
-        <p>10:00 AM</p>
-        <p>60</p>
-        <p>4</p>
+      <section class="booking-content">
+        <section class="categories">
+          <p>Facililty</p>
+          <p>Date</p>
+          <p>Time</p>
+          <p>Duration</p>
+          <p>Admit</p>
+        </section>
+        <section class="info">
+          <p>Padel Court 3</p>
+          <p>15 April 2025</p>
+          <p>10:00 AM</p>
+          <p>60</p>
+          <p>4</p>
+        </section>
       </section>
       <input type="checkbox" id="confirm" name="book" value="booked">
-      <label for="confirm">By clicking here, you're agreeing to use the facility responsibly and follow the rules.</label>
-      <br>
-      <button>Confirm</button>
-
+      <label for="confirm" class="confirm-text">By clicking here, you're agreeing to use the facility responsibly and follow the rules.</label>
+      <section class="btn-container1"><button id="confirm-btn">CONFIRM BOOKING</button></section>
     </dialog>
 
 </body>
