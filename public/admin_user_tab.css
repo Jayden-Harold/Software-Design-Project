@@ -9,14 +9,14 @@
 }
 
 
-body {
+html, body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: "Raleway", sans-serif;
     width: 100%;
     overflow-x: hidden; /* Prevent horizontal scrolling */
-    background-color: white;
+    background-color: var(--lightgray);
 }
 
 .nav-container{
@@ -170,37 +170,70 @@ body {
     padding-left: 1rem;
 }
 
-.Status{
+.Pending{
     padding-left: 1rem;
 }
 
-.Status h2{
-    justify-self: start;
-    background-color: var(--gray);
-    text-align: center;
+.Pending h2{
+    color: var(--brightred)
+}
+
+.Accepted{
+    padding-left: 1rem;
+}
+
+table{
+    width: 100%;
+    padding: 1.6rem;
+}
+
+.table-headings{
+    color: var(--tennisgreen);
+    background-color: var(--darkgray);
+}
+
+#btn-approve{
+    font-family: "Raleway", sans-serif;
+    background-color: var(--tennisgreen);
+    padding: 8px 20px;
+    border: none;
     border-radius: 8px;
-    width: 20%;
-    font-size: 1.2rem;
-}
-
-.row-1{
-    display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 2rem;
-}
-
-.tabs-img{
-    width: 20%;
     cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
 }
+
+#btn-approve:hover{
+    background-color: var(--darkgray);
+    color: var(--tennisgreen);
+
+}
+
+#btn-deny{
+    font-family: "Raleway", sans-serif;
+    background-color: var(--brightred);
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#btn-deny:hover{
+    background-color: white;
+    color: var(--brightred);
+}
+
 
 footer{
     display: flex;
     justify-content: space-around;
     background-color: var(--gray);
     width: 100%;
-    position: absolute;
-    bottom: 0;
 }
 
 footer p{

@@ -20,6 +20,7 @@ html,body {
     width: 100%;
     overflow-x: hidden; /* Prevent horizontal scrolling */
     background-color: var(--lightgray);
+    position: relative;
 }
 
 .nav-container{
@@ -173,6 +174,8 @@ footer{
     display: flex;
     justify-content: space-around;
     background-color: var(--gray);
+    position: sticky;
+    bottom: 0;
 }
 
 footer p{
@@ -204,4 +207,14 @@ footer h2{
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+.wrapper{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container-fac{
+    flex:1;
 }
