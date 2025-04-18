@@ -118,3 +118,26 @@
     border: none;
     background-color: transparent;
 }
+
+#book-btn2{
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--tennisgreen);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#book-btn2:hover{
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: var(--tennisgreen);
+    border: solid 1px var(--tennisgreen);
+    transition: all 0.2s ease-out;
+}

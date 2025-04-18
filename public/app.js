@@ -130,6 +130,7 @@ window.handleSigninResponse = async (response) => {
  const close_signup = document.querySelector(".close-signup");
 
  const facilities_btn = document.querySelector("#btn-3")
+ const fac_book_btn = document.querySelector("#book-btn2");
  
  // Modal triggers
  loginbtn.addEventListener("click", (e) => {
@@ -166,6 +167,11 @@ window.handleSigninResponse = async (response) => {
  facilities_btn.addEventListener("click", (e) => {
   e.preventDefault();
   window.location.href="facilities.html";
+ });
+
+ fac_book_btn.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location.href="booking.html";
  });
  
  /*window.onload = function () {
