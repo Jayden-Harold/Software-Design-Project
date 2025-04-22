@@ -1,6 +1,9 @@
-import { handleSigninResponse } from "../auth/handleSignin";
+/*import { handleSigninResponse } from "../auth/handleSignin";
 import { signInWithCredential } from "firebase/auth";
-import { getDoc } from "firebase/firestore";
+import { getDoc } from "firebase/firestore"; */
+const { handleSigninResponse } = require("../auth/handleSignin");
+const { signInWithCredential } = require("firebase/auth");
+const { getDoc, setDoc } = require("firebase/firestore");
 
 //all necessary mocks needed:
 jest.mock("firebase/auth", () => ({

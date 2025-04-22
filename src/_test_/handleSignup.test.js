@@ -1,6 +1,9 @@
-import { handleSignupResponse } from "../auth/handleSignup";
+/*import { handleSignupResponse } from "../auth/handleSignup";
 import { signInWithCredential } from "firebase/auth";
-import { getDoc,setDoc } from "firebase/firestore";
+import { getDoc,setDoc } from "firebase/firestore"; */
+const { handleSignupResponse } = require("../auth/handleSignup");
+const { signInWithCredential } = require("firebase/auth");
+const { getDoc, setDoc } = require("firebase/firestore");
 
 global.alert = jest.fn(); // mock global alert
 
