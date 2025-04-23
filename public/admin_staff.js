@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-   import { getFirestore, collection, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+   import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
@@ -50,6 +50,7 @@ async function DisplayStaffPending() {
             const denyBtn = document.createElement("button");
             denyBtn.textContent = "Deny";
             denyBtn.className = "btn-deny";
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, userData, row));
 
             actionCell.appendChild(approveBtn);
             actionCell.appendChild(denyBtn);
@@ -65,6 +66,21 @@ async function DisplayStaffPending() {
         console.error("Error fetching pending staff:", error);
     }
 }
+
+async function denyRequest(docId, rowElement) {
+    const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
+    if (!confirmation) return;
+  
+    try {
+      const resDocRef = doc(db, "users", docId);
+      await deleteDoc(resDocRef);
+      alert("Request denied and record deleted successfully.");
+      rowElement.remove();
+    } catch (error) {
+      console.error("Error denying request:", error);
+      alert("An error occurred while denying the request.");
+    }
+  }
 
 async function approveStaff(docId, staffData, rowElement) {
     try {
@@ -88,13 +104,23 @@ async function approveStaff(docId, staffData, rowElement) {
     const tr = document.createElement("tr");
     const nameTd = document.createElement("td");
     const dateTd = document.createElement("td");
-  
+
     nameTd.textContent = staffData.name || "No Name";
     const createdAt = staffData.createdAt?.toDate ? staffData.createdAt.toDate() : new Date();
     dateTd.textContent = createdAt.toLocaleString();
+
+    const actionCell1 = document.createElement("td");
+
+    const denyBtn = document.createElement("button");
+    denyBtn.textContent = "Remove";
+    denyBtn.className = "btn-deny";
+    denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
+
+    actionCell1.appendChild(denyBtn);
   
     tr.appendChild(nameTd);
     tr.appendChild(dateTd);
+    tr.appendChild(actionCell1);
   
     approvedTableBody.appendChild(tr);
   }
@@ -114,12 +140,23 @@ async function approveStaff(docId, staffData, rowElement) {
             const nameTd = document.createElement("td");
             const dateTd = document.createElement("td");
 
+            const actionCell2 = document.createElement("td");
+
+            const denyBtn = document.createElement("button");
+            denyBtn.textContent = "Remove";
+            denyBtn.className = "btn-deny";
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
+
+            actionCell2.appendChild(denyBtn);
+          
+
             nameTd.textContent = staffData.name || "No Name";
             const createdAt = staffData.createdAt?.toDate ? staffData.createdAt.toDate() : new Date();
             dateTd.textContent = createdAt.toLocaleString();
 
             tr.appendChild(nameTd);
             tr.appendChild(dateTd);
+            tr.appendChild(actionCell2);
 
             approvedTableBody.appendChild(tr);
         });

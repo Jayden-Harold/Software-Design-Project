@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-   import { getFirestore, collection, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+   import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
@@ -50,6 +50,7 @@ async function DisplayResPending() {
             const denyBtn = document.createElement("button");
             denyBtn.textContent = "Deny";
             denyBtn.className = "btn-deny";
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, row) );
 
             actionCell.appendChild(approveBtn);
             actionCell.appendChild(denyBtn);
@@ -82,6 +83,20 @@ async function approveResident(docId, resData, rowElement) {
     }
 }
 
+async function denyRequest(docId, rowElement) {
+    const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
+    if (!confirmation) return;
+  
+    try {
+      const resDocRef = doc(db, "users", docId);
+      await deleteDoc(resDocRef);
+      alert("Request denied and record deleted successfully.");
+      rowElement.remove();
+    } catch (error) {
+      console.error("Error denying request:", error);
+      alert("An error occurred while denying the request.");
+    }
+  }
   
   function moveResToApproved(resData) {
 
