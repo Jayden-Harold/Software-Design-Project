@@ -15,15 +15,14 @@
     <title>Green Smoke</title>
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
-
+    <script src="admin_staff.js" defer type="module"></script>
   </head>
     <header class="nav-container">
     <nav class="nav-bar">
       <h1 id="Logo">GREEN SMOKE</h1>
         <ul class="nav-menu">
-          <li><a href="#" class="nav-links">BOOK</a></li>
-          <li><a href="#" class="nav-links">FACILITIES</a></li>
+          <li><a href="booking.html" class="nav-links">BOOK</a></li>
+          <li><a href="facilities.html" class="nav-links">FACILITIES</a></li>
           <li><a href="#" class="nav-links">EVENTS</a></li>      
           <li><a href="#" class="nav-links">USER</a></li>      
           
@@ -41,36 +40,30 @@
 
 <section class="Pending">
   <h2>Pending Requests</h2>
-    <table>
+    <table id="userTable">
+        <thead>
         <tr class="table-headings">
             <th>Name</th>
             <th>Joined on</th>
             <th></th>
         </tr>
-        <tr>
-            <td>Joe Biden</td>
-            <td>11 April 2025, 11:05</td>
-            <td>
-              <button id="btn-approve">Approve</button>
-              <button id="btn-deny">Deny</button>
-            </td>
-        </tr>
+        </thead>
+        <tbody></tbody>
     </table>
 
   </section>
 
     <section class="Accepted">
       <h2>Staff</h2>
-      <table>
-          <tr class="table-headings">
-              <th>Name</th>
-              <th>Joined on</th>
-          </tr>
-          <tr>
-              <td>Example</td>
-              <td>12 April 2025, 22:10</td>
-          </tr>
-      </table>
+      <table id="approvedTable">
+        <thead>
+        <tr class="table-headings">
+            <th>Name</th>
+            <th>Joined on</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
   </section>
 
   <footer>

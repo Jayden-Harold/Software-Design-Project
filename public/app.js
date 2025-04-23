@@ -39,7 +39,6 @@ window.handleSignupResponse = async (response) => {
     if (!userSnap.exists()) {
       await setDoc(userRef, {
         name: user.displayName,
-        email: user.email,
         role: selectedRole,
         createdAt: new Date(),
         status: "pending",
