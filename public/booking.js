@@ -42,3 +42,23 @@ for (let hour = 8; hour < 20; hour++) {
   option.textContent = `${start}–${end}`;
   select.appendChild(option);
 }
+
+async function getCapacityBySport(sport) {
+  const sportsRef = collection(db, "facilities"); // Replace "sports" with your collection name
+  const q = query(sportsRef, where("fname", "==", fname)); // Query where "sport" field matches
+
+  try {
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const capacity = querySnapshot.docs[0].data().capacity; // Get capacity from the first match
+      console.log(`Capacity for ${sport}:`, capacity);
+      return capacity;
+    } else {
+      console.log("No matching sport found!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching capacity:", error);
+    return null;
+  }
+}
