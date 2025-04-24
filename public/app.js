@@ -130,6 +130,15 @@ window.handleSigninResponse = async (response) => {
 
  const facilities_btn = document.querySelector("#btn-3")
  const fac_book_btn = document.querySelector("#book-btn2");
+
+ const menu = document.querySelector("#mobile-menu");
+const menuLinks = document.querySelector(".nav-menu");
+
+// Toggle Mobile Menu
+menu.addEventListener("click", () => {
+    menu.classList.toggle("is-active");
+    menuLinks.classList.toggle("active");
+});
  
  // Modal triggers
  loginbtn.addEventListener("click", (e) => {

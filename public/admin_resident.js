@@ -16,6 +16,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
+    const menu = document.querySelector("#mobile-menu");
+    const menuLinks = document.querySelector(".nav-menu");
+    
+    // Toggle Mobile Menu
+    menu.addEventListener("click", () => {
+        menu.classList.toggle("is-active");
+        menuLinks.classList.toggle("active");
+    });
+
 const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
 const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
 
