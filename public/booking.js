@@ -17,6 +17,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
+
+    const selectedFac = document.getElementById("facility").value;
+    const selectedTime = document.getElementById("timeslot").value;
+    const selectedDate = document.getElementById("booking-date").value;
+
 document.getElementById("book-btn").addEventListener("click", async function () {
   const selectedFac = document.getElementById("facility").value;
   const selectedTime = document.getElementById("timeslot").value;
@@ -82,6 +87,9 @@ document.querySelector("#confirm-btn").addEventListener("click", function (){
     alert("Please agree to the terms and conditions before booking.");
     return; // stop the rest of the booking logic
   }
+  else{
+    checkAndCreateBooking(user, selectedFac, selectedTime, selectedDate);
+  }
 })
  
 const sportSelect = document.getElementById("sport");
@@ -114,8 +122,12 @@ sportSelect.addEventListener("change", async function () {
     facilitySelect.innerHTML = '<option value="">Error loading facilities</option>';
   }
 });
-async function checkAndCreateBooking(userID, fname, timeslot, date) {
+
+async function checkAndCreateBooking(user, fname, timeslot, date) {
   const bookingsRef = collection(db, 'bookings');
+
+  const userID = user.uid;
+  const userName = user.name;
 
   // Check if user already has a booking at that timeslot on that date
   const userQuery = query(
@@ -148,6 +160,7 @@ async function checkAndCreateBooking(userID, fname, timeslot, date) {
   // No conflicts, add new booking with default status
   const newBookingRef = await addDoc(bookingsRef, {
     userID,
+    userName,
     fname,
     timeslot,
     date,
