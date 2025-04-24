@@ -17,9 +17,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
-document.getElementById("book-btn").addEventListener("click", function () {
+document.getElementById("book-btn").addEventListener("click", async function () {
   const selectedFac = document.getElementById("facility").value;
-  let capacity = getCapacityBySport(selectedFac);
   const selectedTime = document.getElementById("timeslot").value;
   const selectedDate = document.getElementById("booking-date").value;
 
@@ -28,10 +27,12 @@ document.getElementById("book-btn").addEventListener("click", function () {
   const time = document.getElementById("selected-time");
   const admit = document.getElementById("admit");
 
+  const capacity = await getCapacityBySport(selectedFac); // WAIT for async result
+
   facility.textContent = selectedFac;
   date.textContent = selectedDate;
   time.textContent = selectedTime;
-  admit.textContent = capacity.toString();
+  admit.textContent = capacity ? capacity.toString() : "N/A";
 
   // Optionally open the dialog
   document.querySelector(".modal-booking").showModal();
