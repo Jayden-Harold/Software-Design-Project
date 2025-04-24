@@ -41,7 +41,7 @@
       <h1>Make a booking</h1>
       <section class="booking-form">
       <label for="Sport">Sport</label>
-      <select name="Sport">
+      <select name="Sport" id="sport">
         <option value="" disabled selected>Sport...</option>
         <option value="Padel" >Padel</option>
         <option value="Soccer" >Soccer</option>
@@ -51,7 +51,7 @@
         <option value="Hockey" >Hockey</option>
       </select>
       <label for="Facility">Facility</label>
-      <select name="Facility">
+      <select name="Facility" id="facility">
         <option value="" disabled selected>Facility...</option>
       </select>
       <label for="Date">Date</label>
@@ -78,11 +78,11 @@
           <p>Admit</p>
         </section>
         <section class="info">
-          <p>Padel Court 3</p>
-          <p>15 April 2025</p>
-          <p>10:00 AM</p>
+          <p id="selected-fac"></p>
+          <p id="selected-date"></p>
+          <p id="selected-time"></p>
           <p>60</p>
-          <p>4</p>
+          <p></p>
         </section>
       </section>
       <input type="checkbox" id="confirm" name="book" value="booked">

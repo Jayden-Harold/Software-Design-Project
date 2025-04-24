@@ -62,3 +62,16 @@ async function getCapacityBySport(sport) {
     return null;
   }
 }
+
+const selectedFac = document.getElementById("facility").value;
+const selectedTime = document.getElementById("timeslot").value;
+const selectedDate = document.getElementById("booking-date").value;
+
+const facility = document.getElementById("selected-fac");
+const date = document.getElementById("selected-date");
+const time = document.getElementById("selected-time");
+
+facility.textContent = selectedFac;
+date.textContent = selectedDate;
+time.textContent = selectedTime;
+ 
