@@ -19,7 +19,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
 document.getElementById("book-btn").addEventListener("click", function () {
   const selectedFac = document.getElementById("facility").value;
-  const capacity = getCapacityBySport(selectedFac);
+  let capacity = getCapacityBySport(selectedFac);
   const selectedTime = document.getElementById("timeslot").value;
   const selectedDate = document.getElementById("booking-date").value;
 
