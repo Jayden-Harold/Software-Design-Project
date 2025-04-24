@@ -31,7 +31,7 @@ document.getElementById("book-btn").addEventListener("click", function () {
   facility.textContent = selectedFac;
   date.textContent = selectedDate;
   time.textContent = selectedTime;
-  admit.textContent = capacity;
+  admit.textContent = capacity.toString();
 
   // Optionally open the dialog
   document.querySelector(".modal-booking").showModal();
