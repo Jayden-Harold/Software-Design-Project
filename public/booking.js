@@ -114,3 +114,46 @@ sportSelect.addEventListener("change", async function () {
     facilitySelect.innerHTML = '<option value="">Error loading facilities</option>';
   }
 });
+async function checkAndCreateBooking(userID, fname, timeslot, date) {
+  const bookingsRef = collection(db, 'bookings');
+
+  // Check if user already has a booking at that timeslot on that date
+  const userQuery = query(
+    bookingsRef,
+    where("userID", "==", userID),
+    where("timeslot", "==", timeslot),
+    where("date", "==", date)
+  );
+  const userSnap = await getDocs(userQuery);
+  const userConflict = !userSnap.empty;
+
+  // Check if facility is already booked at that timeslot and date
+  const facilityQuery = query(
+    bookingsRef,
+    where("fname", "==", fname),
+    where("timeslot", "==", timeslot),
+    where("date", "==", date)
+  );
+  const facilitySnap = await getDocs(facilityQuery);
+  const facilityConflict = !facilitySnap.empty;
+
+  if (userConflict) {
+    return { success: false, message: "User already has a booking at this timeslot." };
+  }
+
+  if (facilityConflict) {
+    return { success: false, message: "Facility is already booked at this timeslot." };
+  }
+
+  // No conflicts, add new booking with default status
+  const newBookingRef = await addDoc(bookingsRef, {
+    userID,
+    fname,
+    timeslot,
+    date,
+    status: "pending",
+    createdAt: new Date().toISOString()
+  });
+
+  return { success: true, message: "Booking successfully created.", bookingID: newBookingRef.id };
+}
