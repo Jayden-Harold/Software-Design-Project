@@ -82,15 +82,32 @@ async function getCapacityBySport(fname) {
 
 const checkbox = document.getElementById("confirm");
 
-document.querySelector("#confirm-btn").addEventListener("click", function (){
+document.querySelector("#confirm-btn").addEventListener("click", async function () {
   if (!checkbox.checked) {
     alert("Please agree to the terms and conditions before booking.");
-    return; // stop the rest of the booking logic
+    return;
   }
-  else{
-    checkAndCreateBooking(user, selectedFac, selectedTime, selectedDate);
+
+  const user = auth.currentUser; // NOW it's likely to be set if the user is logged in
+
+  if (!user) {
+    alert("Please sign in before booking.");
+    return;
   }
-})
+
+  const selectedFac = document.getElementById("facility").value;
+  const selectedTime = document.getElementById("timeslot").value;
+  const selectedDate = document.getElementById("booking-date").value;
+
+  const result = await checkAndCreateBooking(user, selectedFac, selectedTime, selectedDate);
+
+  if (result.success) {
+    alert(result.message);
+    document.querySelector(".modal-booking").close(); // close modal on success
+  } else {
+    alert(result.message);
+  }
+});
  
 const sportSelect = document.getElementById("sport");
 const facilitySelect = document.getElementById("facility");
