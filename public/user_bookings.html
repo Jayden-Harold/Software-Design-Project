@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="dashboard_user.css">
+    <link rel="stylesheet" href="admin_bookings_tab.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -15,7 +15,6 @@
     <title>Green Smoke</title>
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="info.js" defer type="module"></script>
   </head>
     <header class="nav-container">
     <nav class="nav-bar">
@@ -24,32 +23,29 @@
           <li><a href="booking.html" class="nav-links">BOOK</a></li>
           <li><a href="facilities.html" class="nav-links">FACILITIES</a></li>
           <li><a href="#" class="nav-links">EVENTS</a></li>      
-          <li><a href="#" class="nav-links-new">USER</a></li>      
-          
+          <li><a href="#" class="nav-links">USER</a></li>      
         </ul>
-
-
     </nav>
     </header>
-
 <body>
-    <section class="Greeting">
-        <h1 id="username"></h1>
-    </section>
-
-    <section class="Status">
-        <h2 id="userRole"></h2>
-        <h2 id="userStatus"></h2>
-        <img id="userDP">
-    </section>
-
-    <section class="row-1">
-      <img src="images/bookings-img.png" alt="BOOKINGS" class="tabs-img" id="bookings-img">
+  <section class="Greeting">
+    <h1>Bookings</h1>
+</section>
+<section class="Pending">
+  <h2>My Bookings</h2>
+    <table id="userTable">
+        <thead>
+        <tr class="table-headings">
+            <th>Facililty</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th></th>        
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
   </section>
-
-
-</body>
-
   <footer>
     <section>
       <h2>GREEN SMOKE</h2>
@@ -67,3 +63,5 @@
       <p><a href="#" class="f-links">Privacy Policy</a></p>  
     </section>
     </footer>
+
+</body>
