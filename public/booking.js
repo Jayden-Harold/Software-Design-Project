@@ -16,14 +16,21 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
+document.getElementById("book-btn").addEventListener("click", function () {
+  const selectedFac = document.getElementById("facility").value;
+  const selectedTime = document.getElementById("timeslot").value;
+  const selectedDate = document.getElementById("booking-date").value;
 
+  const facility = document.getElementById("selected-fac");
+  const date = document.getElementById("selected-date");
+  const time = document.getElementById("selected-time");
 
-const book_btn = document.querySelector("#book-btn");
-const modal_booking = document.querySelector(".modal-booking")
+  facility.textContent = selectedFac;
+  date.textContent = selectedDate;
+  time.textContent = selectedTime;
 
-book_btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    modal_booking.showModal();
+  // Optionally open the dialog
+  document.querySelector(".modal-booking").showModal();
 });
 
 const close_booking = document.querySelector(".close-booking");
@@ -63,15 +70,4 @@ async function getCapacityBySport(sport) {
   }
 }
 
-const selectedFac = document.getElementById("facility").value;
-const selectedTime = document.getElementById("timeslot").value;
-const selectedDate = document.getElementById("booking-date").value;
-
-const facility = document.getElementById("selected-fac");
-const date = document.getElementById("selected-date");
-const time = document.getElementById("selected-time");
-
-facility.textContent = selectedFac;
-date.textContent = selectedDate;
-time.textContent = selectedTime;
  
