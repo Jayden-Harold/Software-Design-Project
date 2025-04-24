@@ -31,3 +31,14 @@ const close_booking = document.querySelector(".close-booking");
 close_booking.addEventListener("click", (e) => {
     modal_booking.close();
 })
+
+const select = document.getElementById("timeslot");
+
+for (let hour = 8; hour < 20; hour++) {
+  const start = `${hour.toString().padStart(2, '0')}:00`;
+  const end = `${(hour + 1).toString().padStart(2, '0')}:00`;
+  const option = document.createElement("option");
+  option.value = `${start}-${end}`;
+  option.textContent = `${start}–${end}`;
+  select.appendChild(option);
+}
