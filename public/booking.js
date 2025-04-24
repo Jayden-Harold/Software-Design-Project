@@ -17,11 +17,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
-
-    const selectedFac = document.getElementById("facility").value;
-    const selectedTime = document.getElementById("timeslot").value;
-    const selectedDate = document.getElementById("booking-date").value;
-
 document.getElementById("book-btn").addEventListener("click", async function () {
   const selectedFac = document.getElementById("facility").value;
   const selectedTime = document.getElementById("timeslot").value;
@@ -144,7 +139,7 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
   const bookingsRef = collection(db, 'bookings');
 
   const userID = user.uid;
-  const userName = user.name;
+  const userName = user.displayName || "Unknown User";
 
   // Check if user already has a booking at that timeslot on that date
   const userQuery = query(
