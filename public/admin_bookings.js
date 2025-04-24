@@ -29,7 +29,7 @@ async function DisplayPending() {
 
         querySnapshot.forEach((docSnap) => {
             const bookData = docSnap.data();
-            const resident = bookData.userNname || "User";
+            const resident = bookData.userName || "User";
             const facility = bookData.fname;
             const date = bookData.date;
             const timeslot = bookData.timeslot;
