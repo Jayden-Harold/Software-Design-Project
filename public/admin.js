@@ -11,3 +11,8 @@ staff.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "admin_staff.html";
 })
+
+bookings.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href="admin_bookings.html"
+})
