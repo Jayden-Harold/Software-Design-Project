@@ -70,4 +70,12 @@ async function getCapacityBySport(sport) {
   }
 }
 
+const checkbox = document.getElementById("confirm");
+
+document.querySelector("#confirm-btn").addEventListener("click", function (){
+  if (!checkbox.checked) {
+    alert("Please agree to the terms and conditions before booking.");
+    return; // stop the rest of the booking logic
+  }
+})
  
