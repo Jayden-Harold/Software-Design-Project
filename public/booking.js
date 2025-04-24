@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+   import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
@@ -79,3 +80,33 @@ document.querySelector("#confirm-btn").addEventListener("click", function (){
   }
 })
  
+const sportSelect = document.getElementById("sport");
+const facilitySelect = document.getElementById("facility");
+
+sportSelect.addEventListener("change", async function () {
+  const selectedSport = sportSelect.value;
+  facilitySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+
+  try {
+    const facilitiesRef = collection(db, "facilities");
+    const q = query(facilitiesRef, where("sport", "==", selectedSport));
+    const querySnapshot = await getDocs(q);
+
+    facilitySelect.innerHTML = '<option value="" disabled selected>Facility...</option>';
+
+    if (querySnapshot.empty) {
+      facilitySelect.innerHTML = '<option value="">No facilities found for this sport</option>';
+    } else {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const option = document.createElement("option");
+        option.value = data.fname;
+        option.textContent = data.fname;
+        facilitySelect.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error("Error loading facilities:", error);
+    facilitySelect.innerHTML = '<option value="">Error loading facilities</option>';
+  }
+});
