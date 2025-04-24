@@ -19,16 +19,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
 document.getElementById("book-btn").addEventListener("click", function () {
   const selectedFac = document.getElementById("facility").value;
+  const capacity = getCapacityBySport(selectedFac);
   const selectedTime = document.getElementById("timeslot").value;
   const selectedDate = document.getElementById("booking-date").value;
 
   const facility = document.getElementById("selected-fac");
   const date = document.getElementById("selected-date");
   const time = document.getElementById("selected-time");
+  const admit = document.getElementById("admit");
 
   facility.textContent = selectedFac;
   date.textContent = selectedDate;
   time.textContent = selectedTime;
+  admit.textContent = capacity;
 
   // Optionally open the dialog
   document.querySelector(".modal-booking").showModal();
@@ -51,7 +54,7 @@ for (let hour = 8; hour < 20; hour++) {
   select.appendChild(option);
 }
 
-async function getCapacityBySport(sport) {
+async function getCapacityBySport(fname) {
   const sportsRef = collection(db, "facilities"); // Replace "sports" with your collection name
   const q = query(sportsRef, where("fname", "==", fname)); // Query where "sport" field matches
 
@@ -59,7 +62,7 @@ async function getCapacityBySport(sport) {
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const capacity = querySnapshot.docs[0].data().capacity; // Get capacity from the first match
-      console.log(`Capacity for ${sport}:`, capacity);
+      console.log(`Capacity for ${fname}:`, capacity);
       return capacity;
     } else {
       console.log("No matching sport found!");
