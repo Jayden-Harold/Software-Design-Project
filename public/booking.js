@@ -108,32 +108,34 @@ const checkbox = document.getElementById("confirm");
 
 async function checkAndCreateBooking(user, fname, timeslot, date) {
   const bookingsRef = collection(db, 'bookings');
-
   const userID = user.uid;
   const userName = user.displayName || "Unknown User";
-  
-  const userQuery = query(
-    bookingsRef,
-    where("userID", "==", userID),
-    where("timeslot", "==", timeslot),
-    where("date", "==", date)
-  );
-  const userSnap = await getDocs(userQuery);
+
+  // First, check user profile
+  const userProfileRef = doc(db, "users", userID);
+  const userSnap = await getDoc(userProfileRef); // <== this fetches a single user document
 
   if (!userSnap.exists()) {
     return { success: false, message: "User profile not found. Please register first." };
   }
 
   const userData = userSnap.data();
-  // Block booking if user is pending
+
   if (userData.status === "pending") {
     return { success: false, message: "Your account is pending approval. You cannot make a booking at this time." };
   }
+
   // Check if user already has a booking at that timeslot on that date
+  const userQuery = query(
+    bookingsRef,
+    where("userID", "==", userID),
+    where("timeslot", "==", timeslot),
+    where("date", "==", date)
+  );
+  const userSnapBooking = await getDocs(userQuery);
+  const userConflict = !userSnapBooking.empty;
 
-  const userConflict = !userSnap.empty;
-
-  // Check if facility is already booked at that timeslot and date
+  // Check if facility is already booked
   const facilityQuery = query(
     bookingsRef,
     where("fname", "==", fname),
@@ -151,7 +153,7 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
     return { success: false, message: "Facility is already booked at this timeslot." };
   }
 
-  // No conflicts, add new booking with default status
+  // Add the new booking
   const newBookingRef = await addDoc(bookingsRef, {
     userID,
     userName,
@@ -164,6 +166,7 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
 
   return { success: true, message: "Booking successfully created.", bookingID: newBookingRef.id };
 }
+
 
 document.querySelector("#confirm-btn").addEventListener("click", async function () {
   if (!checkbox.checked) {
