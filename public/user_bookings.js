@@ -41,6 +41,7 @@ async function DisplayPending(user) {
             const facility = bookData.fname;
             const date = bookData.date;
             const timeslot = bookData.timeslot;
+            const status = bookData.status;
 
             const row = document.createElement("tr");
 
@@ -52,6 +53,9 @@ async function DisplayPending(user) {
 
             const timeCell = document.createElement("td");
             timeCell.textContent = timeslot;
+
+            const statusCell = document.createElement("td");
+            status.textContent = status;
 
             const actionCell = document.createElement("td");
 
@@ -65,6 +69,7 @@ async function DisplayPending(user) {
             row.appendChild(fCell);
             row.appendChild(dateCell);
             row.appendChild(timeCell);
+            row.appendChild(status);
             row.appendChild(actionCell);
 
             userTableBody.appendChild(row);
