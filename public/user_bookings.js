@@ -30,9 +30,6 @@ const userTableBody = document.querySelector("#bookTable").getElementsByTagName(
 async function DisplayPending(user) {
     try {
         const bookRef = collection(db, "bookings");
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef); // reads the document at /users/user.uid
-        const userData = userSnap.data();
         const userID = user.uid;
 
         // Firestore compound query
@@ -59,7 +56,7 @@ async function DisplayPending(user) {
             const actionCell = document.createElement("td");
 
             const denyBtn = document.createElement("button");
-            denyBtn.textContent = "Deny";
+            denyBtn.textContent = "CANCEL";
             denyBtn.className = "btn-deny";
             denyBtn.addEventListener("click", () => denyRequest(docSnap.id, row));
 
@@ -74,9 +71,24 @@ async function DisplayPending(user) {
         });
 
     } catch (error) {
-        console.error("Error fetching pending staff:", error);
+        console.error("Error fetching pending bookings:", error);
     }
 }
+
+async function denyRequest(docId, rowElement) {
+    const confirmation = confirm("Are you sure you want to cancel this booking? This action cannot be undone.");
+    if (!confirmation) return;
+  
+    try {
+      const bookDocRef = doc(db, "bookings", docId);
+      await deleteDoc(bookDocRef);
+      alert("Booking cancelled successfully.");
+      rowElement.remove();
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+      alert("An error occurred while cancelling the booking.");
+    }
+  }
 
 onAuthStateChanged(auth, (user) => {
     if (user) {

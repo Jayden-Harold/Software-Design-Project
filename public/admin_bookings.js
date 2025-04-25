@@ -191,7 +191,7 @@ async function approveBooking(docId, bookData, rowElement) {
             approvedTableBody.appendChild(tr);
         });
     } catch (error) {
-        console.error("Error fetching approved staff:", error);
+        console.error("Error fetching bookings:", error);
     }
 }
 
