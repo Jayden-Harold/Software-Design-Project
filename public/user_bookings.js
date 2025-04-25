@@ -80,7 +80,7 @@ async function DisplayPending(user) {
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        DisplayPending(); // now runs for ALL matching users
+        DisplayPending(user); // now runs for ALL matching users
     } else {
         alert("User not signed in. Redirecting...");
         window.location.href = "index.html";
