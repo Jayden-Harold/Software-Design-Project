@@ -25,7 +25,8 @@ window.handleCredentialResponse = async (response) => {
    else{
       handleSigninResponse(response);
    }
-   };
+};
+
 window.handleSignupResponse = async (response) => {
   try {
     const credential = GoogleAuthProvider.credential(response.credential);
