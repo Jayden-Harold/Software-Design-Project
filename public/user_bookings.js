@@ -77,3 +77,12 @@ async function DisplayPending(user) {
         console.error("Error fetching pending staff:", error);
     }
 }
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        DisplayPending(); // now runs for ALL matching users
+    } else {
+        alert("User not signed in. Redirecting...");
+        window.location.href = "index.html";
+    }
+});
