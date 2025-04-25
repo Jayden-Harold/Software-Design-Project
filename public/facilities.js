@@ -6,6 +6,15 @@ const basketball    = document.querySelector("#basketball-img");
 const swim          = document.querySelector("#swimming-img");
 const hockey        = document.querySelector("#hockey-img");
 
+const menu = document.querySelector("#mobile-menu");
+const menuLinks = document.querySelector(".nav-menu");
+
+// Toggle Mobile Menu
+menu.addEventListener("click", () => {
+    menu.classList.toggle("is-active");
+    menuLinks.classList.toggle("active");
+});
+
 padel.addEventListener("click", (e) => {
     e.preventDefault;
     window.location.href="padel.html"

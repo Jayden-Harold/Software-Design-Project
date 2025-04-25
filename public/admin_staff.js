@@ -11,6 +11,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     appId: "1:140065144019:web:48e4963e4826a85aca2826"
   };
   
+  const menu = document.querySelector("#mobile-menu");
+  const menuLinks = document.querySelector(".nav-menu");
+  
+  // Toggle Mobile Menu
+  menu.addEventListener("click", () => {
+      menu.classList.toggle("is-active");
+      menuLinks.classList.toggle("active");
+  });
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);

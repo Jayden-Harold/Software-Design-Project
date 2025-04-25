@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-   import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+   import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
@@ -11,18 +11,42 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     messagingSenderId: "140065144019",
     appId: "1:140065144019:web:48e4963e4826a85aca2826"
   };
+
+  const menu = document.querySelector("#mobile-menu");
+  const menuLinks = document.querySelector(".nav-menu");
+  
+  // Toggle Mobile Menu
+  menu.addEventListener("click", () => {
+      menu.classList.toggle("is-active");
+      menuLinks.classList.toggle("active");
+  });
   
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const user = auth.currentUser;
 
-
-    const selectedFac = document.getElementById("facility").value;
-    const selectedTime = document.getElementById("timeslot").value;
-    const selectedDate = document.getElementById("booking-date").value;
-
 document.getElementById("book-btn").addEventListener("click", async function () {
+    const user = auth.currentUser;
+
+  if (!user) {
+    alert("Please sign in to make a booking.");
+    return;
+  }
+
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    alert("User profile not found. Please register first.");
+    return;
+  }
+
+  const userData = userSnap.data();
+  if (userData.status === "pending") {
+    alert("Your account is pending approval. You cannot make a booking at this time.");
+    return; // Prevent booking if pending
+  }
   const selectedFac = document.getElementById("facility").value;
   const selectedTime = document.getElementById("timeslot").value;
   const selectedDate = document.getElementById("booking-date").value;
@@ -144,8 +168,17 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
   const bookingsRef = collection(db, 'bookings');
 
   const userID = user.uid;
-  const userName = user.name;
+  const userName = user.displayName || "Unknown User";
+  
+  if (!userSnap.exists()) {
+    return { success: false, message: "User profile not found. Please register first." };
+  }
 
+  const userData = userSnap.data();
+  // Block booking if user is pending
+  if (userData.status === "pending") {
+    return { success: false, message: "Your account is pending approval. You cannot make a booking at this time." };
+  }
   // Check if user already has a booking at that timeslot on that date
   const userQuery = query(
     bookingsRef,

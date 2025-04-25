@@ -7,11 +7,9 @@ menu.addEventListener("click", () => {
     menuLinks.classList.toggle("active");
 });
 
+const bookings = document.querySelector("#bookings-img");
 
-const book = document.querySelector("#book-btn2");
-
-book.addEventListener("click", (e) => {
+bookings.addEventListener("click", (e) => {
     e.preventDefault;
-    window.location.href="booking.html";
-});
-
+    window.location.href = "user_bookings.html"
+})

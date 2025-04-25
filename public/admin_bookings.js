@@ -28,67 +28,61 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
 const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
 
-async function DisplayResPending() {
+async function DisplayPending() {
     try {
-        const usersRef = collection(db, "users");
+        const bookRef = collection(db, "bookings");
 
         // Firestore compound query
-        const q = query(usersRef, where("status", "==", "pending"), where("role", "==", "Resident"));
+        const q = query(bookRef, where("status", "==", "pending"));
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach((docSnap) => {
-            const userData = docSnap.data();
-            const name = userData.name || "User";
-            const createdAt = userData.createdAt?.toDate().toLocaleString() || "N/A";
+            const bookData = docSnap.data();
+            const resident = bookData.userName || "User";
+            const facility = bookData.fname;
+            const date = bookData.date;
+            const timeslot = bookData.timeslot;
 
             const row = document.createElement("tr");
 
             const nameCell = document.createElement("td");
-            nameCell.textContent = name;
+            nameCell.textContent = resident;
+
+            const fCell = document.createElement("td");
+            fCell.textContent = facility;
 
             const dateCell = document.createElement("td");
-            dateCell.textContent = createdAt;
+            dateCell.textContent = date;
+
+            const timeCell = document.createElement("td");
+            timeCell.textContent = timeslot;
 
             const actionCell = document.createElement("td");
 
             const approveBtn = document.createElement("button");
             approveBtn.textContent = "Approve";
             approveBtn.className = "btn-approve";
-            approveBtn.addEventListener("click", () => approveResident(docSnap.id, userData, row));
+            approveBtn.addEventListener("click", () => approveBooking(docSnap.id, bookData, row));
 
             const denyBtn = document.createElement("button");
             denyBtn.textContent = "Deny";
             denyBtn.className = "btn-deny";
-            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, row) );
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, bookData, row));
 
             actionCell.appendChild(approveBtn);
             actionCell.appendChild(denyBtn);
 
             row.appendChild(nameCell);
+            row.appendChild(fCell);
             row.appendChild(dateCell);
+            row.appendChild(timeCell);
             row.appendChild(actionCell);
 
             userTableBody.appendChild(row);
         });
 
     } catch (error) {
-        console.error("Error fetching pending residents:", error);
-    }
-}
-
-async function approveResident(docId, resData, rowElement) {
-    try {
-      const resDocRef = doc(db, "users", docId);
-      await updateDoc(resDocRef, { status: "approved" });
-
-      // Remove the row from pending table immediately
-      rowElement.remove();
-
-      // Add to approved table immediately
-      moveResToApproved(resData);
-
-    } catch (error) {
-      console.error("Error approving resident:", error);
+        console.error("Error fetching pending staff:", error);
     }
 }
 
@@ -97,8 +91,8 @@ async function denyRequest(docId, rowElement) {
     if (!confirmation) return;
   
     try {
-      const resDocRef = doc(db, "users", docId);
-      await deleteDoc(resDocRef);
+      const bookDocRef = doc(db, "bookings", docId);
+      await deleteDoc(bookDocRef);
       alert("Request denied and record deleted successfully.");
       rowElement.remove();
     } catch (error) {
@@ -106,57 +100,106 @@ async function denyRequest(docId, rowElement) {
       alert("An error occurred while denying the request.");
     }
   }
+
+async function approveBooking(docId, bookData, rowElement) {
+    try {
+      const bookDocRef = doc(db, "bookings", docId);
+      await updateDoc(bookDocRef, { status: "approved" });
+
+      // Remove the row from pending table immediately
+      rowElement.remove();
+
+      // Add to approved table immediately
+      moveBookToApproved(bookData);
+
+    } catch (error) {
+      console.error("Error approving booking:", error);
+    }
+}
+
   
-  function moveResToApproved(resData) {
+  function moveBookToApproved(bookData) {
 
     const tr = document.createElement("tr");
-    const nameTd = document.createElement("td");
+    const resTd = document.createElement("td");
+    const facTd = document.createElement("td");
     const dateTd = document.createElement("td");
+    const timeTd = document.createElement("td");
+
+    resTd.textContent = bookData.userName || "No Name";
+    facTd.textContent = bookData.fname;
+    dateTd.textContent = bookData.date;
+    timeTd.textContent = bookData.timeslot;
+
+
+    const actionCell1 = document.createElement("td");
+
+    const denyBtn = document.createElement("button");
+    denyBtn.textContent = "Remove";
+    denyBtn.className = "btn-deny";
+    denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
+
+    actionCell1.appendChild(denyBtn);
   
-    nameTd.textContent = resData.name || "No Name";
-    const createdAt = resData.createdAt?.toDate ? resData.createdAt.toDate() : new Date();
-    dateTd.textContent = createdAt.toLocaleString();
-  
-    tr.appendChild(nameTd);
+    tr.appendChild(resTd);
+    tr.appendChild(facTd);
     tr.appendChild(dateTd);
+    tr.appendChild(timeTd);
+    tr.appendChild(actionCell1);
   
     approvedTableBody.appendChild(tr);
   }
 
-  async function DisplayResApproved() {
+  async function DisplayBookApproved() {
     try {
         approvedTableBody.innerHTML = ""; // Clear existing rows
 
-        const usersRef = collection(db, "users");
-        const q = query(usersRef, where("status", "==", "approved"), where("role", "==", "Resident"));
+        const bookRef = collection(db, "bookings");
+        const q = query(bookRef, where("status", "==", "approved"));
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach((docSnap) => {
-            const resData = docSnap.data();
+            const bookData = docSnap.data();
 
             const tr = document.createElement("tr");
-            const nameTd = document.createElement("td");
+            const resTd = document.createElement("td");
+            const facTd = document.createElement("td");
             const dateTd = document.createElement("td");
+            const timeTd = document.createElement("td");
 
-            nameTd.textContent = resData.name || "No Name";
-            const createdAt = resData.createdAt?.toDate ? resData.createdAt.toDate() : new Date();
-            dateTd.textContent = createdAt.toLocaleString();
+            const actionCell2 = document.createElement("td");
 
-            tr.appendChild(nameTd);
+            const denyBtn = document.createElement("button");
+            denyBtn.textContent = "Remove";
+            denyBtn.className = "btn-deny";
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
+
+            actionCell2.appendChild(denyBtn);
+          
+
+            resTd.textContent = bookData.userName;
+            facTd.textContent = bookData.fname;
+            dateTd.textContent = bookData.date;
+            timeTd.textContent = bookData.timeslot;
+
+            tr.appendChild(resTd);
+            tr.appendChild(facTd);
             tr.appendChild(dateTd);
+            tr.appendChild(timeTd);
+            tr.appendChild(actionCell2);
 
             approvedTableBody.appendChild(tr);
         });
     } catch (error) {
-        console.error("Error fetching approved residents:", error);
+        console.error("Error fetching approved staff:", error);
     }
 }
 
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        DisplayResPending(); // now runs for ALL matching users
-        DisplayResApproved();
+        DisplayPending(); // now runs for ALL matching users
+        DisplayBookApproved();
     } else {
         alert("User not signed in. Redirecting...");
         window.location.href = "index.html";
