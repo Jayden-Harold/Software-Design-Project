@@ -2,12 +2,15 @@ document.body.innerHTML = `
   <table id="userTable"><tbody></tbody></table>
   <table id="approvedTable"><tbody></tbody></table>`
 ;
-const { approveResident, moveResToApproved } = require ("../Admin/admin_resident");
+const { approveResident, moveResToApproved,denyRequest } = require ("../Admin/admin_resident");
+const { deleteDoc, doc } = require("firebase/firestore");
+
 
 jest.mock("firebase/firestore", () => ({
 getFirestore: jest.fn(() => ({})),
 getDocs: jest.fn(),
 updateDoc: jest.fn(),
+deleteDoc: jest.fn(),
 doc: jest.fn(() => ({})),
 collection: jest.fn(),
 query: jest.fn(),
@@ -50,6 +53,58 @@ describe("approveResident", () => {
         }, 100);
 
     });
+});
+//denying:
+describe("denyRequest", () => {
+  const { deleteDoc, doc } = require("firebase/firestore");
+
+  let rowElement;
+  const docId = "User-5678";
+
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <table><tbody><tr id="row-1"><td>User</td></tr></tbody></table>
+    `;
+    rowElement = document.getElementById("row-1");
+
+    // Reset mocks
+    jest.clearAllMocks();
+
+    // Mock confirm and alert
+    global.confirm = jest.fn();
+    global.alert = jest.fn();
+  });
+
+  it("deletes the doc and removes the row when confirmed", async () => {
+    confirm.mockReturnValue(true);
+
+    await denyRequest(docId, rowElement);
+
+    expect(doc).toHaveBeenCalledWith(expect.anything(), "users", docId);
+    expect(deleteDoc).toHaveBeenCalledWith(expect.anything());
+    expect(alert).toHaveBeenCalledWith("Request denied and record deleted successfully.");
+    expect(document.getElementById("row-1")).toBeNull();
+  });
+
+  it("does nothing if user cancels", async () => {
+    confirm.mockReturnValue(false);
+
+    await denyRequest(docId, rowElement);
+
+    expect(deleteDoc).not.toHaveBeenCalled();
+    expect(alert).not.toHaveBeenCalled();
+    expect(document.getElementById("row-1")).not.toBeNull();
+  });
+
+  it("shows error if deleteDoc fails", async () => {
+    confirm.mockReturnValue(true);
+    deleteDoc.mockRejectedValue(new Error("Firebase error"));
+
+    await denyRequest(docId, rowElement);
+
+    expect(alert).toHaveBeenCalledWith("An error occurred while denying the request.");
+    expect(document.getElementById("row-1")).not.toBeNull();
+  });
 });
 
 

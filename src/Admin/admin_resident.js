@@ -1,5 +1,5 @@
 //import { GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "firebase/auth";
-import { getDocs, doc, updateDoc, collection, query, where } from "firebase/firestore";
+import { getDocs, doc, updateDoc, collection, query, where,deleteDoc } from "firebase/firestore";
 import { auth, db } from "../test_utils/firebase.js";
 
 export const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
