@@ -1,60 +1,53 @@
-const { attachSportRedirects } =require ("../booking/sport_redirect");
+/**
+ * @jest-environment jsdom
+ */
 
-describe("attachSportRedirects", () => {
-  let mockDocument, mockWindow;
+import { attachSportRedirects } from "../booking/sport_redirect";
+
+describe("Sport Redirects", () => {
+  let mockWindow;
 
   beforeEach(() => {
+    // Setup mock window.location
     mockWindow = {
       location: {
-        href: ""
+        assign: jest.fn()
       }
     };
 
-    const createMockElement = () => {
-      const el = {
-        addEventListener: jest.fn((event, handler) => {
-          el._handler = handler;
-        }),
-        _handler: null,
-      };
-      return el;
-    };
-
-    mockDocument = {
-      querySelector: jest.fn((selector) => {
-        const mockElements = {
-          "#padel-img": createMockElement(),
-          "#soccer-img": createMockElement(),
-          "#netball-img": createMockElement(),
-          "#cricket-img": createMockElement(),
-          "#basketball-img": createMockElement(),
-          "#swimming-img": createMockElement(),
-          "#hockey-img": createMockElement(),
-        };
-        return mockElements[selector];
-      })
-    };
+    // Inject HTML elements into the DOM
+    document.body.innerHTML = `
+      <img id="padel-img" />
+      <img id="soccer-img" />
+    `;
   });
 
-  it("should set up event listeners and redirect on click", () => {
-    attachSportRedirects(mockDocument, mockWindow);
+  it("should redirect to padel.html when clicked", () => {
+    attachSportRedirects(document, mockWindow);
 
-    // Simulate clicking on padel image
-    const padelEl = mockDocument.querySelector("#padel-img");
-    const mockEvent = { preventDefault: jest.fn() };
+    const padelEl = document.querySelector("#padel-img");
 
-    padelEl._handler(mockEvent);
-    expect(mockEvent.preventDefault).toHaveBeenCalled();
-    expect(mockWindow.location.href).toBe("padel.html");
+    // Simulate the click
+    const event = new Event("click");
+    Object.defineProperty(event, "preventDefault", { value: jest.fn() });
+
+    padelEl.dispatchEvent(event);
+
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(mockWindow.location.assign).toHaveBeenCalledWith("padel.html");
   });
 
-  it("should handle soccer click", () => {
-    attachSportRedirects(mockDocument, mockWindow);
+  it("should redirect to soccer.html when clicked", () => {
+    attachSportRedirects(document, mockWindow);
 
-    const soccerEl = mockDocument.querySelector("#soccer-img");
-    const mockEvent = { preventDefault: jest.fn() };
+    const soccerEl = document.querySelector("#soccer-img");
 
-    soccerEl._handler(mockEvent);
-    expect(mockWindow.location.href).toBe("soccer.html");
+    const event = new Event("click");
+    Object.defineProperty(event, "preventDefault", { value: jest.fn() });
+
+    soccerEl.dispatchEvent(event);
+
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(mockWindow.location.assign).toHaveBeenCalledWith("soccer.html");
   });
 });
