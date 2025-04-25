@@ -3,6 +3,8 @@ module.exports = {
       '^.+\\.js$': 'babel-jest',
     },
     transformIgnorePatterns: ['node_modules/(?!firebase)'],
-    testEnvironment: 'jsdom', // This is a must!
+    testEnvironment: 'jsdom',
+    setupFiles: ['<rootDir>/jest.setup.js'],
+
   };
   
