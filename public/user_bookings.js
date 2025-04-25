@@ -55,7 +55,7 @@ async function DisplayPending(user) {
             timeCell.textContent = timeslot;
 
             const statusCell = document.createElement("td");
-            status.textContent = status;
+            statusCell.textContent = status;
 
             const actionCell = document.createElement("td");
 
