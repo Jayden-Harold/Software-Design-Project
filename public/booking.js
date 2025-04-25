@@ -112,6 +112,14 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
   const userID = user.uid;
   const userName = user.displayName || "Unknown User";
   
+  const userQuery = query(
+    bookingsRef,
+    where("userID", "==", userID),
+    where("timeslot", "==", timeslot),
+    where("date", "==", date)
+  );
+  const userSnap = await getDocs(userQuery);
+
   if (!userSnap.exists()) {
     return { success: false, message: "User profile not found. Please register first." };
   }
@@ -122,13 +130,7 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
     return { success: false, message: "Your account is pending approval. You cannot make a booking at this time." };
   }
   // Check if user already has a booking at that timeslot on that date
-  const userQuery = query(
-    bookingsRef,
-    where("userID", "==", userID),
-    where("timeslot", "==", timeslot),
-    where("date", "==", date)
-  );
-  const userSnap = await getDocs(userQuery);
+
   const userConflict = !userSnap.empty;
 
   // Check if facility is already booked at that timeslot and date
