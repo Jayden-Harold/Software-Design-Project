@@ -67,7 +67,7 @@ async function DisplayPending() {
             const denyBtn = document.createElement("button");
             denyBtn.textContent = "Deny";
             denyBtn.className = "btn-deny";
-            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, bookData, row));
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, row));
 
             actionCell.appendChild(approveBtn);
             actionCell.appendChild(denyBtn);
