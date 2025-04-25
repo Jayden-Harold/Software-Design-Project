@@ -17,15 +17,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    const app = initializeApp(firebaseConfig);
    const auth = getAuth(app);
    const db = getFirestore(app);
-
-   const menu = document.querySelector("#mobile-menu");
-   const menuLinks = document.querySelector(".nav-menu");
-   
-   // Toggle Mobile Menu
-   menu.addEventListener("click", () => {
-       menu.classList.toggle("is-active");
-       menuLinks.classList.toggle("active");
-   });
  
 window.handleCredentialResponse = async (response) => {
    if (isRegistering){
@@ -123,7 +114,7 @@ window.handleSigninResponse = async (response) => {
  
      google.accounts.id.prompt(); // Optional: shows One Tap
    };
- 
+
  const modal_signin = document.querySelector(".modal-signin");
  const modal_signup = document.querySelector(".modal-signup");
  
