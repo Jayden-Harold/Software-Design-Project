@@ -117,8 +117,18 @@ async function denyRequest(docId, rowElement) {
     const createdAt = resData.createdAt?.toDate ? resData.createdAt.toDate() : new Date();
     dateTd.textContent = createdAt.toLocaleString();
   
+    const actionCell1 = document.createElement("td");
+
+    const denyBtn = document.createElement("button");
+    denyBtn.textContent = "Remove";
+    denyBtn.className = "btn-deny";
+    denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
+
+    actionCell1.appendChild(denyBtn);
+
     tr.appendChild(nameTd);
     tr.appendChild(dateTd);
+    tr.appendChild(actionCell1);
   
     approvedTableBody.appendChild(tr);
   }
@@ -142,8 +152,18 @@ async function denyRequest(docId, rowElement) {
             const createdAt = resData.createdAt?.toDate ? resData.createdAt.toDate() : new Date();
             dateTd.textContent = createdAt.toLocaleString();
 
+            const actionCell2 = document.createElement("td");
+
+            const denyBtn = document.createElement("button");
+            denyBtn.textContent = "Remove";
+            denyBtn.className = "btn-deny";
+            denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
+
+            actionCell2.appendChild(denyBtn);
+
             tr.appendChild(nameTd);
             tr.appendChild(dateTd);
+            tr.appendChild(actionCell2);
 
             approvedTableBody.appendChild(tr);
         });
