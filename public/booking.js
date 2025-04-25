@@ -27,6 +27,26 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const user = auth.currentUser;
 
 document.getElementById("book-btn").addEventListener("click", async function () {
+    const user = auth.currentUser;
+
+  if (!user) {
+    alert("Please sign in to make a booking.");
+    return;
+  }
+
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    alert("User profile not found. Please register first.");
+    return;
+  }
+
+  const userData = userSnap.data();
+  if (userData.status === "pending") {
+    alert("Your account is pending approval. You cannot make a booking at this time.");
+    return; // Prevent booking if pending
+  }
   const selectedFac = document.getElementById("facility").value;
   const selectedTime = document.getElementById("timeslot").value;
   const selectedDate = document.getElementById("booking-date").value;
@@ -149,7 +169,16 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
 
   const userID = user.uid;
   const userName = user.displayName || "Unknown User";
+  
+  if (!userSnap.exists()) {
+    return { success: false, message: "User profile not found. Please register first." };
+  }
 
+  const userData = userSnap.data();
+  // Block booking if user is pending
+  if (userData.status === "pending") {
+    return { success: false, message: "Your account is pending approval. You cannot make a booking at this time." };
+  }
   // Check if user already has a booking at that timeslot on that date
   const userQuery = query(
     bookingsRef,
