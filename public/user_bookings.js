@@ -69,7 +69,7 @@ async function DisplayPending(user) {
             row.appendChild(fCell);
             row.appendChild(dateCell);
             row.appendChild(timeCell);
-            row.appendChild(status);
+            row.appendChild(statusCell);
             row.appendChild(actionCell);
 
             userTableBody.appendChild(row);
