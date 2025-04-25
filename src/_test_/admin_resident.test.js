@@ -60,6 +60,7 @@ describe("denyRequest", () => {
 
   let rowElement;
   const docId = "User-5678";
+  deleteDoc.mockResolvedValue();
 
   beforeEach(() => {
     document.body.innerHTML = `
@@ -99,11 +100,13 @@ describe("denyRequest", () => {
   it("shows error if deleteDoc fails", async () => {
     confirm.mockReturnValue(true);
     deleteDoc.mockRejectedValue(new Error("Firebase error"));
+    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {}); //remove this and the last line to show console error
 
-    await denyRequest(docId, rowElement);
+    await denyRequest(docId, rowElement); 
 
     expect(alert).toHaveBeenCalledWith("An error occurred while denying the request.");
     expect(document.getElementById("row-1")).not.toBeNull();
+    consoleSpy.mockRestore(); // Clean up after test
   });
 });
 
