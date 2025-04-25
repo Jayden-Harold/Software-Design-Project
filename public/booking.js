@@ -106,6 +106,63 @@ async function getCapacityBySport(fname) {
 
 const checkbox = document.getElementById("confirm");
 
+async function checkAndCreateBooking(user, fname, timeslot, date) {
+  const bookingsRef = collection(db, 'bookings');
+
+  const userID = user.uid;
+  const userName = user.displayName || "Unknown User";
+  
+  if (!userSnap.exists()) {
+    return { success: false, message: "User profile not found. Please register first." };
+  }
+
+  const userData = userSnap.data();
+  // Block booking if user is pending
+  if (userData.status === "pending") {
+    return { success: false, message: "Your account is pending approval. You cannot make a booking at this time." };
+  }
+  // Check if user already has a booking at that timeslot on that date
+  const userQuery = query(
+    bookingsRef,
+    where("userID", "==", userID),
+    where("timeslot", "==", timeslot),
+    where("date", "==", date)
+  );
+  const userSnap = await getDocs(userQuery);
+  const userConflict = !userSnap.empty;
+
+  // Check if facility is already booked at that timeslot and date
+  const facilityQuery = query(
+    bookingsRef,
+    where("fname", "==", fname),
+    where("timeslot", "==", timeslot),
+    where("date", "==", date)
+  );
+  const facilitySnap = await getDocs(facilityQuery);
+  const facilityConflict = !facilitySnap.empty;
+
+  if (userConflict) {
+    return { success: false, message: "User already has a booking at this timeslot." };
+  }
+
+  if (facilityConflict) {
+    return { success: false, message: "Facility is already booked at this timeslot." };
+  }
+
+  // No conflicts, add new booking with default status
+  const newBookingRef = await addDoc(bookingsRef, {
+    userID,
+    userName,
+    fname,
+    timeslot,
+    date,
+    status: "pending",
+    createdAt: new Date().toISOString()
+  });
+
+  return { success: true, message: "Booking successfully created.", bookingID: newBookingRef.id };
+}
+
 document.querySelector("#confirm-btn").addEventListener("click", async function () {
   if (!checkbox.checked) {
     alert("Please agree to the terms and conditions before booking.");
@@ -164,59 +221,3 @@ sportSelect.addEventListener("change", async function () {
   }
 });
 
-async function checkAndCreateBooking(user, fname, timeslot, date) {
-  const bookingsRef = collection(db, 'bookings');
-
-  const userID = user.uid;
-  const userName = user.displayName || "Unknown User";
-  
-  if (!userSnap.exists()) {
-    return { success: false, message: "User profile not found. Please register first." };
-  }
-
-  const userData = userSnap.data();
-  // Block booking if user is pending
-  if (userData.status === "pending") {
-    return { success: false, message: "Your account is pending approval. You cannot make a booking at this time." };
-  }
-  // Check if user already has a booking at that timeslot on that date
-  const userQuery = query(
-    bookingsRef,
-    where("userID", "==", userID),
-    where("timeslot", "==", timeslot),
-    where("date", "==", date)
-  );
-  const userSnap = await getDocs(userQuery);
-  const userConflict = !userSnap.empty;
-
-  // Check if facility is already booked at that timeslot and date
-  const facilityQuery = query(
-    bookingsRef,
-    where("fname", "==", fname),
-    where("timeslot", "==", timeslot),
-    where("date", "==", date)
-  );
-  const facilitySnap = await getDocs(facilityQuery);
-  const facilityConflict = !facilitySnap.empty;
-
-  if (userConflict) {
-    return { success: false, message: "User already has a booking at this timeslot." };
-  }
-
-  if (facilityConflict) {
-    return { success: false, message: "Facility is already booked at this timeslot." };
-  }
-
-  // No conflicts, add new booking with default status
-  const newBookingRef = await addDoc(bookingsRef, {
-    userID,
-    userName,
-    fname,
-    timeslot,
-    date,
-    status: "pending",
-    createdAt: new Date().toISOString()
-  });
-
-  return { success: true, message: "Booking successfully created.", bookingID: newBookingRef.id };
-}
