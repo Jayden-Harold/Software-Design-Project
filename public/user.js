@@ -8,8 +8,15 @@ menu.addEventListener("click", () => {
 });
 
 const bookings = document.querySelector("#bookings-img");
+const maintenance = document.querySelector("#maintenance-img");
 
 bookings.addEventListener("click", (e) => {
     e.preventDefault;
     window.location.href = "user_bookings.html"
 })
+
+maintenance.addEventListener("click", (e) => {
+    e.preventDefault;
+    window.location.href = "user_maintenance_html"
+})
+
