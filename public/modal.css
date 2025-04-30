@@ -124,3 +124,18 @@ select {
     background-position: right 10px center;
     background-size: 10px;
   }
+
+  textarea{
+    font-size: 16px;
+    padding: 6px 10px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: var(--lightgray);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+  }

@@ -5,20 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <nav class="nav-bar">
-        <h1 id="Logo">GREEN SMOKE</h1>
-          <ul class="nav-menu">
-            <li><a href="booking.html" class="nav-links">BOOK</a></li>
-            <li><a href="facilities.html" class="nav-links">FACILITIES</a></li>
-            <li><a href="#" class="nav-links">EVENTS</a></li>      
-            <li><a href="#" class="nav-links">USER</a></li>      
-          </ul>
-
-      </nav>
-
-    <section>
+  </head>
+  <header class="nav-container">
+  <nav class="nav-bar">
+    <h1 id="Logo">GREEN SMOKE</h1>
+      <ul class="nav-menu">
+        <li><a href="booking.html" class="nav-links">BOOK</a></li>
+        <li><a href="facilities.html" class="nav-links">FACILITIES</a></li>
+        <li><a href="#" class="nav-links">EVENTS</a></li>      
+        <li><a href="#" class="nav-links">USER</a></li>      
+      </ul>
+      <button id="mobile-menu" class="menu-toggle">
+        <i class="fa-sharp fa-solid fa-bars fa-2xl" style="color: #EDEDED"></i>
+    </button>
+  </nav>
+  </header>
+  <body>
+    <section class="maintenance">
+      <h1>Report an issue</h1>
+    <section class="maintenance-form">
       <label for="">Facility: </label>
       <select name="Facility" id="facility_1">
         <option value="" disabled selected>Facility...</option>
@@ -31,14 +36,11 @@
         <option value="Safety Hazard" >Safety Hazard</option>
         <option value="Cleanliness" >Cleanliness</option>
         <option value="Other" >Other</option>
-        
       </select>
-      
     <label>Do you have a message for us? </label> <textarea></textarea>
-      <input type="submit" value="Submit Form">  
-    
+      <input type="submit" value="SUBMIT" id="submit-btn">  
     </section>
-
+    </section>
       
 
 </body>

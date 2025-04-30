@@ -135,7 +135,7 @@ async function approveBooking(docId, bookData, rowElement) {
     const actionCell1 = document.createElement("td");
 
     const denyBtn = document.createElement("button");
-    denyBtn.textContent = "Remove";
+    denyBtn.textContent = "CANCEL";
     denyBtn.className = "btn-deny";
     denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
 
@@ -170,7 +170,7 @@ async function approveBooking(docId, bookData, rowElement) {
             const actionCell2 = document.createElement("td");
 
             const denyBtn = document.createElement("button");
-            denyBtn.textContent = "Remove";
+            denyBtn.textContent = "CANCEL";
             denyBtn.className = "btn-deny";
             denyBtn.addEventListener("click", () => denyRequest(docSnap.id, tr) );
 
