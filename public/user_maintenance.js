@@ -25,3 +25,34 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const auth = getAuth(app);
     const db = getFirestore(app);
     const user = auth.currentUser;
+
+    const facilitySelect = document.getElementById("facility_1");
+
+    document.addEventListener("DOMContentLoaded", async function () {
+      facilitySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+    
+      try {
+        const facilitiesRef = collection(db, "facilities");
+        const q = query(facilitiesRef);
+        const querySnapshot = await getDocs(q);
+    
+        facilitySelect.innerHTML = '<option value="" disabled selected>Facility...</option>';
+    
+        if (querySnapshot.empty) {
+          facilitySelect.innerHTML = '<option value="">No facilities found for this sport</option>';
+        } else {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const option = document.createElement("option");
+            option.value = data.fname;
+            option.textContent = data.fname;
+            facilitySelect.appendChild(option);
+          });
+        }
+      } catch (error) {
+        console.error("Error loading facilities:", error);
+        facilitySelect.innerHTML = '<option value="">Error loading facilities</option>';
+      }
+    });
+    
+    
