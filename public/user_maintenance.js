@@ -78,10 +78,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           ReportedDate: new Date(),
          
         });
-      await updateDoc(doc(db, "facilities", selectedFac), {
-       status: "Under Maintenance"
-        });
+      const facilitiesRef = collection(db, "facilities");
+      const q = query(facilitiesRef, where("fname", "==", selectedFac));
+      const querySnapshot = await getDocs(q);
 
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async (facilityDoc) => {
+          await updateDoc(facilityDoc.ref, {
+            status: "Under Maintenance"
+          });
+        });
+      } else {
+        console.error("No facility found with the given Facility name:", selectedFac);
+      }
 
         alert("Issue reported succesfully.");
         
