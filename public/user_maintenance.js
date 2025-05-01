@@ -54,5 +54,39 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
         facilitySelect.innerHTML = '<option value="">Error loading facilities</option>';
       }
     });
+
+    document.querySelector("#submit-btn").addEventListener("click", async function () {
+    
+      const user = auth.currentUser; // NOW it's likely to be set if the user is logged in
+    
+      if (!user) {
+        alert("Please sign in.");
+        return;
+      }
+    
+      const selectedFac = document.getElementById("facility_1").value;
+      const selectedCat = document.getElementById("category").value;
+      const GivenDesc = document.getElementById("description").value;
+    
+      try{
+        await addDoc(collection(db , "Maintenance"),{
+          facility: selectedFac,
+          category:selectedCat,
+          description: GivenDesc,
+          assignedTo: "Staff",
+          Status: "Reported",
+          ReportedDate: new Date(),
+          userId: user.uid
+        });
+
+        alert("Issue reported succesfully.");
+        
+    } catch (error) {
+      console.error("Error submitting report:", error);
+      alert("Failed to submit report. Try again.");
+    }
+
+    });
+
     
     
