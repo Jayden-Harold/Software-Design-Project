@@ -17,6 +17,6 @@ bookings.addEventListener("click", (e) => {
 
 maintenance.addEventListener("click", (e) => {
     e.preventDefault;
-    window.location.href = "user_maintenance_html"
+    window.location.href = "user_maintenance.html"
 })
 
