@@ -73,11 +73,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           facility: selectedFac,
           category:selectedCat,
           description: GivenDesc,
-          assignedTo: "Staff",
+          assignedTo: "TBD",
           Status: "Reported",
           ReportedDate: new Date(),
-          userId: user.uid
+         
         });
+      await updateDoc(doc(db, "facilities", selectedFac), {
+       status: "Under Maintenance"
+        });
+
 
         alert("Issue reported succesfully.");
         
