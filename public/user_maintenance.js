@@ -101,22 +101,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
     });
 
-    select.addEventListener("change", async (e) => {
-      const selectedStaff = e.target.value;
-      const docId = docSnap.id; // ID of the current report
-  
-      try {
-          await updateDoc(doc(db, "Maintenance", docId), {
-              assignedTo: selectedStaff,
-              Status: "assigned"  // ✅ Add this line to update the status
-          });
-          alert(`Assigned to ${selectedStaff} successfully.`);
-          statTd.textContent = "assigned"; // Optional: instantly update UI
-      } catch (error) {
-          console.error("Error assigning staff:", error);
-          alert("Failed to assign staff.");
-      }
-  });
+
   
 
     
