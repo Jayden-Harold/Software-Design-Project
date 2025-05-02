@@ -32,10 +32,25 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     try {
         mainTableBody.innerHTML = ""; // Clear existing rows
 
+        // Step 1: Fetch all staff members (once)
+        const staffSnapshot = await getDocs(
+            query(collection(db, "users"), where("role", "==", "Staff"))
+        );
+
+        const staffList = [];
+        staffSnapshot.forEach((doc) => {
+            const data = doc.data();
+            if (data.name) {
+                staffList.push(data.name);
+            }
+        });
+
+        // Step 2: Fetch all maintenance reports
         const mainRef = collection(db, "Maintenance");
         const q = query(mainRef);
         const querySnapshot = await getDocs(q);
 
+        // Step 3: Build table rows
         querySnapshot.forEach((docSnap) => {
             const mainData = docSnap.data();
 
@@ -47,35 +62,53 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
             const statTd = document.createElement("td");
             const dateTd = document.createElement("td");
 
+            // Format date
             const createdAt = mainData.ReportedDate?.toDate ? mainData.ReportedDate.toDate() : new Date();
             dateTd.textContent = createdAt.toLocaleString();
 
-            facTd.textContent = mainData.facility;
-            catTd.textContent = mainData.category;
-            descTd.textContent = mainData.description;
-            statTd.textContent = mainData.Status;
-            const select = document.createElement('select');
-            ['Pending', 'Approved', 'Denied'].forEach(status => {
-                const option = document.createElement('option');
-                option.value = status.toLowerCase();
-                option.textContent = status;
-                select.appendChild(option);
-            });
+            // Fill table cells
+            facTd.textContent = mainData.facility || "";
+            catTd.textContent = mainData.category || "";
+            descTd.textContent = mainData.description || "";
+            statTd.textContent = mainData.Status || "";
 
+            // Create and populate the select dropdown
+            const select = document.createElement("select");
+            select.innerHTML = `<option value="" disabled selected>Select staff...</option>`;
+
+            if (staffList.length > 0) {
+                staffList.forEach((name) => {
+                    const option = document.createElement("option");
+                    option.value = name;
+                    option.textContent = name;
+                    select.appendChild(option);
+                });
+            } else {
+                const option = document.createElement("option");
+                option.value = "";
+                option.textContent = "No staff found";
+                select.appendChild(option);
+            }
+
+            assignedTd.appendChild(select);
+
+            // Append all cells to row
             tr.appendChild(facTd);
             tr.appendChild(catTd);
             tr.appendChild(descTd);
-            tr.appendChild(select);
+            tr.appendChild(assignedTd);
             tr.appendChild(dateTd);
             tr.appendChild(statTd);
 
+            // Append row to table
             mainTableBody.appendChild(tr);
-
         });
+
     } catch (error) {
-        console.error("Error fetching bookings:", error);
+        console.error("Error displaying reports:", error);
     }
 }
+
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
