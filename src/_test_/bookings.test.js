@@ -1,4 +1,4 @@
-const {generateTimeslots,getCapacityBySport,checkAndCreateBooking,} = require ("../booking/bookings");
+const {generateTimeslots,getCapacityBySport,checkAndCreateBooking,populateTimeslots} = require ("../booking/bookings");
   
   describe("generateTimeslots", () => {
     it("should generate timeslots from 8 to 20", () => {
@@ -99,4 +99,27 @@ const {generateTimeslots,getCapacityBySport,checkAndCreateBooking,} = require ("
       expect(result.bookingID).toBe("new-booking-id");
       expect(addDoc).toHaveBeenCalled();
     });
-  });  
+
+    it("returns null and logs error when getDocs throws", async () => {
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {}); //Suppress or mock console.error to keep test output clean:
+      const getDocs = jest.fn().mockRejectedValue(new Error("Firestore failure"));
+      const collection = jest.fn();
+      const query = jest.fn();
+      const where = jest.fn();
+    
+      const result = await getCapacityBySport("Tennis", {}, getDocs, collection, query, where);
+      expect(result).toBeNull();
+      consoleSpy.mockRestore();
+    });
+  });
+  
+  describe("populateTimeslots", () => {
+    it("populates a select element with time slots", () => {
+      const selectElement = { appendChild: jest.fn() };
+      document.createElement = jest.fn().mockReturnValue({});
+  
+      populateTimeslots(selectElement);
+  
+      expect(selectElement.appendChild).toHaveBeenCalledTimes(12);// Called 12 times from 08:00–20:00
+    });
+  });
