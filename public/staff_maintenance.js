@@ -94,6 +94,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                           await updateDoc(facilityDoc.ref, {
                             status: "Available"
                           });
+                          console.log(data.facility);
                         }); 
                       }
                   } catch (err) {
