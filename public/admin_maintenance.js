@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-   import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+   import { collection, query, where, getDocs, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
@@ -27,6 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const user = auth.currentUser;
 
   const mainTableBody = document.querySelector("#mainTable").getElementsByTagName("tbody")[0];
+  const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
 
   async function DisplayReports() {
     try {
@@ -47,7 +48,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
         // Step 2: Fetch all maintenance reports
         const mainRef = collection(db, "Maintenance");
-        const q = query(mainRef);
+        const q = query(mainRef, where("Status", "==", "Reported"));
         const querySnapshot = await getDocs(q);
 
         // Step 3: Build table rows
@@ -92,13 +93,30 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
             assignedTd.appendChild(select);
 
+            // 🔁 Add event listener inside the loop
+            select.addEventListener("change", async (e) => {
+                const selectedStaff = e.target.value;
+                const docId = docSnap.id; // ID of the current report
+
+                try {
+                    await updateDoc(doc(db, "Maintenance", docId), {
+                        assignedTo: selectedStaff,
+                        Status: "assigned"  // ✅ update status
+                    });
+                    alert(`Assigned to ${selectedStaff} successfully.`);
+                } catch (error) {
+                    console.error("Error assigning staff:", error);
+                    alert("Failed to assign staff.");
+                }
+            });
+
             // Append all cells to row
             tr.appendChild(facTd);
             tr.appendChild(catTd);
             tr.appendChild(descTd);
             tr.appendChild(assignedTd);
-            tr.appendChild(dateTd);
             tr.appendChild(statTd);
+            tr.appendChild(dateTd);
 
             // Append row to table
             mainTableBody.appendChild(tr);
@@ -109,26 +127,53 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     }
 }
 
-    select.addEventListener("change", async (e) => {
-      const selectedStaff = e.target.value;
-      const docId = docSnap.id; // ID of the current report
-  
-      try {
-          await updateDoc(doc(db, "Maintenance", docId), {
-              assignedTo: selectedStaff,
-              Status: "assigned"  // ✅ Add this line to update the status
-          });
-          alert(`Assigned to ${selectedStaff} successfully.`);
-          statTd.textContent = "assigned"; // Optional: instantly update UI
-      } catch (error) {
-          console.error("Error assigning staff:", error);
-          alert("Failed to assign staff.");
-      }
-  });
+  async function DisplayAssigned() {
+    try {
+        approvedTableBody.innerHTML = ""; // Clear existing rows
+
+        const mainRef = collection(db, "Maintenance");
+        const q = query(mainRef, where("Status", "==", "assigned"));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((docSnap) => {
+            const mainData = docSnap.data();
+
+            const tr = document.createElement("tr");
+            const facTd = document.createElement("td");
+            const catTd = document.createElement("td");
+            const descTd = document.createElement("td");
+            const assignedTd = document.createElement("td");
+            const statTd = document.createElement("td");
+            const dateTd = document.createElement("td");
+
+            const createdAt = mainData.ReportedDate?.toDate ? mainData.ReportedDate.toDate() : new Date();
+            dateTd.textContent = createdAt.toLocaleString();
+
+            // Fill table cells
+            facTd.textContent = mainData.facility || "";
+            catTd.textContent = mainData.category || "";
+            descTd.textContent = mainData.description || "";
+            statTd.textContent = mainData.Status || "";
+            assignedTd.textContent = mainData.assignedTo || "";
+
+            tr.appendChild(facTd);
+            tr.appendChild(catTd);
+            tr.appendChild(descTd);
+            tr.appendChild(assignedTd);
+            tr.appendChild(statTd);
+            tr.appendChild(dateTd);
+
+            approvedTableBody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Error fetching bookings:", error);
+    }
+}
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         DisplayReports();
+        DisplayAssigned();
     } else {
         alert("User not signed in. Redirecting...");
         window.location.href = "index.html";
