@@ -50,7 +50,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           const q = query(collection(db, "Maintenance"), where("assignedTo", "==", staffName));
           const snapshot = await getDocs(q);
   
-          snapshot.forEach((docSnap) => {
+          snapshot.forEach(async (docSnap) => {
               const data = docSnap.data();
               const tr = document.createElement("tr");
   
@@ -78,8 +78,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
               });
 
               const facilitiesRef = collection(db, "facilities");
-                    const q = query(facilitiesRef, where("fname", "==", data.facility));
-                    const querySnapshot = getDocs(q);
+              const q = query(facilitiesRef, where("fname", "==", data.facility));
+              const querySnapshot = await getDocs(q);
             
               // Handle status update
               statusSelect.addEventListener("change", async (e) => {
@@ -101,7 +101,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                       alert("Error updating status.");
                   }
               });
-              
+
               statusTd.appendChild(statusSelect);
   
               tr.appendChild(facTd);
