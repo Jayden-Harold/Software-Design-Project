@@ -76,7 +76,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                   if (data.Status === status) option.selected = true;
                   statusSelect.appendChild(option);
               });
-  
+
+              const facilitiesRef = collection(db, "facilities");
+                    const q = query(facilitiesRef, where("fname", "==", data.facility));
+                    const querySnapshot = getDocs(q);
+            
               // Handle status update
               statusSelect.addEventListener("change", async (e) => {
                   const newStatus = e.target.value;
@@ -86,8 +90,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                       });
                       alert(`Status updated to "${newStatus}"`);
                       if (newStatus === "Complete"){
-                        await updateDoc(doc(db, "facilities", data.facility), {
-                          status: "available"
+                        querySnapshot.forEach(async (facilityDoc) => {
+                          await updateDoc(facilityDoc.ref, {
+                            status: "Available"
+                          });
                         }); 
                       }
                   } catch (err) {
@@ -95,7 +101,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                       alert("Error updating status.");
                   }
               });
-  
+              
               statusTd.appendChild(statusSelect);
   
               tr.appendChild(facTd);
