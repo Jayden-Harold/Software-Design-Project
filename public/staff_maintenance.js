@@ -85,6 +85,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                           Status: newStatus
                       });
                       alert(`Status updated to "${newStatus}"`);
+                      if (newStatus === "Complete"){
+                        await updateDoc(doc(db, "facilities", data.facility), {
+                          status: "available"
+                        }); 
+                      }
                   } catch (err) {
                       console.error("Failed to update status:", err);
                       alert("Error updating status.");
