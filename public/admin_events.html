@@ -38,6 +38,7 @@
 <body>
   <h1>Events</h1>
   <main class="container">
+  <!--button id="event-btn">Create Event</button-->
     <!-- Event 1 -->
     <article class="event-card">
       <img src="images/bball-img.png" alt="" />
@@ -86,25 +87,24 @@
       </section>
     </article>
   </main>
-  <button id="event-btn">Create Event</button>
   <dialog class="modal-event">
     <button class="close-btn">
       <i class="fa-solid fa-xmark"></i>
     </button>
     <h1>Create an event</h1>
     <section class="event-content">
-        <label for="Name">Event Name:</label><input type="text" name="event-name" required>
+        <label for="Name">Event Name:</label><input type="text" id="eventName" name="event-name" required>
         <label for="Location">Location:</label><select name="Facility" id="facility">
             <option value="" disabled selected>Location...</option>
           </select>
-        <label for="Date">Date:</label><input type="date" name="event-date" required>
+        <label for="Date">Date:</label><input type="date" id="eventDate" name="event-date" required>
         <label for="start">Start Time:</label>
         <input type="time" id="start" name="start" required>
     
         <label for="end">Finish Time:</label>
         <input type="time" id="end" name="end" required>
-        <label for="Description">Event Description:</label><textarea></textarea>
-        <label for="Image">Event Image:</label><input type="file" name="image" accept="image/*" required>
+        <label for="Description">Event Description:</label><textarea id="desc"></textarea>
+        <label for="Image">Event Image:</label><input type="file" id="image" name="image" accept="image/*" required>
         <button type="submit" id="upload-btn">Upload</button>
     </section>
     <section class="btn-container1"><button id="confirm-btn">CREATE EVENT</button></section>
