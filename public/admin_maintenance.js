@@ -132,7 +132,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
         approvedTableBody.innerHTML = ""; // Clear existing rows
 
         const mainRef = collection(db, "Maintenance");
-        const q = query(mainRef, where("Status", "==", "assigned"));
+        const q = query(mainRef, where("Status", "!=", "Reported"));
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach((docSnap) => {

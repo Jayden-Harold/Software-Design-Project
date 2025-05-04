@@ -108,6 +108,7 @@ const checkbox = document.getElementById("confirm");
 
 async function checkAndCreateBooking(user, fname, timeslot, date) {
   const bookingsRef = collection(db, 'bookings');
+  const facRef = collection(db, 'facilities');
   const userID = user.uid;
   const userName = user.displayName || "Unknown User";
 
@@ -135,6 +136,10 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
   const userSnapBooking = await getDocs(userQuery);
   const userConflict = !userSnapBooking.empty;
 
+  const facQuery = query( facRef, where("fname", "==", fname), where("status", "==", "Under Maintenance"));
+  const facMaintenance = await getDocs(facQuery);
+  const facConflict = !facMaintenance.empty;
+
   // Check if facility is already booked
   const facilityQuery = query(
     bookingsRef,
@@ -151,6 +156,10 @@ async function checkAndCreateBooking(user, fname, timeslot, date) {
 
   if (facilityConflict) {
     return { success: false, message: "Facility is already booked at this timeslot." };
+  }
+
+  if (facConflict) {
+    return {success: false, message: "Facility is under maintenance."};
   }
 
   // Add the new booking
