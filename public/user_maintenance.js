@@ -78,6 +78,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           ReportedDate: new Date(),
          
         });
+
+         const bookDocRef = doc(db, "Maintenance", docId);
+         const bookDoc = await getDoc(bookDocRef);
+         const bookData = bookDoc.data();
           // Then add a notification
         const notificationsRef = collection(db, "notifications");
             await addDoc(notificationsRef, {
