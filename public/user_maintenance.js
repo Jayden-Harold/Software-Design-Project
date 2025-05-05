@@ -79,7 +79,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
          
         });
 
-         const bookDocRef = doc(db, "Maintenance", docId);
+         const bookDocRef = doc(db, "Maintenance", doc.id);
          const bookDoc = await getDoc(bookDocRef);
          const bookData = bookDoc.data();
           // Then add a notification
