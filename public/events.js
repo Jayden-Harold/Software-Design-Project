@@ -27,7 +27,7 @@ async function displayEvents() {
       const q = query(eventRef);
       const querySnapshot = await getDocs(q);
   
-      const eventList = document.getElementById("event-list");
+      
   
       querySnapshot.forEach((docSnap) => {
         const eventData = docSnap.data();
@@ -38,13 +38,15 @@ async function displayEvents() {
         const facility = eventData.facilityName;
         const sport = eventData.eventSport;
 
-       const image = "images/padel-img.png" 
+        const lowSport = sport.toLowerCase();
+
+       const image = `"images/${lowSport}-img.png"`
   
         const article = document.createElement("article");
         article.className = "event-card";
   
         article.innerHTML = `
-          <img src="${image}" alt="${eventName}} poster" />
+          <img src=${image} alt="${eventName}} poster" />
           <section class="details">
             <h3>${eventName}</h3>
             <p>${facility}</p>
