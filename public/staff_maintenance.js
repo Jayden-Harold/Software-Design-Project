@@ -69,7 +69,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
   
               // Status dropdown
               const statusSelect = document.createElement("select");
-              ["In Progress", "Complete"].forEach((status) => {
+              ["Assigned", "In Progress", "Complete"].forEach((status) => {
                   const option = document.createElement("option");
                   option.value = status;
                   option.textContent = status;
