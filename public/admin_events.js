@@ -120,7 +120,57 @@ async function checkAndCreateEvent(eventSport, eventName, facilityName, eventDat
     return { success: true, message: "Event successfully created.", eventID: newEventRef.id };
   }
   
+const container = document.querySelector(".container");
 
+async function displayEvents() {
+    try {
+      const eventRef = collection(db, "events"); // or your actual Firestore collection
+      const q = query(eventRef);
+      const querySnapshot = await getDocs(q);
+  
+      const eventList = document.getElementById("event-list");
+  
+      querySnapshot.forEach((docSnap) => {
+        const eventData = docSnap.data();
+        const eventName = eventData.eventName;
+        const eventEndTime = eventData.endTime;
+        const eventStartTime = eventData.startTime;
+        const date = eventData.eventDate;
+        const facility = eventData.facilityName;
+        const sport = eventData.eventSport;
+
+       const image = "images/padel-img.png" 
+  
+        const article = document.createElement("article");
+        article.className = "event-card";
+  
+        article.innerHTML = `
+          <img src="${image}" alt="${eventName}} poster" />
+          <section class="details">
+            <h3>${eventName}</h3>
+            <p>${facility}</p>
+            <p>${date}</p>
+            <p>${eventStartTime}-${eventEndTime}</p>
+            <span class="category">${sport}</span>
+          </section>
+        `;
+  
+        container.appendChild(article);
+      });
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  }
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        displayEvents(); // now runs for ALL matching users
+    } else {
+        alert("User not signed in. Redirecting...");
+        window.location.href = "index.html";
+    }
+});
+  
 /*document.getElementById("create-event").addEventListener("click", (e) => {
     e.preventDefault;
     document.querySelector(".modal-event").showModal();

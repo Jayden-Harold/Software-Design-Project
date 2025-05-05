@@ -100,6 +100,7 @@ async function DisplayPending() {
       alert("An error occurred while denying the request.");
     }
 } */
+
    async function denyRequest(docId, rowElement) {
       const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
       if (!confirmation) return;
