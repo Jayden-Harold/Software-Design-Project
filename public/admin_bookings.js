@@ -126,7 +126,7 @@ async function approveBooking(docId, bookData, rowElement) {
       const bookDoc = await getDoc(bookDocRef);
       const bookData = bookDoc.data();
       
-      await updateDoc(bookDocRef);
+   
 
       //create notification
       const notificationsRef = collection(db, "notifications");
