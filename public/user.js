@@ -26,3 +26,8 @@ events.addEventListener("click", (e) => {
     e.preventDefault;
     window.location.href = "events.html"
 })
+
+notifications.addEventListener("click", (e) => {
+    e.preventDefault;
+    window.location.href = "notifications.html"
+})
