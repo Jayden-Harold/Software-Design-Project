@@ -9,6 +9,8 @@ menu.addEventListener("click", () => {
 
 const bookings = document.querySelector("#bookings-img");
 const maintenance = document.querySelector("#maintenance-img");
+const notifications = document.querySelector("#notifications-img");
+const events = document.querySelector("#events-img");
 
 bookings.addEventListener("click", (e) => {
     e.preventDefault;
@@ -20,3 +22,7 @@ maintenance.addEventListener("click", (e) => {
     window.location.href = "user_maintenance.html"
 })
 
+events.addEventListener("click", (e) => {
+    e.preventDefault;
+    window.location.href = "events.html"
+})

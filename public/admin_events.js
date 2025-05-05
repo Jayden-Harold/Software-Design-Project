@@ -139,7 +139,9 @@ async function displayEvents() {
         const facility = eventData.facilityName;
         const sport = eventData.eventSport;
 
-       const image = "images/padel-img.png" 
+        const lowSport = sport.toLowerCase();
+
+       const image = "images/${lowSport}-img.png" 
   
         const article = document.createElement("article");
         article.className = "event-card";

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="dashboard_user.css">
+    <link rel="stylesheet" href="admin_events.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -15,47 +15,30 @@
     <title>Green Smoke</title>
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="info.js" defer type="module"></script>
-    <script src="user.js" defer type="module"></script>
+    <script src="events.js" defer type="module"></script>
   </head>
     <header class="nav-container">
     <nav class="nav-bar">
       <h1 id="Logo">GREEN SMOKE</h1>
         <ul class="nav-menu">
-          <li><a href="booking.html" class="nav-links">BOOK</a></li>
-          <li><a href="facilities.html" class="nav-links">FACILITIES</a></li>
-          <li><a href="#" class="nav-links">EVENTS</a></li>      
-          <li><a href="#" class="nav-links-new">USER</a></li>      
-          
+          <li><a href="admin_bookings.html" class="nav-links">BOOKINGS</a></li>
+          <li><a href="admin_resident.html" class="nav-links">RESIDENTS</a></li>
+          <li><a href="admin_staff.html" class="nav-links">STAFF</a></li>      
+          <li>
+            <a href="admin.html" style="font-size: 30px; color: black;">
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </a>
+          </li>     
         </ul>
         <button id="mobile-menu" class="menu-toggle">
           <i class="fa-sharp fa-solid fa-bars fa-2xl" style="color: #EDEDED"></i>
       </button>
-
     </nav>
     </header>
-
 <body>
-    <section class="Greeting">
-        <h1 id="username"></h1>
-    </section>
-
-    <section class="Status">
-        <h2 id="userRole"></h2>
-        <h2 id="userStatus"></h2>
-        <img id="userDP">
-    </section>
-
-    <section class="row-1">
-      <img src="images/bookings-img.png" alt="BOOKINGS" class="tabs-img" id="bookings-img">
-      <img src="images/maintenance-img.png" alt="MAINTENANCE" class="tabs-img" id="maintenance-img">
-      <img src="images/events-img.png" alt="EVENTS" class="tabs-img" id="events-img">
-      <img src="images/notifications-img.png" alt="NOTIFICATIONS"  class="tabs-img" id="notifications-img">
-  </section>
-
-
-</body>
-
+  <h1>Events</h1>
+  <main class="container">
+  </main>
   <footer>
     <section>
       <h2>GREEN SMOKE</h2>
@@ -73,3 +56,5 @@
       <p><a href="#" class="f-links">Privacy Policy</a></p>  
     </section>
     </footer>
+
+</body>

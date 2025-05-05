@@ -340,6 +340,32 @@ input[type="file"] {
     transition: 0.2s ease-out;
 }
 
+#create-event{
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--poolblue);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#create-event:hover{
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: var(--poolblue);
+    border: solid 1px var(--poolblue);
+    transition: all 0.2s ease-out;
+}
+
 #event-btn{
     font-size: 1.2rem;
     font-weight: bold;
