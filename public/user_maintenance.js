@@ -79,16 +79,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
          
         });
 
-         const bookDocRef = doc(db, "Maintenance", docId);
-         const bookDoc = await getDoc(bookDocRef);
-         const bookData = bookDoc.data();
+      
           // Then add a notification
         const notificationsRef = collection(db, "notifications");
             await addDoc(notificationsRef, {
                 userID: "all", 
                 category: "maintenance",
                 date: new Date().toISOString().split('T')[0], // current date
-                description: `Please note ${bookData.fname} is currently under maintenance.`,
+                description: `Please note ${selectedFac} is currently under maintenance.`,
                 createdAt: new Date() // timestamp for sorting
           });
       const facilitiesRef = collection(db, "facilities");
