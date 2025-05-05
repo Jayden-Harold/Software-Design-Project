@@ -86,7 +86,7 @@ async function DisplayPending() {
     }
 }
 
-async function denyRequest(docId, rowElement) {
+/*async function denyRequest(docId, rowElement) {
     const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
     if (!confirmation) return;
   
@@ -99,6 +99,36 @@ async function denyRequest(docId, rowElement) {
       console.error("Error denying request:", error);
       alert("An error occurred while denying the request.");
     }
+} */
+   async function denyRequest(docId, rowElement) {
+      const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
+      if (!confirmation) return;
+    
+      try {
+          // First get the booking data before deleting
+          const bookDocRef = doc(db, "bookings", docId);
+          const bookDoc = await getDoc(bookDocRef);
+          const bookData = bookDoc.data();
+          
+          // Delete the booking
+          await deleteDoc(bookDocRef);
+          
+          // Create notification
+          const notificationsRef = collection(db, "notifications");
+          await addDoc(notificationsRef, {
+              userID: bookData.userID, 
+              category: "booking",
+              date: new Date().toISOString().split('T')[0], // current date
+              description: `Your booking for ${bookData.fname} has been denied`,
+              createdAt: new Date() // timestamp for sorting
+          });
+          
+          alert("Request denied and record deleted successfully.");
+          rowElement.remove();
+      } catch (error) {
+          console.error("Error denying request:", error);
+          alert("An error occurred while denying the request.");
+      }
   }
 
 async function approveBooking(docId, bookData, rowElement) {
