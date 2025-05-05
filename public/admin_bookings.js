@@ -118,11 +118,25 @@ async function DisplayPending() {
 
 async function approveBooking(docId, bookData, rowElement) {
     try {
+       
       const bookDocRef = doc(db, "bookings", docId);
       await updateDoc(bookDocRef, { status: "approved" });
-
       // Remove the row from pending table immediately
       rowElement.remove();
+      const bookDoc = await getDoc(bookDocRef);
+      const bookData = bookDoc.data();
+      
+      await updateDoc(bookDocRef);
+
+      //create notification
+      const notificationsRef = collection(db, "notifications");
+          await addDoc(notificationsRef, {
+              userID: bookData.userID, 
+              category: "booking",
+              date: new Date().toISOString().split('T')[0], // current date
+              description: `Your booking for ${bookData.fname} has been approved`,
+              createdAt: new Date() // timestamp for sorting
+          });
 
       // Add to approved table immediately
       moveBookToApproved(bookData);
