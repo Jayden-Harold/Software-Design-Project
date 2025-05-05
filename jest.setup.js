@@ -5,3 +5,12 @@ if (!global.fetch) global.fetch = fetch;
 if (!global.Request) global.Request = Request;
 if (!global.Response) global.Response = Response;
 if (!global.Headers) global.Headers = Headers;
+
+//Mock Firebase globally
+jest.mock('firebase/firestore', () => ({
+    getFirestore: jest.fn(),
+    collection: jest.fn(() => ({
+      where: jest.fn(),
+      get: jest.fn()
+    })),
+}));
