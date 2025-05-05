@@ -84,7 +84,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
         const notificationsRef = collection(db, "notifications");
             await addDoc(notificationsRef, {
                 userID: "all", 
-                category: "maintenance",
+                category: "Maintenance",
                 date: new Date().toISOString().split('T')[0], // current date
                 description: `Please note ${selectedFac} is currently under maintenance.`,
                 createdAt: new Date() // timestamp for sorting
