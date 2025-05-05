@@ -102,7 +102,7 @@ async function DisplayPending() {
       const notificationsRef = collection(db, "notifications");
           await addDoc(notificationsRef, {
               userID: bookData.userID, 
-              category: "booking",
+              category: "Booking",
               date: new Date().toISOString().split('T')[0], // current date
               description: `Your booking for ${bookData.fname} has been denied`,
               createdAt: new Date() // timestamp for sorting
