@@ -92,9 +92,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                       if (newStatus === "Complete"){
                         querySnapshot.forEach(async (facilityDoc) => {
                           await updateDoc(facilityDoc.ref, {
-                            status: "Available"
+                            status: "available"
                           });
-                          console.log(data.facility);
                         }); 
                       }
                   } catch (err) {
@@ -108,8 +107,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
               tr.appendChild(facTd);
               tr.appendChild(catTd);
               tr.appendChild(descTd);
-              tr.appendChild(dateTd);
               tr.appendChild(statusTd);
+              tr.appendChild(dateTd);
               tableBody.appendChild(tr);
           });
       } catch (error) {

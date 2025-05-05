@@ -87,6 +87,7 @@
       </section>
     </article>
   </main>
+  <button id="create-event">CREATE EVENT</button>
   <dialog class="modal-event">
     <button class="close-btn">
       <i class="fa-solid fa-xmark"></i>
@@ -94,20 +95,28 @@
     <h1>Create an event</h1>
     <section class="event-content">
         <label for="Name">Event Name:</label><input type="text" id="eventName" name="event-name" required>
+        <label for="Sport">Sport:</label>
+        <select name="Event Sport" id="sport">
+          <option value="" disabled selected>Sport...</option>
+          <option value="Padel" >Padel</option>
+          <option value="Soccer" >Soccer</option>
+          <option value="Netball" >Netball</option>
+          <option value="Cricket" >Cricket</option>
+          <option value="Basketball" >Basketball</option>
+          <option value="Hockey" >Hockey</option>
+          <option vale="Swimming">Swimming</option>
+        </select>
         <label for="Location">Location:</label><select name="Facility" id="facility">
             <option value="" disabled selected>Location...</option>
           </select>
         <label for="Date">Date:</label><input type="date" id="eventDate" name="event-date" required>
         <label for="start">Start Time:</label>
         <input type="time" id="start" name="start" required>
-    
         <label for="end">Finish Time:</label>
         <input type="time" id="end" name="end" required>
         <label for="Description">Event Description:</label><textarea id="desc"></textarea>
-        <label for="Image">Event Image:</label><input type="file" id="image" name="image" accept="image/*" required>
-        <button type="submit" id="upload-btn">Upload</button>
     </section>
-    <section class="btn-container1"><button id="confirm-btn">CREATE EVENT</button></section>
+    <section class="btn-container1"><button id="event-btn">CREATE EVENT</button></section>
   </dialog>
   <footer>
     <section>

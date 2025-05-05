@@ -189,6 +189,12 @@ body {
     padding-bottom: 2rem;
 }
 
+.row-2{
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 2rem;
+}
+
 .tabs-img{
     width: 20%;
     cursor: pointer;
@@ -199,8 +205,6 @@ footer{
     justify-content: space-around;
     background-color: var(--gray);
     width: 100%;
-    position: absolute;
-    bottom: 0;
 }
 
 footer p{
