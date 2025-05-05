@@ -116,6 +116,16 @@ async function checkAndCreateEvent(eventSport, eventName, facilityName, eventDat
       endTime,
       eventDescription,
     });
+            
+    //create notification
+      const notificationsRef = collection(db, "notifications");
+          await addDoc(notificationsRef, {
+              userID: "all", 
+              category: "events",
+              date: new Date().toISOString().split('T')[0], // current date
+              description: `Please note ${facilityName} will be unavaliable on the ${eventDate} due to the ${eventName} event.`,
+              createdAt: new Date() // timestamp for sorting
+          });
   
     return { success: true, message: "Event successfully created.", eventID: newEventRef.id };
   }
