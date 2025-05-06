@@ -26,6 +26,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
+    document.addEventListener("DOMContentLoaded", async function () {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById("booking-date").setAttribute("min", today)
+    });
+
+
 document.getElementById("book-btn").addEventListener("click", async function () {
     const user = auth.currentUser;
 

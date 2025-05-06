@@ -38,3 +38,8 @@ maintenance.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href="admin_maintenance.html"
 })
+
+notifications.addEventListener("click", (e) => {
+    e.preventDefault;
+    window.location.href="notifications.html"
+})

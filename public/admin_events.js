@@ -16,6 +16,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const auth = getAuth(app);
     const db = getFirestore(app);
     const user = auth.currentUser;
+
     document.getElementById("create-event").addEventListener("click", (e) => {
         e.preventDefault();
         document.querySelector(".modal-event").showModal();
@@ -32,6 +33,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
       
       document.addEventListener("DOMContentLoaded", async function () {
         locationSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("eventDate").setAttribute("min", today)
       
         try {
           const facilitiesRef = collection(db, "facilities");
