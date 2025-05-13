@@ -128,7 +128,8 @@ async function checkAndCreateEvent(eventSport, eventName, facilityName, eventDat
               category: "Events",
               date: new Date().toISOString().split('T')[0], // current date
               description: `Please note ${facilityName} will be unavaliable on the ${eventDate} due to the ${eventName} event.`,
-              createdAt: new Date() // timestamp for sorting
+              createdAt: new Date(),// timestamp for sorting
+              seenBy:[]
           });
   
     return { success: true, message: "Event successfully created.", eventID: newEventRef.id };

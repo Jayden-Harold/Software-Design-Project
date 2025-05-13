@@ -35,9 +35,11 @@ async function DisplayNotifications(user) {
         // Firestore compound query
         const q = query(
             noteRef,
-            where("userID", "in", [userID, "all"])
+            where("userID", "in", [userID, "all"]),
+            where("seenBy", "not-in", [[userID]])
           );
         const querySnapshot = await getDocs(q);
+        userTableBody.innerHTML = "";
 
         querySnapshot.forEach((docSnap) => {
             const noteData = docSnap.data();
@@ -56,6 +58,14 @@ async function DisplayNotifications(user) {
             const descCell = document.createElement("td");
             descCell.textContent = description;
 
+            // Action Cell (Mark as Read Button)
+            const actionCell = document.createElement("td");
+            const markReadBtn = document.createElement("button");
+            markReadBtn.textContent = "Mark as Read";
+            markReadBtn.className = "mark-read-btn"; // For CSS styling
+            markReadBtn.onclick = () => handleMarkAsRead(docSnap.id, userID, row);
+            actionCell.appendChild(markReadBtn);
+
             row.appendChild(catCell);
             row.appendChild(descCell);
             row.appendChild(dateCell);
@@ -66,6 +76,27 @@ async function DisplayNotifications(user) {
 
     } catch (error) {
         console.error("Error fetching notifications:", error);
+    }
+}
+
+// Handle button click - mark notification as read
+async function handleMarkAsRead(notificationId, userId, rowElement) {
+    try {
+        const notificationRef = doc(db, "notifications", notificationId);
+        
+        // Update Firestore
+        await updateDoc(notificationRef, {
+            seenBy: arrayUnion(userId) // Add user to seenBy array
+        });
+
+        // Visual feedback: Remove bold styling and button
+        rowElement.style.fontWeight = "normal";
+        const btnCell = rowElement.querySelector("td:last-child");
+        btnCell.innerHTML = "✓ Read"; // Or remove the cell entirely
+
+    } catch (error) {
+        console.error("Error marking notification as read:", error);
+        alert("Failed to mark as read. Please try again.");
     }
 }
 
