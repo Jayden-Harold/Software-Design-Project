@@ -40,6 +40,13 @@ async function DisplayNotifications(user) {
         const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
         // Combine results
         const allDocs = [...snap1.docs, ...snap2.docs];
+       // Sort allDocs by createdAt in descending order
+        allDocs.sort((a, b) => {
+        const dateA = a.data().createdAt?.toMillis?.() || 0;
+        const dateB = b.data().createdAt?.toMillis?.() || 0;
+        return dateB - dateA;
+        });
+
 
         userTableBody.innerHTML = "";
 

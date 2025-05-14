@@ -28,8 +28,8 @@ Click [here](https://green-smoke-0f073e403.6.azurestaticapps.net/)
 
 - **Languages**: HTML, CSS, JavaScript
 - **Frontend**: React
-- **Backend**: Node.js, Express
-- **Database**: Azure SQL Database
+- **Backend**: Node.js
+- **Database**: Firestore Database
 - **Authentication**: Google OAuth
 - **Testing**: Jest
 - **CI/CD Pipeline**: GitHub Actions
