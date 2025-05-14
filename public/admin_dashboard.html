@@ -15,7 +15,7 @@
     <title>Green Smoke</title>
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="admin_events.js" defer type="module"></script>
+    <script src="admin_dashboard.js" defer type="module"></script>
   </head>
     <header class="nav-container">
     <nav class="nav-bar">
@@ -47,20 +47,23 @@
       </select>
     <button onclick="downloadPDF()">Download as PDF</button>
     </section>
-    <ul class="flex border-b mb-4">
-  <li><button>Usage Trends</button></li>
-  <li><button>Custom View</button></li>
-    </ul>
-    <section class="main-figures">
+  <section class="tab">
+  <button class="tablinks" id="usage-trends-btn">Usage Trends</button>
+  <button class="tablinks" id="custom-view-btn">Custom View</button>
+    </section>
+    <section class="tab-content" id="usage-trends">
         <article class="most-popular-facility">
             <h1>Most Popular Facility</h1>
         </article>
         <article class="total-bookings">
             <h1>Total Bookings</h1>
         </article>
-    </section>
-    <section>
+      <section class="weekly-usage">
         <h1>Weekly Usage Comparison</h1>
+    </section>
+    </section>
+    <section class="tab-content" id="custom-view">
+      <h1>Custom View</h1>
     </section>
   <footer>
     <section>
