@@ -105,7 +105,8 @@ async function DisplayPending() {
               category: "Booking",
               date: new Date().toISOString().split('T')[0], // current date
               description: `Your booking for ${bookData.fname} has been denied`,
-              createdAt: new Date() // timestamp for sorting
+              createdAt: new Date(), // timestamp for sorting
+              seenBy:[]
           });
 
       alert("Request denied and record deleted successfully.");
@@ -135,7 +136,8 @@ async function approveBooking(docId, bookData, rowElement) {
               category: "Booking",
               date: new Date().toISOString().split('T')[0], // current date
               description: `Your booking for ${bookData.fname} has been approved`,
-              createdAt: new Date() // timestamp for sorting
+              createdAt: new Date(), // timestamp for sorting
+              seenBy:[]
           });
 
       // Add to approved table immediately
