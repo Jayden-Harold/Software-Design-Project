@@ -32,39 +32,31 @@ async function DisplayNotifications(user) {
         const noteRef = collection(db, "notifications");
         const userID = user.uid;
 
-        // Firestore compound query
-        const q1 = query(
-            noteRef,
-            where("userID", "==", userID)
-        );
-          
-          const q2 = query(
-            noteRef,
-            where("userID", "==", "all")
-        );
+        // Firestore compound queries
+        const q1 = query(noteRef, where("userID", "==", userID));
+        const q2 = query(noteRef, where("userID", "==", "all"));
 
         // Execute both queries
         const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
         // Combine results
         const allDocs = [...snap1.docs, ...snap2.docs];
 
-        // Filter out documents that user has already seen
-        const unseenDocs = allDocs.filter(doc => {
-            const seenBy = doc.data().seenBy || [];
-            return !seenBy.includes(userID);
-        });
-
         userTableBody.innerHTML = "";
 
-        // Render table rows for each unseen notification
-        unseenDocs.forEach((docSnap) => {
+        // Render table rows for all notifications
+        allDocs.forEach((docSnap) => {
             const noteData = docSnap.data();
             const category = noteData.category;
             const date = noteData.date;
             const description = noteData.description;
+            const seenBy = noteData.seenBy || [];
 
             const row = document.createElement("tr");
-            row.style.fontWeight = "bold"; // visually indicate unread
+
+            // Bold for unseen, normal for seen
+            if (!seenBy.includes(userID)) {
+                row.style.fontWeight = "bold";
+            }
 
             const catCell = document.createElement("td");
             catCell.textContent = category;
@@ -76,11 +68,18 @@ async function DisplayNotifications(user) {
             descCell.textContent = description;
 
             const actionCell = document.createElement("td");
-            const markReadBtn = document.createElement("button");
-            markReadBtn.textContent = "Mark as Read";
-            markReadBtn.className = "mark-read-btn";
-            markReadBtn.onclick = () => handleMarkAsRead(docSnap.id, userID, row);
-            actionCell.appendChild(markReadBtn);
+
+            // Show "Mark as Read" button only for unseen
+            if (!seenBy.includes(userID)) {
+                const markReadBtn = document.createElement("button");
+                markReadBtn.textContent = "Mark as Read";
+                markReadBtn.className = "mark-read-btn";
+                markReadBtn.onclick = () => handleMarkAsRead(docSnap.id, userID, row);
+                actionCell.appendChild(markReadBtn);
+            } else {
+                actionCell.textContent = "Seen";
+                actionCell.style.color = "gray";
+            }
 
             row.appendChild(catCell);
             row.appendChild(descCell);
@@ -94,6 +93,7 @@ async function DisplayNotifications(user) {
         console.error("Error fetching notifications:", error);
     }
 }
+
 
 // Handle button click - mark notification as read
 async function handleMarkAsRead(notificationId, userId, rowElement) {

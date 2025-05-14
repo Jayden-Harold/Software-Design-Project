@@ -244,3 +244,21 @@ tbody tr:last-child td {
         color: var(--darkgray);
     }
 }
+
+.mark-read-btn{
+        font-family: "Raleway", sans-serif;
+    background-color: var(--lightgray);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+    margin-right: .5rem;
+}
+
+.mark-read-btn:hover{
+    background-color: var(--darkgray);
+    color: var(--tennisgreen);
+}
