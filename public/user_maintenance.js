@@ -87,7 +87,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                 category: "Maintenance",
                 date: new Date().toISOString().split('T')[0], // current date
                 description: `Please note ${selectedFac} is currently under maintenance.`,
-                createdAt: new Date() // timestamp for sorting
+                createdAt: new Date(), // timestamp for sorting
+                seenBy:[]
           });
       const facilitiesRef = collection(db, "facilities");
       const q = query(facilitiesRef, where("fname", "==", selectedFac));
