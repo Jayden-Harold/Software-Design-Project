@@ -256,3 +256,91 @@ footer a{
   border: 1px solid #ccc;
   border-top: none;
 }
+
+.main-figures{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+  article.main-figure{
+    flex: 0 1 calc(50% - 40px);
+    max-width: 500px;
+    min-width: 250px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .main-figure h1{
+    font-size: 1.5rem;
+    background-color: var(--poolblue);
+    margin: 0;
+    padding: .5rem;
+    color: white;
+  }
+
+  .main-figure h2{
+    font-size: 1.2 rem;
+    align-items: center;
+    text-align: center;
+    color: var(--poolblue);
+  }
+
+  h1{
+    padding-left: .8rem;
+  }
+
+  select {
+    font-size: 16px;
+    padding: 6px 10px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: var(--lightgray);       /* Hides default arrow on modern browsers */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    cursor: pointer;
+  }
+  
+  .usage{
+    margin-left: .8rem;
+    margin-bottom: .8rem;
+  }
+
+  .btn-container{
+        display: flex;
+        justify-content: flex-end; /* pushes content to the right */
+        align-items: center;
+        padding: .5rem;
+}
+
+#pdf-btn{
+    font-size: .8rem;
+    font-weight: bold;
+    background-color: var(--poolblue);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    transition: all .35s;
+    outline: none;
+}
+
+#pdf-btn:hover{
+    background-color: transparent;
+    padding: 8px 20px;
+    border-radius: 4px;
+    color: var(--poolblue);
+    border: solid 1px var(--poolblue);
+    transition: all 0.2s ease-out;
+}

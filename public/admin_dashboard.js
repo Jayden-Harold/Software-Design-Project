@@ -45,27 +45,27 @@ async function displayBookingStats() {
     }
     
     // Display most popular facility
-    const popularFacilityElement = document.querySelector('.most-popular-facility');
+    const popularFacilityElement = document.querySelector('#most-popular-facility');
     if (popularFacilityElement) {
       if (mostPopularFacility) {
         popularFacilityElement.innerHTML = `
           <h1>Most Popular Facility</h1>
-          <p>${mostPopularFacility}</p>
+          <h2>${mostPopularFacility}</h2>
         `;
       } else {
         popularFacilityElement.innerHTML = `
           <h1>Most Popular Facility</h1>
-          <p>No booking data available</p>
+          <h2>No booking data available</h2>
         `;
       }
     }
     
     // Display total bookings
-    const totalBookingsElement = document.querySelector('.total-bookings');
+    const totalBookingsElement = document.querySelector('#total-bookings');
     if (totalBookingsElement) {
       totalBookingsElement.innerHTML = `
         <h1>Total Bookings</h1>
-        <p>${totalBookings}</p>
+        <h2>${totalBookings}</h2>
       `;
     }
     
@@ -76,7 +76,7 @@ async function displayBookingStats() {
     if (popularFacilityElement) {
       popularFacilityElement.innerHTML = `
         <h1>Most Popular Facility</h1>
-        <p>Error loading data</p>
+        <h2>Error loading data</h2>
       `;
     }
     
@@ -84,7 +84,7 @@ async function displayBookingStats() {
     if (totalBookingsElement) {
       totalBookingsElement.innerHTML = `
         <h1>Total Bookings</h1>
-        <p>Error loading data</p>
+        <h2>Error loading data</h2>
       `;
     }
   }
