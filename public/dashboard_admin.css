@@ -220,7 +220,6 @@ footer a{
 /* Style the tab */
 .tab {
   overflow: hidden;
-  border: 1px solid var(--greensmoke);
   background-color: var(--poolblue);
 }
 
@@ -233,16 +232,21 @@ footer a{
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
+  color: white;
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: #ddd;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #ccc;
+  background-color: var(--poolblue);
+  border-bottom: 2px solid var(--tennisgreen);
+  font-weight: bold;
 }
 
 /* Style the tab content */
