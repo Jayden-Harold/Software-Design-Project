@@ -13,6 +13,8 @@
         html2pdf().from(element).save('maintenance.pdf');
       }
     </script>
+    <script src="graphing_maintenance.js" defer type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <header class="nav-container">
@@ -39,7 +41,7 @@
   <h1>Maintenance</h1>
   <button onclick="downloadPDF()">Download as PDF</button>
     <section class="Pending">
-        <h2>Unassigned Maintenance Reports</h2>
+        <h2>Unassigned Reports</h2>
           <table id="mainTable">
               <thead>
               <tr class="table-headings">
@@ -55,7 +57,7 @@
           </table>
         </section>
         <section class="Accepted">
-          <h2>Maintenance Reports</h2>
+          <h2>Assigned Reports</h2>
           <table id="approvedTable">
             <thead>
             <tr class="table-headings">
@@ -70,6 +72,17 @@
             <tbody></tbody>
         </table>
       </section>
+    </section>
+        <section class="issues">
+        <h1>Maintenance Summary</h1>
+        <select id="dateRangeSelector">
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        </select>
+        <h2>Issue Status Overview</h2>
+        <section id="chart-container"><canvas id="issueChart" width="400" height="200"></canvas></section>
+        <h2>Issues by Facility</h2>
+        <section id="chart-container"><canvas id="facilityChart" width="400" height="200"></canvas></section>
     </section>
 </body>
   <footer>

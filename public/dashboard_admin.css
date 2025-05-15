@@ -277,6 +277,7 @@ footer a{
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    border: 1px solid var(--poolblue);
   }
 
   .main-figure h1{
@@ -344,3 +345,15 @@ footer a{
     border: solid 1px var(--poolblue);
     transition: all 0.2s ease-out;
 }
+
+  #bookingsChart {
+    max-width: 600px;
+    max-height: 450px;
+  }
+
+  #chart-container{
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
