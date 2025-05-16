@@ -147,9 +147,15 @@ updateChart(7);
 document.getElementById('dateRangeSelector').addEventListener('change', (e) => {
   const days = parseInt(e.target.value);
   updateChart(days);
+  renderStatusPieChart(days);
 });
 
-async function fetchStatusCounts() {
+
+async function fetchStatusCounts(days) {
+  const now = new Date();
+  const cutoff = new Date(now);
+  cutoff.setDate(now.getDate() - days);
+
   const snapshot = await getDocs(collection(db, 'Maintenance'));
 
   const statusCounts = {
@@ -159,30 +165,34 @@ async function fetchStatusCounts() {
   };
 
   snapshot.forEach(doc => {
-    const status = doc.data().Status?.toLowerCase();
+    const data = doc.data();
+    const status = data.Status?.toLowerCase();
+    const date = data.ReportedDate?.toDate?.();
 
-    if (status === 'reported' || status === 'assigned') {
-      statusCounts.Open++;
-    } else if (status === 'in progress') {
-      statusCounts["In Progress"]++;
-    } else if (status === 'complete') {
-      statusCounts.Closed++;
+    if (date && date >= cutoff) {
+      if (status === 'reported' || status === 'assigned') {
+        statusCounts.Open++;
+      } else if (status === 'in progress') {
+        statusCounts["In Progress"]++;
+      } else if (status === 'complete') {
+        statusCounts.Closed++;
+      }
     }
   });
 
   return statusCounts;
 }
 
+
 let pieChart; // Global reference for pie chart
 
-async function renderStatusPieChart() {
-  const counts = await fetchStatusCounts();
+async function renderStatusPieChart(days) {
+  const counts = await fetchStatusCounts(days);
   const labels = Object.keys(counts);
   const data = Object.values(counts);
 
   const ctx = document.getElementById('issueChart').getContext('2d');
 
-  // Destroy previous chart if it exists
   if (pieChart) {
     pieChart.destroy();
   }
@@ -192,7 +202,7 @@ async function renderStatusPieChart() {
     data: {
       labels,
       datasets: [{
-        label: 'Maintenance Status Distribution',
+        label: `Maintenance Status (Last ${days} Days)`,
         data,
         backgroundColor: [
           '#f44336', // Open - red
@@ -208,12 +218,13 @@ async function renderStatusPieChart() {
         },
         title: {
           display: true,
-          text: 'Maintenance Requests by Status'
+          text: `Maintenance Requests by Status (Last ${days} Days)`
         }
       }
     }
   });
 }
 
+
 // Call on page load
-renderStatusPieChart();
+renderStatusPieChart(7);

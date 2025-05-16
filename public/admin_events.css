@@ -37,8 +37,11 @@ html, body {
     position: relative;
 }
 
-#Logo{
-    width: 17%;
+#Logo {
+    height: auto;
+    width: auto;
+    max-height: 60px;  /* Ensures it doesn't grow too big vertically */
+    max-width: 220px;  /* Optional: caps width on large screens */
 }
 
 .nav-menu{

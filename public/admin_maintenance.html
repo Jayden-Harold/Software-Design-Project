@@ -4,7 +4,9 @@
     <link rel="stylesheet" href="admin_maintenance.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Green Smoke</title>
+    <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="admin_maintenance.js" defer type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
@@ -39,7 +41,7 @@
 <body>
   <section id="maintenance">
   <h1>Maintenance</h1>
-  <button onclick="downloadPDF()">Download as PDF</button>
+  <section class="btn-container"><button id="pdf-btn" onclick="downloadPDF()"><i class="fa fa-download" aria-hidden="true"></i> Download as PDF</button></section>
     <section class="Pending">
         <h2>Unassigned Reports</h2>
           <table id="mainTable">

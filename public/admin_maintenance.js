@@ -101,7 +101,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                 try {
                     await updateDoc(doc(db, "Maintenance", docId), {
                         assignedTo: selectedStaff,
-                        Status: "assigned"  // ✅ update status
+                        Status: "Assigned"  // ✅ update status
                     });
                     alert(`Assigned to ${selectedStaff} successfully.`);
                 } catch (error) {
@@ -155,6 +155,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
             descTd.textContent = mainData.description || "";
             statTd.textContent = mainData.Status || "";
             assignedTd.textContent = mainData.assignedTo || "";
+
+            const status = (mainData.Status || "").toLowerCase();
+            if (status === "complete") {
+                statTd.style.color = "green";
+            } else if (status === "in progress" || status === "assigned") {
+                statTd.style.color = "orange";
+            }
 
             tr.appendChild(facTd);
             tr.appendChild(catTd);
