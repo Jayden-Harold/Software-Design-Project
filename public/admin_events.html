@@ -16,6 +16,26 @@
     <script src="https://kit.fontawesome.com/4b08f514fc.js" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="admin_events.js" defer type="module"></script>
+                 <script>
+        const apiKey = '5a3c0823d180bfaf64e493bab38442f5'; // Replace with your OpenWeatherMap API key
+        const city = 'Johannesburg'; // Replace with your city
+
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+            .then(response => response.json())
+            .then(data => {
+                const temp = data.main.temp;
+                const description = data.weather[0].description;
+                const iconCode = data.weather[0].icon;
+                const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+                document.getElementById('weather').innerHTML = `<p id="weather-container"> <img src="${iconUrl}" alt="${description}" id="weather-img"> ${temp}°C</p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('weather').innerHTML = 'Unable to fetch weather data.';
+                console.error(error);
+            });
+    </script>
   </head>
     <header class="nav-container">
     <nav class="nav-bar">
@@ -73,6 +93,7 @@
         <label for="Description">Event Description:</label><textarea id="desc"></textarea>
     </section>
     <section class="btn-container1"><button id="event-btn">CREATE EVENT</button></section>
+    <section id="weather"></section>
   </dialog>
   <footer>
     <section>
