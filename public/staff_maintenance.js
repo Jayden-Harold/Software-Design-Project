@@ -102,7 +102,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                          const assignedTo = data.assignedTo || staffName;
                          const workload = data.workload || 0;
 
-                          const staffRef = doc(db, "Staff Performance", Staff);
+                          const staffRef = doc(db, "Staff Performance", assignedTo);
                           const staffSnap = await getDoc(staffRef); // fixed from getDocs to getDoc
                         
                           if (staffSnap.exists()) {
