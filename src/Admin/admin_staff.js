@@ -1,5 +1,5 @@
 //import { getAuth,GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "firebase/auth";
-import { getDocs, doc, updateDoc, collection, query, where } from "firebase/firestore";
+import { getDocs, doc, updateDoc, collection, query, where,deleteDoc } from "firebase/firestore";
 import { auth, db } from "../test_utils/firebase.js";
 
 export const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
@@ -53,7 +53,7 @@ export async function DisplayStaffPending() {
     }
 }
 
-export async function denyRequest(docId, rowElement) {
+export async function denyRequest(db,docId, rowElement) {
     const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
     if (!confirmation) return;
   
@@ -113,6 +113,8 @@ export  function moveStaffToApproved(staffData) {
 
 export  async function DisplayStaffApproved() {
     try {
+        const approvedTableBody = document.querySelector("#approvedTable tbody"); 
+        if (!approvedTableBody) return;
         approvedTableBody.innerHTML = ""; // Clear existing rows
 
         const usersRef = collection(db, "users");
