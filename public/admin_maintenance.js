@@ -196,6 +196,42 @@ async function DisplayAssigned() {
         console.error("Error fetching bookings:", error);
     }
 }
+async function DisplayStaffPerformance() {
+  try {
+    const performanceTableBody = document.querySelector("#performanceTable tbody");
+    performanceTableBody.innerHTML = "";
+
+    const snapshot = await getDocs(collection(db, "Staff Performance"));
+
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+
+      const tr = document.createElement("tr");
+      const nameTd = document.createElement("td");
+      const resolvedTd = document.createElement("td");
+      const avgTimeTd = document.createElement("td");
+      const workloadTd = document.createElement("td");
+
+      nameTd.textContent = data.Staff || "Unknown";
+      resolvedTd.textContent = data.ResolveIssues ?? 0;
+
+      const avgTime = data.AvResTime ?? "-";
+      avgTimeTd.textContent = typeof avgTime === "number" ? `${avgTime.toFixed(2)} hrs` : "-";
+
+      workloadTd.textContent = data.CurrWorkload ?? 0;
+
+      tr.appendChild(nameTd);
+      tr.appendChild(resolvedTd);
+      tr.appendChild(avgTimeTd);
+      tr.appendChild(workloadTd);
+
+      performanceTableBody.appendChild(tr);
+    });
+
+  } catch (error) {
+    console.error("Error displaying staff performance:", error);
+  }
+}
 
 async function loadStaffPerformance() {
   const tableBody = document.querySelector("#staffPerformanceTable tbody");
