@@ -183,8 +183,6 @@ footer{
     justify-content: space-around;
     background-color: var(--gray);
     width: 100%;
-    position: absolute;
-    bottom: 0;
 }
 
 footer p{
@@ -205,6 +203,23 @@ footer a{
     padding-top: 1rem;
 }
 
+#weather-img {
+    height: auto;
+    width: auto;
+    max-height: 60px;  /* Ensures it doesn't grow too big vertically */
+    max-width: 220px;  /* Optional: caps width on large screens */
+}
+
+
+#weather-container{
+    margin-left: 1rem;
+    border: solid 2px var(--poolblue);
+    border-radius: 4px;
+    width: 15%;
+    color: white;
+    font-weight: bold;
+    background-color: var(--poolblue);
+}
 
 .row-1{
     display: flex;
