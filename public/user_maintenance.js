@@ -79,15 +79,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           ResolvedDate: "N/A",
           resolutionTime:"N/A",
         });
-
-        await addDoc(collection(db , "Staff Performance"),{
-          StaffMem: selectedFac,
-          resolved:selectedCat,
-          avRes: GivenDesc,
-          workload: "TBD",
-        });
-
-      
+    
           // Then add a notification
         const notificationsRef = collection(db, "notifications");
             await addDoc(notificationsRef, {
