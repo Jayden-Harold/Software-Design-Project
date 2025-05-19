@@ -177,10 +177,82 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     }
 }
 
+async function DisplayStaffPerformance() {
+  try {
+    const performanceTableBody = document.querySelector("#performanceTable tbody");
+    performanceTableBody.innerHTML = "";
+
+    // Fetch all staff users
+    const staffSnapshot = await getDocs(query(collection(db, "users"), where("role", "==", "Staff")));
+    const staffData = {};
+
+    staffSnapshot.forEach((docSnap) => {
+      const name = docSnap.data()?.name;
+      if (name) {
+        staffData[name] = {
+          issuesResolved: 0,
+          totalResolutionTime: 0,
+          cumulativeWorkload: 0
+        };
+      }
+    });
+
+    // Fetch all maintenance records
+    const maintenanceSnapshot = await getDocs(collection(db, "Maintenance"));
+    maintenanceSnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const assignedTo = data.assignedTo;
+
+      if (assignedTo && staffData[assignedTo]) {
+        staffData[assignedTo].cumulativeWorkload++;
+
+        if (data.Status === "Complete") {
+          staffData[assignedTo].issuesResolved++;
+          if (typeof data.ResolutionTime === "number") {
+            staffData[assignedTo].totalResolutionTime += data.ResolutionTime;
+          }
+        }
+      }
+    });
+
+    // Populate table
+    Object.entries(staffData).forEach(([name, stats]) => {
+      const tr = document.createElement("tr");
+
+      const nameTd = document.createElement("td");
+      const resolvedTd = document.createElement("td");
+      const avgTimeTd = document.createElement("td");
+      const workloadTd = document.createElement("td");
+
+      nameTd.textContent = name;
+      resolvedTd.textContent = stats.issuesResolved;
+
+      const avgTime = stats.issuesResolved > 0
+        ? (stats.totalResolutionTime / stats.issuesResolved).toFixed(2)
+        : "-";
+      avgTimeTd.textContent = avgTime !== "-" ? `${avgTime} hrs` : "-";
+
+      workloadTd.textContent = stats.cumulativeWorkload;
+
+      tr.appendChild(nameTd);
+      tr.appendChild(resolvedTd);
+      tr.appendChild(avgTimeTd);
+      tr.appendChild(workloadTd);
+
+      performanceTableBody.appendChild(tr);
+    });
+
+  } catch (error) {
+    console.error("Error displaying staff performance:", error);
+  }
+}
+
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         DisplayReports();
         DisplayAssigned();
+        DisplayStaffPerformance();
     } else {
         alert("User not signed in. Redirecting...");
         window.location.href = "index.html";
