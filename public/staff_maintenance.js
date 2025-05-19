@@ -94,14 +94,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                         const reportedDate = data.ReportedDate?.toDate ? data.ReportedDate.toDate() : now;
                         const resolutionTime = (now - reportedDate) / (1000 * 60 * 60); // in hours
 
-                        updateDoc.ResolvedDate = now;
-                        updateDoc.ResolutionTime = resolutionTime;
+                        await updateDoc(doc(db, "Maintenance", docSnap.id), {
+                            ResolvedDate: now,
+                            resolutionTime: resolutionTime
+                          });
                         querySnapshot.forEach(async (facilityDoc) => {
                           await updateDoc(facilityDoc.ref, {
                             status: "available"
                           });
-                        }); 
-                        
+                        });  
                       }
                   } catch (err) {
                       console.error("Failed to update status:", err);
