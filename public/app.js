@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-   import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+   import { collection, query, where, getDocs, addDoc, orderBy, limit, } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
  
    // Firebase config
    const firebaseConfig = {
@@ -170,37 +170,35 @@ window.handleSigninResponse = async (response) => {
  });
 async function displayMostRecentEvent() {
   try {
-    // Query events, order by date descending, and limit to 1 result
-    const querySnapshot = await db.collection('events')
-      .orderBy('eventDate', 'desc')
-      .limit(1)
-      .get();
+    // Construct the query
+    const eventsQuery = query(
+      collection(db, 'events'),
+      orderBy('eventDate', 'desc'),
+      limit(1)
+    );
+
+    // Execute the query
+    const querySnapshot = await getDocs(eventsQuery);
 
     if (!querySnapshot.empty) {
-      // Get the first (most recent) document
       const doc = querySnapshot.docs[0];
       const eventData = doc.data();
       
-      // Format the date if needed (Firestore Timestamp to readable format)
-      const eventDate = eventData.eventDate.toDate();
-      const formattedDate = eventDate.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    const eventDate = new Date(eventData.eventDate);
+    const formattedDate = eventDate.toLocaleDateString('en-GB'); // DD/MM/YYYY
+
       
-      // Update the HTML elements
       document.getElementById('eventDate').textContent = formattedDate;
       document.getElementById('eventDescription').textContent = eventData.eventDescription || 'No description';
       document.getElementById('facilityName').textContent = eventData.facilityName || 'Location not specified';
       
-      // Format time if needed
-      const startTime = eventData.startTime || '14:15'; // Default time if not provided
+      const startTime = eventData.startTime || '14:15';
       document.getElementById('startTime').textContent = startTime;
     } else {
-      // No events found
       document.getElementById('eventDescription').textContent = 'No upcoming events';
-      // Hide other elements or show placeholder text
     }
   } catch (error) {
     console.error("Error fetching events: ", error);
-    // Update UI to show error
     document.getElementById('eventDescription').textContent = 'Error loading events';
   }
 }
