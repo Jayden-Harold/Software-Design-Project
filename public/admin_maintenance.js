@@ -29,7 +29,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
   const mainTableBody = document.querySelector("#mainTable").getElementsByTagName("tbody")[0];
   const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
 
-  async function DisplayReports() {
+async function DisplayReports() {
     try {
         mainTableBody.innerHTML = ""; // Clear existing rows
 
@@ -96,45 +96,43 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
             // 🔁 Add event listener inside the loop
             select.addEventListener("change", async (e) => {
                 const selectedStaff = e.target.value;
-                const docId = docSnap.id; // ID of the current report
+                const docId = docSnap.id;
 
                 try {
                     await updateDoc(doc(db, "Maintenance", docId), {
                         assignedTo: selectedStaff,
-                        Status: "Assigned"  // update status
+                        Status: "Assigned"
                     });
                     alert(`Assigned to ${selectedStaff} successfully.`);
 
                     const perfQuery = query(
-                     collection(db, "Staff Performance"),
-                     where("Staff", "==", selectedStaff)
-                   );
-                   const perfSnapshot = await getDocs(perfQuery);
+                        collection(db, "Staff Performance"),
+                        where("Staff", "==", selectedStaff)
+                    );
+                    const perfSnapshot = await getDocs(perfQuery);
 
-                   if(perfSnapshot.empty){
-                   await addDoc(collection(db , "Staff Performance"),{
-                         Staff: selectedStaff,
-                         ResolveIssues: 0,
-                         AvResTime: 0 ,
-                         CurrWorkload: 1,
-                    }{ merge: true }));
-                   } else {
-                        // Update existing workload
+                    if (perfSnapshot.empty) {
+                        await addDoc(collection(db, "Staff Performance"), {
+                            Staff: selectedStaff,
+                            ResolveIssues: 0,
+                            AvResTime: 0,
+                            CurrWorkload: 1
+                        });
+                    } else {
                         const staffDoc = perfSnapshot.docs[0];
                         const currentData = staffDoc.data();
                         const currentWorkload = currentData.CurrWorkload || 0;
-                  
-                        await updateDoc(doc(db, "Staff Performance"), {
-                          CurrWorkload: currentWorkload + 1
+
+                        await updateDoc(doc(db, "Staff Performance", staffDoc.id), {
+                            CurrWorkload: currentWorkload + 1
                         });
-                      }
+                    }
                 } catch (error) {
                     console.error("Error assigning staff:", error);
                     alert("Failed to assign staff.");
                 }
             });
 
-            // Append all cells to row
             tr.appendChild(facTd);
             tr.appendChild(catTd);
             tr.appendChild(descTd);
@@ -142,7 +140,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
             tr.appendChild(statTd);
             tr.appendChild(dateTd);
 
-            // Append row to table
             mainTableBody.appendChild(tr);
         });
 
@@ -151,127 +148,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     }
 }
 
-  async function DisplayAssigned() {
-    try {
-        approvedTableBody.innerHTML = ""; // Clear existing rows
-
-        const mainRef = collection(db, "Maintenance");
-        const q = query(mainRef, where("Status", "!=", "Reported"));
-        const querySnapshot = await getDocs(q);
-
-        querySnapshot.forEach((docSnap) => {
-            const mainData = docSnap.data();
-
-            const tr = document.createElement("tr");
-            const facTd = document.createElement("td");
-            const catTd = document.createElement("td");
-            const descTd = document.createElement("td");
-            const assignedTd = document.createElement("td");
-            const statTd = document.createElement("td");
-            const dateTd = document.createElement("td");
-
-            const createdAt = mainData.ReportedDate?.toDate ? mainData.ReportedDate.toDate() : new Date();
-            dateTd.textContent = createdAt.toLocaleString();
-
-            // Fill table cells
-            facTd.textContent = mainData.facility || "";
-            catTd.textContent = mainData.category || "";
-            descTd.textContent = mainData.description || "";
-            statTd.textContent = mainData.Status || "";
-            assignedTd.textContent = mainData.assignedTo || "";
-
-            const status = (mainData.Status || "").toLowerCase();
-            if (status === "complete") {
-                statTd.style.color = "green";
-            } else if (status === "in progress" || status === "assigned") {
-                statTd.style.color = "orange";
-            }
-
-            tr.appendChild(facTd);
-            tr.appendChild(catTd);
-            tr.appendChild(descTd);
-            tr.appendChild(assignedTd);
-            tr.appendChild(statTd);
-            tr.appendChild(dateTd);
-
-            approvedTableBody.appendChild(tr);
-        });
-    } catch (error) {
-        console.error("Error fetching bookings:", error);
-    }
-}
-
-/*async function DisplayStaffPerformance() {
-  try {
-    const performanceTableBody = document.querySelector("#performanceTable tbody");
-    performanceTableBody.innerHTML = "";
-
-    // Fetch all staff users
-    const staffSnapshot = await getDocs(query(collection(db, "users"), where("role", "==", "Staff")));
-    const staffData = {};
-
-    staffSnapshot.forEach((docSnap) => {
-      const name = docSnap.data()?.name;
-      if (name) {
-        staffData[name] = {
-          issuesResolved: 0,
-          totalResolutionTime: 0,
-          cumulativeWorkload: 0
-        };
-      }
-    });*/
-
-    // Fetch all maintenance records
-    const maintenanceSnapshot = await getDocs(collection(db, "Maintenance"));
-    maintenanceSnapshot.forEach((docSnap) => {
-      const data = docSnap.data();
-      const assignedTo = data.assignedTo;
-
-      if (assignedTo && staffData[assignedTo]) {
-        staffData[assignedTo].cumulativeWorkload++;
-
-        if (data.Status === "Complete") {
-          staffData[assignedTo].issuesResolved++;
-          if (typeof data.ResolutionTime === "number") {
-            staffData[assignedTo].totalResolutionTime += data.ResolutionTime;
-          }
-        }
-      }
-    });
-
-    // Populate table
-    Object.entries(staffData).forEach(([name, stats]) => {
-      const tr = document.createElement("tr");
-
-      const nameTd = document.createElement("td");
-      const resolvedTd = document.createElement("td");
-      const avgTimeTd = document.createElement("td");
-      const workloadTd = document.createElement("td");
-
-      nameTd.textContent = name;
-      resolvedTd.textContent = stats.issuesResolved;
-
-      const avgTime = stats.issuesResolved > 0
-        ? (stats.totalResolutionTime / stats.issuesResolved).toFixed(2)
-        : "-";
-      avgTimeTd.textContent = avgTime !== "-" ? `${avgTime} hrs` : "-";
-
-      workloadTd.textContent = stats.cumulativeWorkload;
-
-      tr.appendChild(nameTd);
-      tr.appendChild(resolvedTd);
-      tr.appendChild(avgTimeTd);
-      tr.appendChild(workloadTd);
-
-      performanceTableBody.appendChild(tr);
-    });
-
-  } catch (error) {
-    console.error("Error displaying staff performance:", error);
-  }
-}
-
-
+// ✅ Move this OUTSIDE of DisplayReports
 onAuthStateChanged(auth, (user) => {
     if (user) {
         DisplayReports();
@@ -282,3 +159,4 @@ onAuthStateChanged(auth, (user) => {
         window.location.href = "index.html";
     }
 });
+
