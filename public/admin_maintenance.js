@@ -101,9 +101,33 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                 try {
                     await updateDoc(doc(db, "Maintenance", docId), {
                         assignedTo: selectedStaff,
-                        Status: "Assigned"  // ✅ update status
+                        Status: "Assigned"  // update status
                     });
                     alert(`Assigned to ${selectedStaff} successfully.`);
+
+                    const perfQuery = query(
+                     collection(db, "Staff Performance"),
+                     where("Staff", "==", selectedStaff)
+                   );
+                   const perfSnapshot = await getDocs(perfQuery);
+
+                   if(perfSnapshot.empty){
+                   await addDoc(collection(db , "Staff Performance"),{
+                         Staff: selectedStaff,
+                         ResolveIssues: 0,
+                         AvResTime: 0 ,
+                         CurrWorkload: 1,
+                    });
+                   } else {
+                        // Update existing workload
+                        const staffDoc = perfSnapshot.docs[0];
+                        const currentData = staffDoc.data();
+                        const currentWorkload = currentData.CurrWorkload || 0;
+                  
+                        await updateDoc(doc(db, "Staff Performance", staffDoc.id), {
+                          CurrWorkload: currentWorkload + 1
+                        });
+                      }
                 } catch (error) {
                     console.error("Error assigning staff:", error);
                     alert("Failed to assign staff.");
