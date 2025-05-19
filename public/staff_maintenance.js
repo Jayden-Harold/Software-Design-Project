@@ -102,20 +102,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                          const assignedTo = data.assignedTo || staffName;
                          const workload = data.workload || 0;
 
-                          const staffRef = doc(db, "Staff Performance", assignedTo);
+                          const staffRef = doc(db, "Staff Performance", Staff);
                           const staffSnap = await getDoc(staffRef); // fixed from getDocs to getDoc
                         
                           if (staffSnap.exists()) {
-                            const data = staffSnap.data();
-                            const updatedIssuesResolved = (data.ResolvedIssues || 0) + 1;
-                            const updatedResolutionTime = (data.resolutionTime || 0) + resolutionTime;
-                            const updatedWorkload = (data.CurrWorkload || 0) - 1;
-                            const updatedAvgResolutionTime = updatedTotalResolutionTime / updatedIssuesResolved;
+                            const staffData = staffSnap.data();
+                            const updatedIssuesResolved = (staffData.ResolvedIssues || 0) + 1;
+                            const updatedResolutionTime = (staffData.resolutionTime || 0) + resolutionTime;
+                            const updatedWorkload = (staffData.CurrWorkload || 0) - 1;
+                            const updatedAvgResolutionTime = updatedResolutionTime / updatedIssuesResolved;
                         
                             await updateDoc(staffRef, {
                               ResolvedIssues: updatedIssuesResolved,
-                              ResolutionTime: updatedTotalResolutionTime,
-                              CurrWorkload: updatedTotalWorkload,
+                              ResolutionTime: updatedResolutionTime,
+                              CurrWorkload: updatedWorkload,
                               AvResTime: updatedAvgResolutionTime
                             });
                           } else {
@@ -123,7 +123,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                               Staff: assignedTo,
                               ResolvedIssues: 1,
                               resolutionTime: resolutionTime,
-                              CurrWorkload: workload,
+                              CurrWorkload: workload - 1,
                               AvResTime: resolutionTime
                             });
                           }
