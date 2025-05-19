@@ -101,7 +101,6 @@ async function approveStaff(docId, staffData, rowElement) {
 
       // Add to approved table immediately
       moveStaffToApproved(staffData);
-      updateStaffPerformance(maintenanceDoc);
 
     } catch (error) {
       console.error("Error approving staff:", error);
@@ -173,42 +172,6 @@ async function approveStaff(docId, staffData, rowElement) {
     } catch (error) {
         console.error("Error fetching approved staff:", error);
     }
-}
-
-async function updateStaffPerformance(maintenanceDoc){
-    const {
-    assignedTo,
-    resolutionTime,
-    workload = 0
-  } = maintenanceDoc;
-
-  if (!assignedTo || !resolutionTime) return;
-
-  const staffRef = doc(db, "StaffPerformance", assignedTo);
-  const staffSnap = await getDocs(staffRef);
-
-  if (staffSnap.exists()) {
-    const data = staffSnap.data();
-    const updatedIssuesResolved = data.issuesResolved + 1;
-    const updatedTotalResolutionTime = data.totalResolutionTime + resolutionTime;
-    const updatedTotalWorkload = data.totalWorkload + workload;
-    const updatedAvgResolutionTime = updatedTotalResolutionTime / updatedIssuesResolved;
-
-    await updateDoc(staffRef, {
-      issuesResolved: updatedIssuesResolved,
-      totalResolutionTime: updatedTotalResolutionTime,
-      totalWorkload: updatedTotalWorkload,
-      averageResolutionTime: updatedAvgResolutionTime
-    });
-  } else {
-    await setDoc(staffRef, {
-      staffId: assignedTo,
-      issuesResolved: 1,
-      totalResolutionTime: resolutionTime,
-      totalWorkload: workload,
-      averageResolutionTime: resolutionTime
-    });
-  }
 }
 
 
