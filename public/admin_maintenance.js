@@ -147,6 +147,56 @@ async function DisplayReports() {
         console.error("Error displaying reports:", error);
     }
 }
+async function DisplayAssigned() {
+    try {
+        approvedTableBody.innerHTML = ""; // Clear existing rows
+
+        const mainRef = collection(db, "Maintenance");
+        const q = query(mainRef, where("Status", "!=", "Reported"));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((docSnap) => {
+            const mainData = docSnap.data();
+
+            const tr = document.createElement("tr");
+            const facTd = document.createElement("td");
+            const catTd = document.createElement("td");
+            const descTd = document.createElement("td");
+            const assignedTd = document.createElement("td");
+            const statTd = document.createElement("td");
+            const dateTd = document.createElement("td");
+
+            const createdAt = mainData.ReportedDate?.toDate ? mainData.ReportedDate.toDate() : new Date();
+            dateTd.textContent = createdAt.toLocaleString();
+
+            // Fill table cells
+            facTd.textContent = mainData.facility || "";
+            catTd.textContent = mainData.category || "";
+            descTd.textContent = mainData.description || "";
+            statTd.textContent = mainData.Status || "";
+            assignedTd.textContent = mainData.assignedTo || "";
+
+            const status = (mainData.Status || "").toLowerCase();
+            if (status === "complete") {
+                statTd.style.color = "green";
+            } else if (status === "in progress" || status === "assigned") {
+                statTd.style.color = "orange";
+            }
+
+            tr.appendChild(facTd);
+            tr.appendChild(catTd);
+            tr.appendChild(descTd);
+            tr.appendChild(assignedTd);
+            tr.appendChild(statTd);
+            tr.appendChild(dateTd);
+
+            approvedTableBody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Error fetching bookings:", error);
+    }
+}
+
 
 // ✅ Move this OUTSIDE of DisplayReports
 onAuthStateChanged(auth, (user) => {
