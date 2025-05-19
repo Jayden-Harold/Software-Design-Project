@@ -392,6 +392,11 @@ footer a{
     padding: 20px;
   }
 
+  #maintenanceChart{
+      max-width: 600px;
+    max-height: 450px;
+  }
+
 
   table{
     width: 100%;

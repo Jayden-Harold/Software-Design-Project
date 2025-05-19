@@ -307,3 +307,33 @@ document.getElementById("facility").addEventListener("change", () => {
   }
 });
 
+const sportSelect1 = document.getElementById("sport1");
+const facilitySelect1 = document.getElementById("facility1");
+
+sportSelect1.addEventListener("change", async function () {
+  const selectedSport = sportSelect1.value;
+  facilitySelect1.innerHTML = '<option value="" disabled selected>Loading...</option>';
+
+  try {
+    const facilitiesRef = collection(db, "facilities");
+    const q = query(facilitiesRef, where("sport", "==", selectedSport));
+    const querySnapshot = await getDocs(q);
+
+    facilitySelect1.innerHTML = '<option value="" disabled selected>Facility...</option>';
+
+    if (querySnapshot.empty) {
+      facilitySelect1.innerHTML = '<option value="">No facilities found for this sport</option>';
+    } else {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const option = document.createElement("option");
+        option.value = data.fname;
+        option.textContent = data.fname;
+        facilitySelect1.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error("Error loading facilities:", error);
+    facilitySelect1.innerHTML = '<option value="">Error loading facilities</option>';
+  }
+});

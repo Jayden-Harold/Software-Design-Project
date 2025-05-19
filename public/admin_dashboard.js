@@ -126,3 +126,113 @@ customView.addEventListener("click", (e) => {
 
 // Initialize
 usageTrends.click();
+
+const ctxMaintenance = document.getElementById('maintenanceChart').getContext('2d');
+let maintenanceChart;
+
+// Fetch resolved maintenance issues grouped by facility
+async function fetchMaintenanceCounts(days = null, startDate = null, endDate = null) {
+  const snapshot = await getDocs(collection(db, 'Maintenance'));
+  const counts = {};
+  const now = new Date();
+
+  snapshot.forEach(docSnap => {
+    const data = docSnap.data();
+    const facility = data.facility || 'Unknown Facility';
+    const timestamp = data.ReportedDate;
+
+    const reportedDate = timestamp.toDate(); // convert Firestore Timestamp to JS Date
+    let include = false;
+
+    if (days !== null) {
+      const cutoff = new Date();
+      cutoff.setDate(now.getDate() - days);
+      include = reportedDate >= cutoff;
+    } else if (startDate && endDate) {
+      include = reportedDate >= new Date(startDate) && reportedDate <= new Date(endDate);
+    }
+
+    if (include) {
+      counts[facility] = (counts[facility] || 0) + 1;
+    }
+  });
+
+  return counts;
+}
+
+// Build or update the maintenance chart
+async function updateMaintenanceChart(days = null, startDate = null, endDate = null) {
+  const counts = await fetchMaintenanceCounts(days, startDate, endDate);
+  const labels = Object.keys(counts);
+  const data = Object.values(counts);
+const selectedFacility = document.getElementById("facility1")?.value;
+
+  const backgroundColors = labels.map(label =>
+    label === selectedFacility ? 'rgba(255, 99, 132, 0.8)' : 'rgba(0, 150, 136, 0.7)'
+  );
+
+  const labelText = days
+    ? `Maintenance Issues (Last ${days} Days)`
+    : `Maintenance Issues (${startDate} to ${endDate})`;
+
+  if (maintenanceChart) {
+    maintenanceChart.data.labels = labels;
+    maintenanceChart.data.datasets[0].data = data;
+    maintenanceChart.data.datasets[0].label = labelText;
+    maintenanceChart.data.datasets[0].backgroundColor = backgroundColors;
+    maintenanceChart.update();
+  } else {
+    maintenanceChart = new Chart(ctxMaintenance, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: labelText,
+          data,
+          backgroundColor: backgroundColors,
+          barThickness: 50
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
+  }
+}
+
+
+
+
+// Default to last 7 days
+updateMaintenanceChart(7);
+
+// Optional: Add a selector just like for bookings
+document.getElementById('maintenanceDateRangeSelector').addEventListener('change', (e) => {
+  const val = e.target.value;
+  if (val === "custom") {
+    document.getElementById("customMaintenanceModal").style.display = "block";
+    document.getElementById("modalBackdrop").style.display = "block";
+  } else {
+    const days = parseInt(val);
+    updateMaintenanceChart(days);
+  }
+});
+
+document.getElementById("facility1").addEventListener("change", () => {
+  const val = document.getElementById("maintenanceDateRangeSelector").value;
+  if (val === "custom") {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    if (startDate && endDate) {
+      updateChartCustom(null, startDate, endDate);
+    }
+  } else {
+    const days = parseInt(val);
+    updateMaintenanceChart(days);
+  }
+});

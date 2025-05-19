@@ -110,7 +110,23 @@
       <section id="chart-container-custom"><canvas id="bookingsChart-custom" width="400" height="200"></canvas></section>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <h1>Issues by Facililty</h1>
-      <section id="chart-container-custom"><canvas id="issuesChart" width="400" height="200"></canvas></section>
+      <select id="maintenanceDateRangeSelector">
+      <option value="7">Last 7 days</option>
+      <option value="30">Last 30 days</option>
+      </select>
+      <select name="Sport" id="sport1">
+        <option value="" disabled selected>Sport...</option>
+        <option value="Padel" >Padel</option>
+        <option value="Soccer" >Soccer</option>
+        <option value="Netball" >Netball</option>
+        <option value="Cricket" >Cricket</option>
+        <option value="Basketball" >Basketball</option>
+        <option value="Hockey" >Hockey</option>
+      </select>
+      <select name="Facility" id="facility1">
+        <option value="" disabled selected>Facility...</option>
+      </select>
+      <section id="chart-container-custom"><canvas id="maintenanceChart" width="400" height="200"></canvas></section>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <h1>Recent Maintenance Issues</h1>
       <table id="mainTable">
