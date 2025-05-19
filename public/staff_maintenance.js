@@ -123,6 +123,43 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           console.error("Error loading staff reports:", error);
       }
   }
+async function updateStaffPerformance(maintenanceDoc){
+    const {
+    assignedTo,
+    resolutionTime,
+    workload = 0
+  } = maintenanceDoc;
+
+  if (!assignedTo || !resolutionTime) return;
+
+  const staffRef = doc(db, "StaffPerformance", assignedTo);
+  const staffSnap = await getDocs(staffRef);
+
+  if (staffSnap.exists()) {
+    const data = staffSnap.data();
+    const updatedIssuesResolved = data.issuesResolved + 1;
+    const updatedTotalResolutionTime = data.totalResolutionTime + resolutionTime;
+    const updatedTotalWorkload = data.totalWorkload + workload;
+    const updatedAvgResolutionTime = updatedTotalResolutionTime / updatedIssuesResolved;
+
+    await updateDoc(staffRef, {
+      issuesResolved: updatedIssuesResolved,
+      totalResolutionTime: updatedTotalResolutionTime,
+      totalWorkload: updatedTotalWorkload,
+      averageResolutionTime: updatedAvgResolutionTime
+    });
+  } else {
+    await setDoc(staffRef, {
+      staffId: assignedTo,
+      issuesResolved: 1,
+      totalResolutionTime: resolutionTime,
+      totalWorkload: workload,
+      averageResolutionTime: resolutionTime
+    });
+  }
+}
+
+updateStaffPerformance(maintenanceDoc);
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
