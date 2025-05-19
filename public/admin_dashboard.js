@@ -235,4 +235,75 @@ document.getElementById("facility1").addEventListener("change", () => {
     const days = parseInt(val);
     updateMaintenanceChart(days);
   }
+
+
+
 });
+
+const approvedTableBody = document.querySelector("#mainTable").getElementsByTagName("tbody")[0];
+
+async function DisplayAssigned() {
+  try {
+    approvedTableBody.innerHTML = ""; // Clear existing rows
+
+    const dateRange = document.getElementById("dateRange").value;
+    const days = parseInt(dateRange, 10);
+
+    const endDate = new Date(); // now
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - days);
+
+    const mainRef = collection(db, "Maintenance");
+
+    // Only filter by Status in the query to avoid needing a composite index
+    const q = query(mainRef, where("Status", "!=", "Reported"));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((docSnap) => {
+      const mainData = docSnap.data();
+
+      // Convert Firestore Timestamp to JS Date
+      const reportedDate = mainData.ReportedDate?.toDate?.();
+      if (!reportedDate) return;
+
+      // Filter by date range manually in JS
+      if (reportedDate < startDate || reportedDate > endDate) return;
+
+      const tr = document.createElement("tr");
+      const facTd = document.createElement("td");
+      const catTd = document.createElement("td");
+      const descTd = document.createElement("td");
+      const assignedTd = document.createElement("td");
+      const statTd = document.createElement("td");
+      const dateTd = document.createElement("td");
+
+      dateTd.textContent = reportedDate.toLocaleString();
+      facTd.textContent = mainData.facility || "";
+      catTd.textContent = mainData.category || "";
+      descTd.textContent = mainData.description || "";
+      statTd.textContent = mainData.Status || "";
+      assignedTd.textContent = mainData.assignedTo || "";
+
+      const status = (mainData.Status || "").toLowerCase();
+      if (status === "complete") {
+        statTd.style.color = "green";
+      } else if (status === "in progress" || status === "assigned") {
+        statTd.style.color = "orange";
+      }
+
+      tr.appendChild(facTd);
+      tr.appendChild(catTd);
+      tr.appendChild(descTd);
+      tr.appendChild(assignedTd);
+      tr.appendChild(statTd);
+      tr.appendChild(dateTd);
+
+      approvedTableBody.appendChild(tr);
+    });
+  } catch (error) {
+    console.error("Error fetching maintenance data:", error);
+  }
+}
+
+
+DisplayAssigned();

@@ -147,6 +147,7 @@ async function DisplayReports() {
         console.error("Error displaying reports:", error);
     }
 }
+
 async function DisplayAssigned() {
     try {
         approvedTableBody.innerHTML = ""; // Clear existing rows
