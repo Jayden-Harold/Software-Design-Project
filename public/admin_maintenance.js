@@ -117,14 +117,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                          ResolveIssues: 0,
                          AvResTime: 0 ,
                          CurrWorkload: 1,
-                    });
+                    }{ merge: true }));
                    } else {
                         // Update existing workload
                         const staffDoc = perfSnapshot.docs[0];
                         const currentData = staffDoc.data();
                         const currentWorkload = currentData.CurrWorkload || 0;
                   
-                        await updateDoc(doc(db, "Staff Performance", staffDoc.id), {
+                        await updateDoc(doc(db, "Staff Performance"), {
                           CurrWorkload: currentWorkload + 1
                         });
                       }
@@ -201,7 +201,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     }
 }
 
-async function DisplayStaffPerformance() {
+/*async function DisplayStaffPerformance() {
   try {
     const performanceTableBody = document.querySelector("#performanceTable tbody");
     performanceTableBody.innerHTML = "";
@@ -219,7 +219,7 @@ async function DisplayStaffPerformance() {
           cumulativeWorkload: 0
         };
       }
-    });
+    });*/
 
     // Fetch all maintenance records
     const maintenanceSnapshot = await getDocs(collection(db, "Maintenance"));
