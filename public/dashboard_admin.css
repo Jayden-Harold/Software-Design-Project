@@ -373,9 +373,36 @@ footer a{
     max-height: 450px;
   }
 
+  #bookingsChart-custom{
+    max-width: 600px;
+    max-height: 450px;
+  }
+
   #chart-container{
       display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
   }
+
+  #chart-container-custom{
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+
+  table{
+    width: 100%;
+    padding: 1.6rem;
+}
+
+.table-headings{
+    color: var(--tennisgreen);
+    background-color: var(--darkgray);
+}
+
+td, th{
+    width: 16%;
+}

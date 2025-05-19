@@ -153,3 +153,157 @@ document.getElementById('dateRangeSelector').addEventListener('change', (e) => {
   updateChart(days);
 });
 
+const ctx1 = document.getElementById('bookingsChart-custom').getContext('2d');
+let chart1; // global chart reference
+
+async function fetchBookingsCustom(days = null, startDate = null, endDate = null) {
+  const snapshot = await getDocs(collection(db, 'bookings'));
+  const counts = {};
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const status = data.status?.toLowerCase();
+    const fname = data.fname || '';
+    const dateStr = data.date;
+    const date = new Date(dateStr);
+
+    let include = false;
+    if (status === 'approved') {
+      if (days !== null) {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - days);
+        include = date >= cutoff;
+      } else if (startDate && endDate) {
+        include = date >= new Date(startDate) && date <= new Date(endDate);
+      }
+    }
+
+    if (include) {
+      counts[fname] = (counts[fname] || 0) + 1;
+    }
+  });
+
+  return counts;
+}
+
+async function updateChartCustom(days = null, startDate = null, endDate = null) {
+  const counts = await fetchBookingsCustom(days, startDate, endDate);
+  const labels = Object.keys(counts);
+  const data = Object.values(counts);
+
+  const selectedFacility = document.getElementById("facility")?.value;
+
+  const backgroundColors = labels.map(label =>
+    label === selectedFacility ? 'rgba(255, 99, 132, 0.8)' : 'rgba(0, 150, 136, 0.7)'
+  );
+
+  const labelText = days
+    ? `Approved Bookings (Last ${days} Days)`
+    : `Approved Bookings (${startDate} to ${endDate})`;
+
+  if (chart1) {
+    chart1.data.labels = labels;
+    chart1.data.datasets[0].data = data;
+    chart1.data.datasets[0].label = labelText;
+    chart1.data.datasets[0].backgroundColor = backgroundColors;
+    chart1.update();
+  } else {
+    chart1 = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: labelText,
+          data,
+          backgroundColor: backgroundColors,
+          barThickness: 50
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
+  }
+}
+
+updateChartCustom(7);
+
+document.getElementById('dateRangeSelector2').addEventListener('change', (e) => {
+  const val = e.target.value;
+  if (val === "custom") {
+    document.getElementById("customDateModal").style.display = "block";
+  } else {
+    const days = parseInt(val);
+    updateChartCustom(days);
+  }
+});
+
+document.getElementById("applyDateRange").addEventListener("click", () => {
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+
+  if (!startDate || !endDate) {
+    alert("Please select both start and end dates.");
+    return;
+  }
+
+  if (new Date(startDate) > new Date(endDate)) {
+    alert("Start date must be before end date.");
+    return;
+  }
+
+  document.getElementById("customDateModal").style.display = "none";
+
+  updateChartCustom(null, startDate, endDate);
+});
+
+const sportSelect = document.getElementById("sport");
+const facilitySelect = document.getElementById("facility");
+
+sportSelect.addEventListener("change", async function () {
+  const selectedSport = sportSelect.value;
+  facilitySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+
+  try {
+    const facilitiesRef = collection(db, "facilities");
+    const q = query(facilitiesRef, where("sport", "==", selectedSport));
+    const querySnapshot = await getDocs(q);
+
+    facilitySelect.innerHTML = '<option value="" disabled selected>Facility...</option>';
+
+    if (querySnapshot.empty) {
+      facilitySelect.innerHTML = '<option value="">No facilities found for this sport</option>';
+    } else {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const option = document.createElement("option");
+        option.value = data.fname;
+        option.textContent = data.fname;
+        facilitySelect.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error("Error loading facilities:", error);
+    facilitySelect.innerHTML = '<option value="">Error loading facilities</option>';
+  }
+});
+
+document.getElementById("facility").addEventListener("change", () => {
+  const val = document.getElementById("dateRangeSelector2").value;
+  if (val === "custom") {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    if (startDate && endDate) {
+      updateChartCustom(null, startDate, endDate);
+    }
+  } else {
+    const days = parseInt(val);
+    updateChartCustom(days);
+  }
+});
+

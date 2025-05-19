@@ -197,13 +197,49 @@ async function DisplayAssigned() {
     }
 }
 
+async function loadStaffPerformance() {
+  const tableBody = document.querySelector("#staffPerformanceTable tbody");
 
-// ✅ Move this OUTSIDE of DisplayReports
+  // Clear existing rows (optional, useful if reloading)
+  tableBody.innerHTML = "";
+
+  try {
+    const querySnapshot = await getDocs(collection(db, "Staff Performance"));
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+
+      // Destructure with defaults in case some values are missing
+      const {
+        Staff = "N/A",
+        ResolveIssues = 0,
+        AvResTime = 0,
+        CurrWorkload = 0
+      } = data;
+
+      const row = document.createElement("tr");
+row.innerHTML = `
+        <td>${Staff}</td>
+        <td>${ResolveIssues}</td>
+        <td>${AvResTime}</td>
+        <td>${CurrWorkload}</td>
+      `;
+
+      tableBody.appendChild(row);
+    });
+
+  } catch (error) {
+    console.error("Error loading staff performance data:", error);
+  }
+}
+
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         DisplayReports();
         DisplayAssigned();
         DisplayStaffPerformance();
+        loadStaffPerformance();
     } else {
         alert("User not signed in. Redirecting...");
         window.location.href = "index.html";
