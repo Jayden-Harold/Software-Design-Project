@@ -248,7 +248,7 @@ async function loadStaffPerformance() {
       // Destructure with defaults in case some values are missing
       const {
         Staff = "N/A",
-        ResolveIssues = 0,
+        ResolvedIssues = 0,
         AvResTime = 0,
         CurrWorkload = 0
       } = data;
@@ -256,7 +256,7 @@ async function loadStaffPerformance() {
       const row = document.createElement("tr");
 row.innerHTML = `
         <td>${Staff}</td>
-        <td>${ResolveIssues}</td>
+        <td>${ResolvedIssues}</td>
         <td>${AvResTime}</td>
         <td>${CurrWorkload}</td>
       `;
