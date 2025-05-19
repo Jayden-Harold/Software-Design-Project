@@ -123,7 +123,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                               Staff: assignedTo,
                               ResolvedIssues: 1,
                               resolutionTime: resolutionTime,
-                              CurrWorkload: workload - 1,
+                              CurrWorkload: workload,
                               AvResTime: resolutionTime
                             });
                           }
