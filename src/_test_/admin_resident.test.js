@@ -2,8 +2,8 @@ document.body.innerHTML = `
   <table id="userTable"><tbody></tbody></table>
   <table id="approvedTable"><tbody></tbody></table>`
 ;
-const { approveResident, moveResToApproved,denyRequest } = require ("../Admin/admin_resident");
-const { deleteDoc, doc } = require("firebase/firestore");
+const { approveResident, moveResToApproved,denyRequest,DisplayResApproved } = require ("../Admin/admin_resident");
+const { deleteDoc, doc,getDocs,collection,query, where } = require("firebase/firestore");
 
 
 jest.mock("firebase/firestore", () => ({
@@ -78,10 +78,12 @@ describe("denyRequest", () => {
 
   it("deletes the doc and removes the row when confirmed", async () => {
     confirm.mockReturnValue(true);
+    let mockDb={}; //mock db
 
-    await denyRequest(docId, rowElement);
 
-    expect(doc).toHaveBeenCalledWith(expect.anything(), "users", docId);
+    await denyRequest(mockDb,docId, rowElement);
+
+    expect(doc).toHaveBeenCalledWith(mockDb, "users", docId);
     expect(deleteDoc).toHaveBeenCalledWith(expect.anything());
     expect(alert).toHaveBeenCalledWith("Request denied and record deleted successfully.");
     expect(document.getElementById("row-1")).toBeNull();
@@ -107,6 +109,82 @@ describe("denyRequest", () => {
     expect(alert).toHaveBeenCalledWith("An error occurred while denying the request.");
     expect(document.getElementById("row-1")).not.toBeNull();
     consoleSpy.mockRestore(); // Clean up after test
+  });
+});
+
+describe("DisplayResApproved", () => {
+  let mockDb;
+  let approvedTableBody;
+
+  beforeEach(() => {
+    document.body.innerHTML = `
+    <table id="approvedTable"><tbody></tbody></table>`;
+    approvedTableBody = document.querySelector("#approvedTable tbody");
+
+    mockDb = {}; //mock db
+    jest.clearAllMocks();
+    collection.mockReturnValue("mockCollection");
+    query.mockReturnValue("mockQuery");
+    where.mockReturnValue("mockWhere");
+  });
+
+  afterEach(() => {
+    document.body.innerHTML = ""; //Clean up DOM
+  });
+
+  it("Clears the table and adds approved residents", async () => {
+    const mockDocs = [
+      {
+        id: "1",
+        data: () => ({
+          name: "John English",
+          createdAt: {
+            toDate: () => new Date("2023-01-01T10:00:00Z")
+          },
+        }),
+      },
+      {
+        id: "2",
+        data: () => ({
+          name: "Jane Smith",
+          createdAt: {
+            toDate: () => new Date("2023-01-02T12:30:00Z")
+          },
+        }),
+      },
+    ];
+
+    getDocs.mockResolvedValue({
+      forEach: (cb) => mockDocs.forEach((doc) => cb({
+        data: () => doc.data(),})),
+    });
+
+    approvedTableBody.innerHTML = "<tr><td>Old Data</td></tr>";
+    await DisplayResApproved();
+    expect(approvedTableBody.querySelectorAll("tr").length).toBe(2); //ensure it resets
+
+    const rows = approvedTableBody.querySelectorAll("tr");
+    expect(rows.length).toBe(2); //Check rows appended
+    expect(rows[0].textContent).toContain("John English");
+    expect(rows[1].textContent).toContain("Jane Smith");
+  });
+
+  it("handles no approved residents", async () => {
+    getDocs.mockResolvedValue({
+      forEach: () => {}, // No documents
+    });
+
+    await DisplayResApproved();
+    expect(approvedTableBody.children.length).toBe(0); //to be empty
+  });
+
+  it("logs error on failure", async () => {
+    console.error = jest.fn();
+
+    getDocs.mockRejectedValue(new Error("Firestore error"));
+
+    await DisplayResApproved();
+    expect(console.error).toHaveBeenCalledWith("Error fetching approved residents:", expect.any(Error));
   });
 });
 

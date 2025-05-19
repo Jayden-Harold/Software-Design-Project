@@ -1,7 +1,7 @@
 // this file is used for testing because jest cannot 
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+//import { initializeApp } from "firebase/app";
+//import { getFirestore } from "firebase/firestore";
+//import { getAuth } from "firebase/auth";
 
 //The web app's Firebase configuration
 const firebaseConfig = {
@@ -11,13 +11,31 @@ const firebaseConfig = {
     storageBucket: "greensmoke-ee894.firebasestorage.app",
     messagingSenderId: "140065144019",
     appId: "1:140065144019:web:48e4963e4826a85aca2826"
-  };
+};
 
 //initializing firestore:
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-export { db ,auth};
+//const app = initializeApp(firebaseConfig);
+//const db = getFirestore(app);
+//const auth = getAuth(app);
+//export { db ,auth};
+// Mock all Firebase services
+export const initializeApp = jest.fn();
+export const getAuth = jest.fn();
+export const getFirestore = jest.fn();
+export const collection = jest.fn(() => ({
+  get: jest.fn(() => ({
+    forEach: jest.fn()
+  }))
+}));
+export const deleteDoc = jest.fn(() => Promise.resolve());
+export const doc = jest.fn((db, collectionName, docId) => {
+  return { 
+      db, 
+      collectionName, 
+      docId,
+      // Add other document properties you need
+  };
+});
 
 /*export const initializeApp = jest.fn();
 export const getAuth = jest.fn(() => ({

@@ -76,7 +76,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           assignedTo: "TBD",
           Status: "Reported",
           ReportedDate: new Date(),
-         
+          ResolvedDate: "N/A",
+          resolutionTime:"N/A",
+        });
+
+        await addDoc(collection(db , "Staff Performance"),{
+          StaffMem: selectedFac,
+          resolved:selectedCat,
+          avRes: GivenDesc,
+          workload: "TBD",
         });
 
       

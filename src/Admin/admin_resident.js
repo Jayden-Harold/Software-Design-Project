@@ -69,7 +69,7 @@ export async function approveResident(docId, resData, rowElement) {
     }
 }
 
-export async function denyRequest(docId, rowElement) {
+export async function denyRequest(db,docId, rowElement) {
     const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
     if (!confirmation) return;
   
@@ -102,6 +102,8 @@ export  function moveResToApproved(resData) {
 
  export  async function DisplayResApproved() {
     try {
+        const approvedTableBody = document.querySelector("#approvedTable tbody"); 
+        if (!approvedTableBody) return;
         approvedTableBody.innerHTML = ""; // Clear existing rows
 
         const usersRef = collection(db, "users");
