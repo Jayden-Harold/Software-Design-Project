@@ -123,7 +123,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
           console.error("Error loading staff reports:", error);
       }
   }
-async function updateStaffPerformance(maintenanceDoc){
+async function updateStaffPerformance(){
     const {
     assignedTo,
     resolutionTime,
@@ -159,7 +159,7 @@ async function updateStaffPerformance(maintenanceDoc){
   }
 }
 
-updateStaffPerformance(maintenanceDoc);
+updateStaffPerformance();
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
