@@ -17,7 +17,7 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="info.js" defer type="module"></script>
     <script src="user.js" defer type="module"></script>
-     <script>
+             <script>
         const apiKey = '5a3c0823d180bfaf64e493bab38442f5'; // Replace with your OpenWeatherMap API key
         const city = 'Johannesburg'; // Replace with your city
 
@@ -29,8 +29,7 @@
                 const iconCode = data.weather[0].icon;
                 const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-                document.getElementById('weather').innerHTML = `
-                    <img src="${iconUrl}" alt="${description}">
+                document.getElementById('weather').innerHTML = `<p id="weather-container"> <img src="${iconUrl}" alt="${description}" id="weather-img"> ${temp}°C</p>
                 `;
             })
             .catch(error => {
@@ -77,8 +76,7 @@
       <img src="images/events-img.png" alt="EVENTS" class="tabs-img" id="events-img">
       <img src="images/notifications-img.png" alt="NOTIFICATIONS"  class="tabs-img" id="notifications-img">
   </section>
-
-
+<section id="weather"></section>
 </body>
 
   <footer>
