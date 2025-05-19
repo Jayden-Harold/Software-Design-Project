@@ -213,7 +213,7 @@ async function DisplayStaffPerformance() {
       const workloadTd = document.createElement("td");
 
       nameTd.textContent = data.Staff || "Unknown";
-      resolvedTd.textContent = data.ResolveIssues ?? 0;
+      resolvedTd.textContent = data.ResolvedIssues ?? 0;
 
       const avgTime = data.AvResTime ?? "-";
       avgTimeTd.textContent = typeof avgTime === "number" ? `${avgTime.toFixed(2)} hrs` : "-";
