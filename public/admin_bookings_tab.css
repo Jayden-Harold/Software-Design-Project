@@ -258,3 +258,15 @@ footer a{
     padding-top: 1rem;
 }
 
+select {
+    font-size: 16px;
+    padding: 6px 10px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: var(--lightgray);
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    cursor: pointer;
+    margin-left: .8rem;
+  }

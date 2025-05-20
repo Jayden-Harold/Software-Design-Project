@@ -19,8 +19,8 @@
     <script src="graphing_usage.js" defer type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-      function downloadPDF() {
-        const element = document.querySelector('.tab-content');
+      function downloadPDF(id) {
+        const element = document.getElementById(id);
         html2pdf().from(element).save('report.pdf');
       }
     </script>
@@ -53,7 +53,7 @@
   <button class="tablinks" id="custom-view-btn">CUSTOM VIEW</button>
   </section>
     <section class="tab-content" id="usage-trends">
-      <section class="btn-container"><button id="pdf-btn" onclick="downloadPDF()"><i class="fa fa-download" aria-hidden="true"></i> Download as PDF</button></section>
+      <section class="btn-container"><button id="pdf-btn" onclick="downloadPDF('usage-trends')"><i class="fa fa-download" aria-hidden="true"></i> Download as PDF</button></section>
         <section class="main-figures">
         <article class= "main-figure" id="most-popular-facility">
             <h1>Most Popular Facility</h1>
@@ -73,7 +73,7 @@
     </section>
     </section>
     <section class="tab-content" id="custom-view">
-      <section class="btn-container"><button id="pdf-btn" onclick="downloadPDF()"><i class="fa fa-download" aria-hidden="true"></i> Download as PDF</button></section>
+      <section class="btn-container"><button id="pdf-btn" onclick="downloadPDF('custom-view')"><i class="fa fa-download" aria-hidden="true"></i> Download as PDF</button></section>
     <section class="usage">
           <dialog id="customDateModal">
   <h3>Select Date Range</h3>
@@ -138,6 +138,7 @@
               </thead>
               <tbody></tbody>
           </table>
+    </section>
     </section>
   <footer>
     <section>
