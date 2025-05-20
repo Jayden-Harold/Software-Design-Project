@@ -52,7 +52,7 @@ Take note that Google OAuth is used as a third party identity provider.
 - `/docs`: UML Diagrams and Project Plan
 - `/scrum`:
   - `/scrum/sprint_retros`: Sprint Retrospectives
-  - `/scrum/sprint_meeting`: Sprint Meetings
+  - `/scrum/sprint_meetings`: Sprint Meetings
   - `/scrum/sprint_reviews`: Sprint Reviews
  
 ## Setup & Installation
