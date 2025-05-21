@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+   // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -16,6 +17,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
+  /* checks user status(pending/approved) and
+   displays relevant message on user profile when user logins*/
    async function updateUserProfile(user) {
     try {
         const userRef = doc(db, "users", user.uid);
@@ -45,6 +48,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
         return null;
     }
 }
+
+/* Checks if the user is signed in and if not, alerts the user to 
+ create an account and redirects to the homepage*/
 
 onAuthStateChanged(auth, (user) => {
     if (user) {

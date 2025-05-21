@@ -4,6 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
    import { updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+   // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -27,16 +28,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
+    // function to display maintenance reports assigned to the specific staff member
     async function DisplayStaffReports() {
       try {
           const user = auth.currentUser;
           if (!user) {
-              alert("User not signed in.");
+              alert("User not signed in."); //checks if staff member is signed in
               return;
           }
   
           const userDoc = await getDoc(doc(db, "users", user.uid));
-          const staffName = userDoc.data()?.name;
+          const staffName = userDoc.data()?.name; //get the staff member's name
   
           if (!staffName) {
               alert("User name not found.");
@@ -81,7 +83,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
               const q = query(facilitiesRef, where("fname", "==", data.facility));
               const querySnapshot = await getDocs(q);
             
-              // Handle status update
+              // Handle reported maintenance issue status update by staff member
               statusSelect.addEventListener("change", async (e) => {
                   const newStatus = e.target.value;
                   try {
@@ -89,6 +91,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                           Status: newStatus
                       });
                       alert(`Status updated to "${newStatus}"`);
+                      
+                      /*if the staff updates maintenance issue to "complete", update the staff
+                      member's resolution time*/
                       if (newStatus === "Complete"){
                         const now = new Date();
                         const reportedDate = data.ReportedDate?.toDate ? data.ReportedDate.toDate() : now;
@@ -103,8 +108,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
                          const workload = data.workload || 0;
 
                           const staffRef = doc(db, "Staff Performance", assignedTo);
-                          const staffSnap = await getDoc(staffRef); // fixed from getDocs to getDoc
+                          const staffSnap = await getDoc(staffRef); 
                         
+                          // updates the relevant staff performance attributes:
                           if (staffSnap.exists()) {
                             const staffData = staffSnap.data();
                             const updatedIssuesResolved = (staffData.ResolvedIssues || 0) + 1;
@@ -153,7 +159,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
       }
   }
 
-  
+/* check if staff is logged in before displaying maintenance reports,
+if not, alert user they're not signed in and redirects to the homepage*/  
   onAuthStateChanged(auth, (user) => {
     if (user) {
       DisplayStaffReports();

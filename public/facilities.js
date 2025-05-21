@@ -15,6 +15,7 @@ menu.addEventListener("click", () => {
     menuLinks.classList.toggle("active");
 });
 
+// event listeners to redirect user to the corresponding facility info page when a sport is clicked
 padel.addEventListener("click", (e) => {
     e.preventDefault;
     window.location.href="padel.html"

@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc, arrayUnion} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+   // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -25,7 +26,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
         menuLinks.classList.toggle("active");
     });
 
-
+// firestore query to fetch all maintenance issues that aren't marked as complete
 const q = query(
   collection(db, "Maintenance"),
   where("Status", "!=", "Complete")
@@ -34,9 +35,11 @@ const q = query(
 const reportCounts = {};
 const snapshot = await getDocs(q);
 
+//gets the date from 7 days ago for the "Last 7 days" filter
 const now = new Date();
 const sevenDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
 
+//checks for reports that were reported within the last 7 days
 snapshot.forEach(doc => {
   const data = doc.data();
   const facility = data.facility;
@@ -48,8 +51,9 @@ snapshot.forEach(doc => {
   }
 });
 
-console.log(reportCounts); // { "Pool": 4, "Gym": 2, ... }
+console.log(reportCounts); // { "Swimming Pool": 4, "Padel": 2, ... }
 
+// function to plot the maintenance reports graph
 function plotReportChart(reportCounts) {
   const labels = Object.keys(reportCounts);
   const data = Object.values(reportCounts);
@@ -95,7 +99,7 @@ async function fetchReports(days) {
     const status = data.status?.toLowerCase();
     const fname = data.facility || '';
     const timestamp = data.ReportedDate;
-    const date = timestamp?.toDate?.(); // ✅ Convert Firestore Timestamp to JS Date
+    const date = timestamp?.toDate?.(); // Convert Firestore Timestamp to JS Date
 
     if (status !== 'complete' && date && date >= cutoff) {
       counts[fname] = (counts[fname] || 0) + 1;
@@ -150,7 +154,7 @@ document.getElementById('dateRangeSelector').addEventListener('change', (e) => {
   renderStatusPieChart(days);
 });
 
-
+// function to fetch and count maintenance reports by status (assigned, in progress or complete)
 async function fetchStatusCounts(days) {
   const now = new Date();
   const cutoff = new Date(now);
@@ -186,6 +190,8 @@ async function fetchStatusCounts(days) {
 
 let pieChart; // Global reference for pie chart
 
+/* function to display the different maintenance report 
+statuses(assigned, in progress or complete) statistics in a pie chart*/
 async function renderStatusPieChart(days) {
   const counts = await fetchStatusCounts(days);
   const labels = Object.keys(counts);

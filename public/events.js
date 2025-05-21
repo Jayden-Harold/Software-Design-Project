@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
    import { collection, query, where, getDocs, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+   // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -21,14 +22,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
   
 const container = document.querySelector(".container");
 
+// function to fetch events from firestore and display the events
 async function displayEvents() {
     try {
-      const eventRef = collection(db, "events"); // or your actual Firestore collection
+      const eventRef = collection(db, "events"); 
       const q = query(eventRef);
       const querySnapshot = await getDocs(q);
   
       
-  
+      // query to fetch all the relevant details for each event from the DB
       querySnapshot.forEach((docSnap) => {
         const eventData = docSnap.data();
         const eventName = eventData.eventName;
@@ -63,6 +65,8 @@ async function displayEvents() {
     }
   }
 
+/* check if user is logged in before displaying events,
+if not, alert user they're not signed in and redirects to the homepage*/
 onAuthStateChanged(auth, (user) => {
     if (user) {
         displayEvents(); // now runs for ALL matching users
