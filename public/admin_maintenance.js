@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
    import { collection, query, where, getDocs, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
+// firebase configuarator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -28,7 +28,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
   const mainTableBody = document.querySelector("#mainTable").getElementsByTagName("tbody")[0];
   const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
-
+// Displays all reports 
 async function DisplayReports() {
     try {
         mainTableBody.innerHTML = ""; // Clear existing rows
@@ -93,7 +93,7 @@ async function DisplayReports() {
 
             assignedTd.appendChild(select);
 
-            // 🔁 Add event listener inside the loop
+            // Add event listener inside the loop
             select.addEventListener("change", async (e) => {
                 const selectedStaff = e.target.value;
                 const docId = docSnap.id;
@@ -147,7 +147,7 @@ async function DisplayReports() {
         console.error("Error displaying reports:", error);
     }
 }
-
+// Displays assigned issue details
 async function DisplayAssigned() {
     try {
         approvedTableBody.innerHTML = ""; // Clear existing rows
@@ -197,6 +197,7 @@ async function DisplayAssigned() {
         console.error("Error fetching bookings:", error);
     }
 }
+// Displays stats relating to staff performance from table in db
 async function DisplayStaffPerformance() {
   try {
     const performanceTableBody = document.querySelector("#performanceTable tbody");
@@ -233,7 +234,7 @@ async function DisplayStaffPerformance() {
     console.error("Error displaying staff performance:", error);
   }
 }
-
+// populates staff performance table in db
 async function loadStaffPerformance() {
   const tableBody = document.querySelector("#staffPerformanceTable tbody");
 
