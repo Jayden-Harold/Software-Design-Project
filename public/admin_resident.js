@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
+// firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -27,7 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
 const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
 const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
-
+//displays all users awaiting approval
 async function DisplayResPending() {
     try {
         const usersRef = collection(db, "users");
@@ -50,7 +50,7 @@ async function DisplayResPending() {
             dateCell.textContent = createdAt;
 
             const actionCell = document.createElement("td");
-
+// approve or deny buttons
             const approveBtn = document.createElement("button");
             approveBtn.textContent = "Approve";
             approveBtn.className = "btn-approve";
@@ -75,7 +75,7 @@ async function DisplayResPending() {
         console.error("Error fetching pending residents:", error);
     }
 }
-
+// function to approve residents in the db
 async function approveResident(docId, resData, rowElement) {
     try {
       const resDocRef = doc(db, "users", docId);
@@ -91,7 +91,7 @@ async function approveResident(docId, resData, rowElement) {
       console.error("Error approving resident:", error);
     }
 }
-
+// denies resident requests as users
 async function denyRequest(docId, rowElement) {
     const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
     if (!confirmation) return;
@@ -106,7 +106,7 @@ async function denyRequest(docId, rowElement) {
       alert("An error occurred while denying the request.");
     }
   }
-  
+  // moves pending users to approved section
   function moveResToApproved(resData) {
 
     const tr = document.createElement("tr");
@@ -132,7 +132,7 @@ async function denyRequest(docId, rowElement) {
   
     approvedTableBody.appendChild(tr);
   }
-
+//displays approved residents
   async function DisplayResApproved() {
     try {
         approvedTableBody.innerHTML = ""; // Clear existing rows
