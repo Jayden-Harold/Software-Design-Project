@@ -4,7 +4,7 @@ const bookings = document.querySelector("#bookings-img");
 const events = document.querySelector("#events-img");
 const maintenance = document.querySelector("#maintenance-img");
 const notifications = document.querySelector("#notifications-img");
-
+//Handles the admin dashboard and its clickable directories
 const menu = document.querySelector("#mobile-menu");
 const menuLinks = document.querySelector(".nav-menu");
 
