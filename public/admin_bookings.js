@@ -27,7 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
 const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
 const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
-
+//Displays details of pending bookings from the db 
 async function DisplayPending() {
     try {
         const bookRef = collection(db, "bookings");
@@ -86,7 +86,7 @@ async function DisplayPending() {
     }
 }
 
-
+// Denies a users booking request
  async function denyRequest(docId, rowElement) {
     const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
     if (!confirmation) return;
@@ -116,7 +116,7 @@ async function DisplayPending() {
       alert("An error occurred while denying the request.");
     }
 } 
-
+// approves a users booking request
 async function approveBooking(docId, bookData, rowElement) {
     try {
        
@@ -148,7 +148,7 @@ async function approveBooking(docId, bookData, rowElement) {
     }
 }
 
-  
+  // adds bookings to apporved section
   function moveBookToApproved(bookData) {
 
     const tr = document.createElement("tr");
@@ -180,7 +180,7 @@ async function approveBooking(docId, bookData, rowElement) {
   
     approvedTableBody.appendChild(tr);
   }
-
+// Displays all approved bookings 
   async function DisplayBookApproved() {
     try {
         approvedTableBody.innerHTML = ""; // Clear existing rows
