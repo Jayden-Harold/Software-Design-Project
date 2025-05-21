@@ -241,7 +241,7 @@ document.getElementById("facility1").addEventListener("change", () => {
 });
 
 const approvedTableBody = document.querySelector("#mainTable").getElementsByTagName("tbody")[0];
-
+//Displays assigned maintenance issue details
 async function DisplayAssigned() {
   try {
     approvedTableBody.innerHTML = ""; // Clear existing rows
