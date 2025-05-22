@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
+//firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -27,7 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
 const userTableBody = document.querySelector("#userTable").getElementsByTagName("tbody")[0];
 const approvedTableBody = document.querySelector("#approvedTable").getElementsByTagName("tbody")[0];
-
+//displays all staff awaiting approval
 async function DisplayStaffPending() {
     try {
         const usersRef = collection(db, "users");
@@ -50,12 +50,12 @@ async function DisplayStaffPending() {
             dateCell.textContent = createdAt;
 
             const actionCell = document.createElement("td");
-
+//approve button
             const approveBtn = document.createElement("button");
             approveBtn.textContent = "Approve";
             approveBtn.className = "btn-approve";
             approveBtn.addEventListener("click", () => approveStaff(docSnap.id, userData, row));
-
+//deny button
             const denyBtn = document.createElement("button");
             denyBtn.textContent = "Deny";
             denyBtn.className = "btn-deny";
@@ -75,11 +75,11 @@ async function DisplayStaffPending() {
         console.error("Error fetching pending staff:", error);
     }
 }
-
+//denies a staffs request for apporval
 async function denyRequest(docId, rowElement) {
     const confirmation = confirm("Are you sure you want to deny this request? This action cannot be undone.");
     if (!confirmation) return;
-  
+  //removes from table
     try {
       const resDocRef = doc(db, "users", docId);
       await deleteDoc(resDocRef);
@@ -90,7 +90,7 @@ async function denyRequest(docId, rowElement) {
       alert("An error occurred while denying the request.");
     }
   }
-
+//approves a staff member status
 async function approveStaff(docId, staffData, rowElement) {
     try {
       const staffDocRef = doc(db, "users", docId);
@@ -107,7 +107,7 @@ async function approveStaff(docId, staffData, rowElement) {
     }
 }
 
-  
+  //moves approved staff from pending to approves
   function moveStaffToApproved(staffData) {
 
     const tr = document.createElement("tr");
@@ -133,7 +133,7 @@ async function approveStaff(docId, staffData, rowElement) {
   
     approvedTableBody.appendChild(tr);
   }
-
+//displays all apporved staff members
   async function DisplayStaffApproved() {
     try {
         approvedTableBody.innerHTML = ""; // Clear existing rows
