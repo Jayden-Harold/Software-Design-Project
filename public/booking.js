@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
    import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
+//firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -31,7 +31,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
       document.getElementById("booking-date").setAttribute("min", today)
     });
 
-
+//book button
 document.getElementById("book-btn").addEventListener("click", async function () {
     const user = auth.currentUser;
 
@@ -80,7 +80,7 @@ close_booking.addEventListener("click", (e) => {
 })
 
 const select = document.getElementById("timeslot");
-
+//time constraint
 for (let hour = 8; hour < 20; hour++) {
   const start = `${hour.toString().padStart(2, '0')}:00`;
   const end = `${(hour + 1).toString().padStart(2, '0')}:00`;
@@ -111,7 +111,7 @@ async function getCapacityBySport(fname) {
 }
 
 const checkbox = document.getElementById("confirm");
-
+//creates booking and checks for any bookings already made
 async function checkAndCreateBooking(user, fname, timeslot, date) {
   const bookingsRef = collection(db, 'bookings');
   const facRef = collection(db, 'facilities');
