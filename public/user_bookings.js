@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+   // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -27,6 +28,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
 
 const userTableBody = document.querySelector("#bookTable").getElementsByTagName("tbody")[0];
 
+//function to fetch and display a user's pending bookings
 async function DisplayPending(user) {
     try {
         const bookRef = collection(db, "bookings");
@@ -80,6 +82,7 @@ async function DisplayPending(user) {
     }
 }
 
+//function to cancel a user's booking 
 async function denyRequest(docId, rowElement) {
     const confirmation = confirm("Are you sure you want to cancel this booking? This action cannot be undone.");
     if (!confirmation) return;
@@ -95,6 +98,8 @@ async function denyRequest(docId, rowElement) {
     }
   }
 
+/* check if user is logged in before displaying pending bookings,
+if not, alert user they're not signed in and redirects to the homepage*/  
 onAuthStateChanged(auth, (user) => {
     if (user) {
         DisplayPending(user); // now runs for ALL matching users

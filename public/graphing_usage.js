@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
    import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc, arrayUnion} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+    // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -25,7 +26,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
         menuLinks.classList.toggle("active");
     });
 
-
+// firestore query to fetch all bookings that have been approved by admin
 const q = query(
   collection(db, "bookings"),
   where("status", "==", "approved")
@@ -34,6 +35,7 @@ const q = query(
 const bookingCounts = {};
 const snapshot = await getDocs(q);
 
+//gets the date from 7 days ago for the "Last 7 days" filter
 const now = new Date();
 const sevenDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
 
@@ -48,8 +50,10 @@ snapshot.forEach(doc => {
   }
 });
 
-console.log(bookingCounts); // { "Pool": 4, "Gym": 2, ... }
+console.log(bookingCounts); // { "Swimming Pool": 4, "Padel": 2, ... }
 
+
+// function to plot the bookings graph
 function plotBookingChart(bookingCounts) {
   const labels = Object.keys(bookingCounts);
   const data = Object.values(bookingCounts);
@@ -156,6 +160,8 @@ document.getElementById('dateRangeSelector').addEventListener('change', (e) => {
 const ctx1 = document.getElementById('bookingsChart-custom').getContext('2d');
 let chart1; // global chart reference
 
+
+// function to fetch and count bookings by status: approved
 async function fetchBookingsCustom(days = null, startDate = null, endDate = null) {
   const snapshot = await getDocs(collection(db, 'bookings'));
   const counts = {};
@@ -186,6 +192,7 @@ async function fetchBookingsCustom(days = null, startDate = null, endDate = null
   return counts;
 }
 
+/* function to highlight a specific facility bar when a user filters bookings by facility*/
 async function updateChartCustom(days = null, startDate = null, endDate = null) {
   const counts = await fetchBookingsCustom(days, startDate, endDate);
   const labels = Object.keys(counts);
@@ -233,6 +240,7 @@ async function updateChartCustom(days = null, startDate = null, endDate = null) 
 
 updateChartCustom(7);
 
+// date range filter listener
 document.getElementById('dateRangeSelector2').addEventListener('change', (e) => {
   const val = e.target.value;
   if (val === "custom") {
@@ -243,6 +251,7 @@ document.getElementById('dateRangeSelector2').addEventListener('change', (e) => 
   }
 });
 
+//listener to update the chart based on the selected date range filter
 document.getElementById("applyDateRange").addEventListener("click", () => {
   const startDate = document.getElementById("startDate").value;
   const endDate = document.getElementById("endDate").value;
@@ -265,6 +274,7 @@ document.getElementById("applyDateRange").addEventListener("click", () => {
 const sportSelect = document.getElementById("sport");
 const facilitySelect = document.getElementById("facility");
 
+//listener to fetch all facility data related to the sport based on the sports filter
 sportSelect.addEventListener("change", async function () {
   const selectedSport = sportSelect.value;
   facilitySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
@@ -293,6 +303,7 @@ sportSelect.addEventListener("change", async function () {
   }
 });
 
+//listener to update the chart based on the selected sport and date range filter
 document.getElementById("facility").addEventListener("change", () => {
   const val = document.getElementById("dateRangeSelector2").value;
   if (val === "custom") {
@@ -310,6 +321,7 @@ document.getElementById("facility").addEventListener("change", () => {
 const sportSelect1 = document.getElementById("sport1");
 const facilitySelect1 = document.getElementById("facility1");
 
+//listener to fetch all facility data related to the sport based on the sports filter for another chart
 sportSelect1.addEventListener("change", async function () {
   const selectedSport = sportSelect1.value;
   facilitySelect1.innerHTML = '<option value="" disabled selected>Loading...</option>';

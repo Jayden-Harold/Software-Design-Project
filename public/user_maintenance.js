@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
    import { collection, query, where, getDocs, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+   // firebase configurator
    const firebaseConfig = {
     apiKey: "AIzaSyDSqHKGzYj8bUzKGoFHH93x3Wlq4G463yY",
     authDomain: "greensmoke-ee894.firebaseapp.com",
@@ -26,8 +27,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
     const db = getFirestore(app);
     const user = auth.currentUser;
 
-    const facilitySelect = document.getElementById("facility_1");
+    const facilitySelect = document.getElementById("facility_1"); //facilities drop down menu
 
+    //event listener to fetch all facilities available for the sport the user has selected
     document.addEventListener("DOMContentLoaded", async function () {
       facilitySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
     
@@ -55,6 +57,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
       }
     });
 
+    /*event listener that handles submission of a new maintenance 
+    issue when the submit button is clicked*/
     document.querySelector("#submit-btn").addEventListener("click", async function () {
     
       const user = auth.currentUser; // NOW it's likely to be set if the user is logged in
@@ -68,6 +72,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
       const selectedCat = document.getElementById("category").value;
       const GivenDesc = document.getElementById("description").value;
     
+      //adding the facility with the maintenance issue to the maintenance table
       try{
         await addDoc(collection(db , "Maintenance"),{
           facility: selectedFac,
@@ -94,6 +99,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebas
       const q = query(facilitiesRef, where("fname", "==", selectedFac));
       const querySnapshot = await getDocs(q);
 
+      /*changing the status of the facility to "under Maintenance" in
+       the facilities table so users cannot book it*/
       if (!querySnapshot.empty) {
         querySnapshot.forEach(async (facilityDoc) => {
           await updateDoc(facilityDoc.ref, {
