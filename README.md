@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/56520a52-9106-4856-a76f-24b04c29fd43)# Software-Design-Project
+# Software-Design-Project
 
 ## Project Overview
 
