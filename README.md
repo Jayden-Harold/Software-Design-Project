@@ -42,7 +42,7 @@ Google account:
 
 To explore the website functionality as a resident or staff member, you may either make a new account or log in to one of the following google accounts
 1. Resident: glorianaidu@gmail.com password:
-2. Staff: lorienne maramba password
+2. Staff: loriennemaramba@gmail.com password: loriennemaramba9123
 
 Should you wish to create a new account, you will need to log in as a system administrator after registering to approve the account before you can make use of the website functionality. A single Google account cannot have more than one role within the website, so, should you wish to explore both staff and resident functionality, you will need to register a new account using a different email address or log in to one of the accounts above. These accounts have already been onboarded and do not require approval from the system administrator. 
 
