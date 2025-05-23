@@ -1,4 +1,4 @@
-# Software-Design-Project
+![image](https://github.com/user-attachments/assets/56520a52-9106-4856-a76f-24b04c29fd43)# Software-Design-Project
 
 ## Project Overview
 
@@ -14,36 +14,39 @@ Reporting
 
 ## 🤝 Our Team
 
-- Karabelo Borotho
-- Karabo Bopape
-- Jayden Harold
-- Tariro Muvevi
-- Dylan Naidoo
+- Karabelo Borotho (2690124)
+- Karabo Bopape (2689324)
+- Jayden Harold (2656236)
+- Tariro Muvevi (2667536)
+- Dylan Naidoo (2667989)
 
-## Demo Video
+## 📽️ Demo Video
 
-Before getting started be sure to watch our demo video here
+Before getting started, be sure to watch our demo video here
 
 ## 🚀 Visit our site
 
 Click [here](https://green-smoke-0f073e403.6.azurestaticapps.net/)
 
-## Before getting started with our website
+## ℹ️ Before getting started with our website
 
 ### System administrator 
 
-To explore system the website as a system administrator, you will need to log in to the following 
-google account: aquilinaoosthuizen@gmail.com password:
+To explore the website as a system administrator, you will need to log in to the following 
+Google account: 
+- Aquilina Oosthuizen
+- aquilinaoosthuizen@gmail.com
+- Password: aquilinaoosthuizen1234
 
 ### Residents and Staff Members
 
 To explore the website functionality as a resident or staff member, you may either make a new account or log in to one of the following google accounts
-a. Resident: glorianaidu@gmail.com password: 
-b. Staff: lorienne maramba password
+1. Resident: glorianaidu@gmail.com password:
+2. Staff: lorienne maramba password
 
-Should you wish to create a new account, you will need to log in as a system administrator after registering to approve the account before you can make use of the website functionality. A single google account cannot have more than one role within the website so, should you wish to explore both staff and resident functionality you will need to register a new account using a different email address or log in to one of the accounts above. These accounts have already been onboarded and do not require approval from the system administrator. 
+Should you wish to create a new account, you will need to log in as a system administrator after registering to approve the account before you can make use of the website functionality. A single Google account cannot have more than one role within the website, so, should you wish to explore both staff and resident functionality, you will need to register a new account using a different email address or log in to one of the accounts above. These accounts have already been onboarded and do not require approval from the system administrator. 
 
-Take note that Google OAuth is used as a third party identity provider.
+Google OAuth is used as a third-party identity provider.
 
 ## Repository Overview
 
