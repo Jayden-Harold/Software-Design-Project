@@ -76,7 +76,7 @@ document.getElementById("book-btn").addEventListener("click", async function () 
 const close_booking = document.querySelector(".close-booking");
 
 close_booking.addEventListener("click", (e) => {
-    document.querySelector(".modalbooking").close();
+    document.querySelector(".modal-booking").close();
 })
 
 const select = document.getElementById("timeslot");
