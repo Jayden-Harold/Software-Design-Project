@@ -131,6 +131,7 @@ window.handleSigninResponse = async (response) => {
  const close_signup = document.querySelector(".close-signup");
 
  const facilities_btn = document.querySelector("#btn-3")
+ const events_btn = document.querySelector('#btn-2');
  
  // Modal triggers
  loginbtn.addEventListener("click", (e) => {
@@ -168,6 +169,11 @@ window.handleSigninResponse = async (response) => {
   e.preventDefault();
   window.location.href="facilities.html";
  });
+events_btn.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location.href="events.html"
+});
+
 async function displayMostRecentEvent() {
   try {
     // Construct the query
