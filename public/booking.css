@@ -51,7 +51,8 @@
     top:0;
     background-color: var(--tennisgreen);
     margin: 10% auto;
-    width: 40%;
+   max-width: 600px; /* Sets a nice maximum for larger screens */
+    min-width: 280px;
     max-height: 70vh; 
     border: none;
     border-radius: 10px;
