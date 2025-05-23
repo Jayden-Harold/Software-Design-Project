@@ -1,10 +1,10 @@
 # Software-Design-Project
 
-## Project Overview
+## 🖥️ Project Overview
 
 This website aims to provide a web-based solution for managing community sports facilities. It allows users to book slots, report maintenance issues, and receive relevant notifications.
 
-## 🧠 Overview of Features:
+## 🖥️ Overview of Features:
 
 Facility booking and availability tracking
 Membership and user management
@@ -40,32 +40,39 @@ Google account:
 
 ### Residents and Staff Members
 
-To explore the website functionality as a resident or staff member, you may either make a new account or log in to one of the following google accounts
-1. Resident: glorianaidu@gmail.com password:
-2. Staff: loriennemaramba@gmail.com password: loriennemaramba9123
+To explore the website functionality as a resident or staff member, you may either make a new account or log in to one of the following Google accounts:<br>
+1. Resident:   
+   1. Gloria Naidu  
+   2. [gloria.s.naidu@gmail.com](mailto:glorianaidu@gmail.com)   
+   3. Password: glorianaidu5678
+2. Staff:   
+   1. Lorienne Maramba   
+   2. [loriennemaramba@gmail.com](mailto:loriennemaramba@gmail.com)  
+   3. Password: loriennemaramba9123
 
 Should you wish to create a new account, you will need to log in as a system administrator after registering to approve the account before you can make use of the website functionality. A single Google account cannot have more than one role within the website, so, should you wish to explore both staff and resident functionality, you will need to register a new account using a different email address or log in to one of the accounts above. These accounts have already been onboarded and do not require approval from the system administrator. 
 
-Google OAuth is used as a third-party identity provider.
+**Google OAuth is used as a third-party identity provider.**
 
-## Repository Overview
+## 📁 Repository Overview
 
 - `/public`: Source Code
 - `/src/_tests_`: Test files and Test Plan
-- `/docs`: UML Diagrams and Project Plan
-- `/scrum`:
-  - `/scrum/sprint_retros`: Sprint Retrospectives
-  - `/scrum/sprint_meetings`: Sprint Meetings
+- `/docs`: Project Plan, Test Plan, Architecture Diagrams (UML Diagrams), and Figma Designs  
+- `/scrum`:  
+  - Product Backlog and Sprint Backlogs (with Burndown Charts). We used a shared Excel Sheet for our Scrum Methodology; both the original XLSX file and a PDF version have been included.  
+  - `/scrum/sprint_retros`: Sprint Retrospectives  
+  - `/scrum/sprint_meetings`: Sprint Meetings  
   - `/scrum/sprint_reviews`: Sprint Reviews
  
-## Setup & Installation
+## ⚙️ Setup & Installation
 
 To set up this project on your device, simply clone the repo by running the following command
 ```
 git clone https://github.com/Jayden-Harold/Software-Design-Project.git
 ```
 
-## Tech Stack
+## 🖥️ Tech Stack
 
 - **Languages**: HTML, CSS, JavaScript
 - **Frontend**: React
