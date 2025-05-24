@@ -58,7 +58,7 @@ Should you wish to create a new account, you will need to log in as a system adm
 
 - `/public`: Source Code
 - `/src/_tests_`: Test files and Test Plan
-- `/docs`: Project Plan, Test Plan, Architecture Diagrams (UML Diagrams), and Figma Designs  
+- `/docs`: Project Plan, Architecture Diagrams (UML Diagrams), and Figma Designs  
 - `/scrum`:  
   - Product Backlog and Sprint Backlogs (with Burndown Charts). We used a shared Excel Sheet for our Scrum Methodology; both the original XLSX file and a PDF version have been included.  
   - `/scrum/sprint_retros`: Sprint Retrospectives  
