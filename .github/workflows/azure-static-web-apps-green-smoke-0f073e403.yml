@@ -38,6 +38,10 @@ jobs:
           npx jest --coverage --passWithNoTests
       - name: Add Execute Permissions for react-scripts
         run: chmod +x node_modules/.bin/react-scripts
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
