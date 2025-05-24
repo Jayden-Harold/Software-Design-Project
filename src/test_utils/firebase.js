@@ -21,6 +21,7 @@ const firebaseConfig = {
 // Mock all Firebase services
 export const initializeApp = jest.fn();
 export const getAuth = jest.fn();
+export const onAuthStateChanged= jest.fn();
 export const getFirestore = jest.fn();
 export const collection = jest.fn(() => ({
   get: jest.fn(() => ({

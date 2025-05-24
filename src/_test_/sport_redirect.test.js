@@ -1,8 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-
-import { attachSportRedirects } from "../booking/sport_redirect";
+import {attachSportRedirects } from "../booking/sport_redirect";
 
 describe("Sport Redirects", () => {
   let mockWindow;

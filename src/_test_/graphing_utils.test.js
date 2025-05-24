@@ -18,6 +18,7 @@ describe('countReports', () => {
     const result = countReports(mockDocs, cutoff);
     expect(result).toEqual({ Gym: 1 });
   });
+  console.log("Correctly counts the non complete maintenance issues");
 });
 
 describe('countStatusByCategory', () => {
@@ -39,5 +40,6 @@ describe('countStatusByCategory', () => {
       "In Progress": 1,
       Closed: 1
     });
+    console.log("Correctly counts the maintenance issues by status");
   });
 });

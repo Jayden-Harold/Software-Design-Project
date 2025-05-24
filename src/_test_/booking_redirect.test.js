@@ -13,5 +13,6 @@ describe("Booking Button", () => {
     window.location = { assign: jest.fn() };
     fireEvent.click(bookButton);
     expect(window.location.assign).toHaveBeenCalledWith("booking.html");
+    console.log(" Redirect to bookings page");
   });
 });

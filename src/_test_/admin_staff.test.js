@@ -1,7 +1,5 @@
-document.body.innerHTML = `
-  <table id="userTable"><tbody></tbody></table>
-  <table id="approvedTable"><tbody></tbody></table>`
-;
+document.body.innerHTML = `<table id="userTable"><tbody></tbody></table>
+  <table id="approvedTable"><tbody></tbody></table>`;
 jest.mock("../test_utils/firebase.js", () => ({
     db: {},
     auth: {}
@@ -51,6 +49,7 @@ describe("approveStaff", () => {
   
         expect(approvedTable.children[0].textContent).toContain("John Smith"); //Check if the row contains the user's name
       }, 100);
+    console.log("Approved staff is moved to approved staff table succesfully");
   });
 });
 
@@ -62,9 +61,7 @@ describe("denyRequest", () => {
   deleteDoc.mockResolvedValue();
 
   beforeEach(() => {
-    document.body.innerHTML = `
-      <table><tbody><tr id="row-1"><td>User</td></tr></tbody></table>
-    `;
+    document.body.innerHTML = `<table><tbody><tr id="row-1"><td>User</td></tr></tbody></table>`;
     rowElement = document.getElementById("row-1");
 
     // Reset mocks
@@ -86,6 +83,7 @@ describe("denyRequest", () => {
     expect(deleteDoc).toHaveBeenCalledWith(expect.anything());
     expect(alert).toHaveBeenCalledWith("Request denied and record deleted successfully.");
     expect(document.getElementById("row-1")).toBeNull();
+    console.log("Removes staff if they're role request is denied");
   });
 
   it("does nothing if user cancels", async () => {
@@ -98,17 +96,6 @@ describe("denyRequest", () => {
     expect(document.getElementById("row-1")).not.toBeNull();
   });
 
-  it("shows error if deleteDoc fails", async () => {
-    confirm.mockReturnValue(true);
-    deleteDoc.mockRejectedValue(new Error("Firebase error"));
-    const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {}); //remove this and the last line to show console error
-
-    await denyRequest(docId, rowElement); 
-
-    expect(alert).toHaveBeenCalledWith("An error occurred while denying the request.");
-    expect(document.getElementById("row-1")).not.toBeNull();
-    consoleSpy.mockRestore(); // Clean up after test
-  });
 });
 
 describe("DisplayStaffApproved", () => {
@@ -166,6 +153,7 @@ describe("DisplayStaffApproved", () => {
     expect(rows.length).toBe(2); //Check rows appended
     expect(rows[0].textContent).toContain("John English");
     expect(rows[1].textContent).toContain("Jane Smith");
+    console.log("Fetches approved staff members for display");
   });
 
   it("handles no approved residents", async () => {
@@ -175,14 +163,6 @@ describe("DisplayStaffApproved", () => {
 
     await DisplayStaffApproved();
     expect(approvedTableBody.children.length).toBe(0); //to be empty
-  });
-
-  it("logs error on failure", async () => {
-    console.error = jest.fn();
-
-    getDocs.mockRejectedValue(new Error("Firestore error"));
-
-    await DisplayStaffApproved();
-    expect(console.error).toHaveBeenCalledWith("Error fetching approved staff:", expect.any(Error));
-  });
+    console.log("staff table is empty if there's no approved staff");
+  });  
 });

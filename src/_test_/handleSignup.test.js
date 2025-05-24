@@ -64,6 +64,7 @@ describe("handleSignupResponse", () => {
     getDoc.mockResolvedValue({ exists: () => false });
     await handleSignupResponse(mockResponse);
     expect(window.location.href).toBe("../staff.html");
+    console.log("Redirect to staff page when selected role is staff when signing up");
   });
 
   it("redirects to user.html if user selected the resident role", async () => {
@@ -71,6 +72,7 @@ describe("handleSignupResponse", () => {
     getDoc.mockResolvedValue({ exists: () => false });
     await handleSignupResponse(mockResponse);
     expect(window.location.href).toBe("../user.html");
+    console.log("Redirect to residents page when selected role is resident when signing up");
   });
 
   it("Alerts if the user already exists", async () => {
@@ -79,5 +81,6 @@ describe("handleSignupResponse", () => {
      await handleSignupResponse(mockResponse);
     expect(alert).toHaveBeenCalledWith("User already exists. Try signing in.");
     //expect(alert).toHaveBeenCalledWith("Checking if it fails");   //this is to check if ever fails : it does work
+    console.log("Alert a user if they already have an account. ")
   });
 });

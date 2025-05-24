@@ -1,7 +1,5 @@
-document.body.innerHTML = `
-  <table id="userTable"><tbody></tbody></table>
-  <table id="approvedTable"><tbody></tbody></table>`
-;
+document.body.innerHTML = `<table id="userTable"><tbody></tbody></table>
+  <table id="approvedTable"><tbody></tbody></table>`;
 const { approveResident, moveResToApproved,denyRequest,DisplayResApproved } = require ("../Admin/admin_resident");
 const { deleteDoc, doc,getDocs,collection,query, where } = require("firebase/firestore");
 
@@ -51,7 +49,7 @@ describe("approveResident", () => {
     
           expect(approvedTable.children[0].textContent).toContain("John Smith"); //Check if the row contains the user's name
         }, 100);
-
+        console.log("Approved resident is moved to residents table succesfully");
     });
 });
 //denying:
@@ -87,6 +85,7 @@ describe("denyRequest", () => {
     expect(deleteDoc).toHaveBeenCalledWith(expect.anything());
     expect(alert).toHaveBeenCalledWith("Request denied and record deleted successfully.");
     expect(document.getElementById("row-1")).toBeNull();
+    console.log("Removes resident if they're role request is denied");
   });
 
   it("does nothing if user cancels", async () => {
@@ -109,9 +108,11 @@ describe("denyRequest", () => {
     expect(alert).toHaveBeenCalledWith("An error occurred while denying the request.");
     expect(document.getElementById("row-1")).not.toBeNull();
     consoleSpy.mockRestore(); // Clean up after test
+    console.log("Returns error if firestore fails");
   });
 });
 
+//Displaying approved residents test:
 describe("DisplayResApproved", () => {
   let mockDb;
   let approvedTableBody;
@@ -167,6 +168,7 @@ describe("DisplayResApproved", () => {
     expect(rows.length).toBe(2); //Check rows appended
     expect(rows[0].textContent).toContain("John English");
     expect(rows[1].textContent).toContain("Jane Smith");
+    console.log("Fetches approved staff members for display");
   });
 
   it("handles no approved residents", async () => {
@@ -176,6 +178,7 @@ describe("DisplayResApproved", () => {
 
     await DisplayResApproved();
     expect(approvedTableBody.children.length).toBe(0); //to be empty
+     console.log("staff table is empty if there's no approved staff");
   });
 
   it("logs error on failure", async () => {
@@ -185,6 +188,7 @@ describe("DisplayResApproved", () => {
 
     await DisplayResApproved();
     expect(console.error).toHaveBeenCalledWith("Error fetching approved residents:", expect.any(Error));
+    console.log("Returns error if there's an error fetching residents");
   });
 });
 

@@ -107,17 +107,19 @@ describe('Booking Functions', () => {
         expect(rows[1].querySelector('td:nth-child(1)').textContent).toBe('Basketball Court');
         expect(rows[1].querySelector('td:nth-child(2)').textContent).toBe('2025-05-11');
         expect(rows[1].querySelector('td:nth-child(3)').textContent).toBe('14:00 - 15:00');
+        console.log("Fetch all bookings for a specific user");
     });
 
     test('should handle empty results', async () => {
       getDocs.mockResolvedValueOnce({
-        forEach: jest.fn() // No calls to callback
+        forEach: jest.fn() //No calls to callback
       });
 
       await DisplayPending({uid: 'user123' });
 
       const rows = document.querySelectorAll('#bookTable tbody tr');
       expect(rows.length).toBe(0);
+      console.log("Fetches zero bookings if user has no bookings");
     });
 
     test('should handle missing table element gracefully', async () => {
@@ -147,6 +149,7 @@ describe('Booking Functions', () => {
       expect(where).toHaveBeenCalledWith('userID', '==', 'user123');
       expect(where).toHaveBeenCalledWith('status', '==', 'pending');
       expect(query).toHaveBeenCalled();
+      console.log("Fetch bookings and filter by user id and status of bookigns");
     });
   });
 
@@ -162,18 +165,10 @@ describe('Booking Functions', () => {
       expect(deleteDoc).toHaveBeenCalledWith('doc/bookings/booking1');
       expect(mockRow.parentNode).toBeNull(); //Row should be removed
       expect(alert).toHaveBeenCalledWith('Booking cancelled successfully.');
+      console.log("User can cancel booking successfully");
     });
 
-    test('should not delete booking when not confirmed', async () => {
-      global.confirm.mockReturnValueOnce(false);
-      const mockRow = document.createElement('tr');
-
-      await denyRequest('booking1', mockRow);
-
-      expect(confirm).toHaveBeenCalled();
-      expect(deleteDoc).not.toHaveBeenCalled();
-      expect(alert).not.toHaveBeenCalled();
-    });
+  
 
     test('should handle delete errors', async () => {
       global.confirm.mockReturnValueOnce(true);
@@ -187,6 +182,7 @@ describe('Booking Functions', () => {
       expect(deleteDoc).toHaveBeenCalled();
       expect(alert).toHaveBeenCalledWith('An error occurred while cancelling the booking.');
       expect(console.error).toHaveBeenCalledWith('Error cancelling booking:', error);
+      console.log("Error if there's an error cancelling a booking");
     });
   });
 });

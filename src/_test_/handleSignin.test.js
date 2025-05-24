@@ -62,18 +62,21 @@ describe("handleSigninResponse", () => {
     setupRole("Admin");
     await handleSigninResponse(mockResponse);
     expect(window.location.href).toBe("../admin.html");
+    console.log("Redirect to admin page when if role is admin when signing in");
   });
 
   it("redirects to staff.html if user is staff", async () => {
     setupRole("Staff");
     await handleSigninResponse(mockResponse);
     expect(window.location.href).toBe("../staff.html");
+    console.log("Redirect to staff page when if role is staff when signing in");
   });
 
   it("redirects to user.html if user is a resident", async () => {
     setupRole("Resident");
     await handleSigninResponse(mockResponse);
     expect(window.location.href).toBe("../user.html");
+    console.log("Redirect to resident page when if role is resident when signing in");
   });
 
   it("alerts if user does not exist", async () => {
@@ -85,5 +88,6 @@ describe("handleSigninResponse", () => {
     await handleSigninResponse(mockResponse);
 
     expect(alert).toHaveBeenCalledWith("No account found. Please sign up first.");
+    console.log("Cannot sign in if you dont have an account");
   });
 });
