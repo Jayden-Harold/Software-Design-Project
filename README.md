@@ -82,6 +82,10 @@ git clone https://github.com/Jayden-Harold/Software-Design-Project.git
 - **Testing**: Jest
 - **CI/CD Pipeline**: GitHub Actions
 
+## Code Coverage
+
+[![codecov](https://codecov.io/gh/Jayden-Harold/Software-Design-Project/graph/badge.svg?token=4JOGI94V3D)](https://codecov.io/gh/Jayden-Harold/Software-Design-Project)
+
 ## 📩 Contact us
 
 For any queries related to this project, please email Jayden Harold: 2656236@students.wits.ac.za
