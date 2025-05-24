@@ -22,7 +22,7 @@ Reporting
 
 ## 📽️ Demo Video
 
-Before getting started, be sure to watch our demo video here
+Before getting started, be sure to watch our demo video [here](https://youtu.be/PWSVW2tMhK0)
 
 ## 🚀 Visit our site
 
