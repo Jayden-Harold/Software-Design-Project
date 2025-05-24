@@ -62,7 +62,7 @@ Should you wish to create a new account, you will need to log in as a system adm
 - `/scrum`:  
   - Product Backlog and Sprint Backlogs (with Burndown Charts). We used a shared Excel Sheet for our Scrum Methodology; both the original XLSX file and a PDF version have been included.  
   - `/scrum/sprint_retros`: Sprint Retrospectives  
-  - `/scrum/sprint_meetings`: Sprint Meetings  
+  - `/scrum/sprint_meetings_notes`: Sprint Meetings  
   - `/scrum/sprint_reviews`: Sprint Reviews
  
 ## ⚙️ Setup & Installation
